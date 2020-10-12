@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+            xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:sc="http://primefaces.org/ui/showcase"> 
+      
+
+<h:head>
+  <f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes"/>
+             
+             <link href="#{resource['showcase/images/logoNavB.svg']}" rel="icon" type="image/svg" sizes="32x32"/>
+            <link href="#{resource['showcase/images/logoNav3.svg']}" rel="icon" type="image/svg" sizes="16x16"/>
+            <script type="text/javascript">
+
+            function signOut() {
+				
+		console.log('entro signOut');
+            if (firebase.auth().currentUser) {
+  		          	       
+    	        firebase.auth().signOut();
+    	        location.reload();
+    	      }
+            }; 
+            </script>
+               <style type="text/css">         
+             .layout-wrapper .layout-content {
+    margin-left: 1px;
+    padding: 10px 0 0 0;
+}
+        </style>
+       </f:facet>
+         <title>SGE</title>
+        
+                    <h:outputStylesheet name="css/sh.css" library="showcase"/>
+        <h:outputStylesheet name="css/nanoscroller.css" library="showcase"/>
+        <h:outputStylesheet name="css/primeflex.css" library="showcase"/>
+
+        <!-- For Community Themes except 'Luna' and 'Nova' theme -->
+        <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces"/>
+
+
+        <h:outputScript name="jquery/jquery.js" library="primefaces"/>
+        <h:outputScript name="jquery/jquery-plugins.js" library="primefaces"/>
+        <h:outputScript name="script/nanoscroller.js" library="showcase"/>
+        <h:outputScript name="script/layout.js" library="showcase"/>
+</h:head>
+ 
+<body> 
+<p:commandButton  onclick="signOut()" value="Logout" update="@this" action="#{login.signOut()}" > </p:commandButton>       
+
+<div class="layout-wrapper">
+<div class="layout-content">
+                <ui:insert name="content">
+                    <div class="content-section content-submenu">
+                        <ui:insert name="submenu"></ui:insert>
+                    </div>
+                    <div class="content-section content-introduction">
+                        <h1><ui:insert name="title">Perfil Deportista</ui:insert></h1>
+                        <p><ui:insert name="description">Complete el formulario con sus datos personales y profesionales
+                        recuerde que los datos profesionales, seran visibles para tus entrenadores.</ui:insert></p>
+                   
+                
+                    </div>
+                    <div class="content-section content-implementation">
+                        <ui:insert name="implementation"></ui:insert>
+                    </div>
+                    <div class="content-section content-source">
+
+                    </div>
+                </ui:insert>
+        
+
+   
+<h:form>
+
+   
+    <div class="ui-fluid p-formgrid p-grid">
+
+ 		<div class="p-field p-col-12 ">
+            <p:outputLabel for="nomCompleto" value="Nombre Completo" />
+            <p:inputText id="nomCompleto" value="#{dep.nomCompleto}"/>
+        </div>
+
+         <div class="p-field p-col-12 ">
+            <p:outputLabel for="objetivos" value="Objetivos" />
+            <p:inputTextarea id="objetivos" value="#{dep.obejtivos}" rows="4" />
+        </div>
+
+		<div class="p-field p-col-12 p-md-6">
+				<p:outputLabel for="peso" value="Peso en kgs"></p:outputLabel>
+				<p:inputMask id="peso" value="#{dep.peso}" required="true"
+					mask="999.99" requiredMessage="Debe ingresar peso">
+				</p:inputMask>
+		</div>
+
+		<div class="p-field p-col-12 p-md-6">
+				<p:outputLabel for="altura" value="Altura en cms"></p:outputLabel>
+				<p:inputMask id="altura" value="#{dep.altura}"
+					required="true" mask="999" requiredMessage="Debe ingresar altura">
+				</p:inputMask>
+		</div>
+			
+		<div class="p-field p-col-12 p-md-4">
+				<p:outputLabel for="frecuenciaMin" value="Frecuencia Min"></p:outputLabel>
+				<p:inputMask id="frecuenciaMin" value="#{dep.ferqCardMin}"
+					required="true" mask="999" requiredMessage="Debe ingresar Frecuencia minima">
+				</p:inputMask>
+		</div>
+
+		<div class="p-field p-col-12 p-md-4">
+				<p:outputLabel for="frecuenciaMax" value="Frecuencia Max"></p:outputLabel>
+				<p:inputMask id="frecuenciaMax" value="#{dep.ferqCardMax}"
+					required="true" mask="999" requiredMessage="Debe ingresar Frecuencia maxima">
+				</p:inputMask>
+		</div>
+			
+			<div class="p-field p-col-12 p-md-4">
+				<p:outputLabel for="horas" value="Horas semanales"></p:outputLabel>
+				<p:inputMask id="horas" value="#{dep.dispHoraria}"
+					required="true" mask="99" requiredMessage="Debe ingresar horas">
+				</p:inputMask>
+			
+			</div>
+			         <div class="p-field p-col-12">
+            <p:outputLabel for="alergias" value="Alergias" />
+            <p:inputTextarea id="alergias" value="#{dep.alergias}"  rows="4" 
+            	required="true"  requiredMessage="Debe ingresar alergias">
+            </p:inputTextarea>
+        	</div>
+        	         <div class="p-field p-col-12">
+            <p:outputLabel for="lesiones" value="Lesiones" />
+            <p:inputTextarea id="lesiones" value="#{dep.lesiones}" rows="4" 
+            required="true"  requiredMessage="Debe ingresar lesiones">
+            </p:inputTextarea>
+        </div>
+                 <div class="p-field p-col-12">
+            <p:outputLabel for="sociedad" value="Ingrese Sociedad Medica" />
+            <p:inputTextarea id="sociedad" value="#{dep.sociedadMedica}" rows="4" 
+            required="true"  requiredMessage="Debe ingresar Sociedad Medica">
+            </p:inputTextarea>
+        </div>
+                 <div class="p-field p-col-12">
+            <p:outputLabel for="porbsalud" value="Problemas de Salud" />
+            <p:inputTextarea id="porbsalud" value="#{dep.probSalud}" rows="4" 
+			required="true"  requiredMessage="Debe ingresar problemas de salud">
+            </p:inputTextarea>
+        </div>
+        
+       		
+		<div class="p-field p-col-12">
+		<p:messages id="msgs1" showDetail="false" closable="true">
+        <p:autoUpdate />
+ 	 	</p:messages>
+ 	 				
+			<p:commandButton value="Enviar" action="#{dep.guardarPerfilBean}" update="msgs1"> </p:commandButton> 
+			
+
+         </div>
+         </div>
+        </h:form>
+         
+        </div>
+        </div>
+ <h:outputStylesheet name="css/layout.css" library="showcase"/>
+</body> 
+</html>

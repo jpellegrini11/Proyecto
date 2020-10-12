@@ -1,0 +1,292 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"> 
+	
+
+
+<h:head>
+  <f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes"/>
+                 
+                
+             <link href="#{resource['showcase/images/logoNavB.svg']}" rel="icon" type="image/svg" sizes="32x32"/>
+            <link href="#{resource['showcase/images/logoNav3.svg']}" rel="icon" type="image/svg" sizes="16x16"/>
+            <script type="text/javascript">
+
+       
+            function signOut() {
+				
+		console.log('entro signOut');
+            if (firebase.auth().currentUser) {
+  		          	       
+    	        firebase.auth().signOut();
+    	        location.reload();
+    	       
+    	      }
+            }; 
+            </script>
+               <style type="text/css">         
+             .layout-wrapper .layout-content {
+    margin-left: 1px;
+    padding: 10px 0 0 0;
+}
+        </style>
+       </f:facet>
+         <title>SGE</title>
+        
+                    <h:outputStylesheet name="css/sh.css" library="showcase"/>
+        <h:outputStylesheet name="css/nanoscroller.css" library="showcase"/>
+        <h:outputStylesheet name="css/primeflex.css" library="showcase"/>
+
+        <!-- For Community Themes except 'Luna' and 'Nova' theme -->
+        <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces"/>
+
+
+        <h:outputScript name="jquery/jquery.js" library="primefaces"/>
+        <h:outputScript name="jquery/jquery-plugins.js" library="primefaces"/>
+        <h:outputScript name="script/nanoscroller.js" library="showcase"/>
+        <h:outputScript name="script/layout.js" library="showcase"/>
+      
+        
+            
+            <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase.js"></script>
+
+
+
+<script type="text/javascript">
+window.onload = function() {
+	
+
+	var firebaseConfig = {
+		    apiKey: "AIzaSyCCRn3mef1T_iQ1vjcFVbvwxsOi3lJXM6g",
+		    authDomain: "aug-bot.firebaseapp.com",
+		    databaseURL: "https://aug-bot.firebaseio.com",
+		    projectId: "aug-bot",
+		    storageBucket: "aug-bot.appspot.com",
+		    messagingSenderId: "203313346214",
+		    appId: "1:203313346214:web:e5e8072afc22ed4d072667"
+		  };
+		  // Initialize Firebase
+		  firebase.initializeApp(firebaseConfig);
+   		  initApp();
+  };
+
+   function initApp() {
+      // Listening for auth state changes.
+      // [START authstatelistener]
+      firebase.auth().onAuthStateChanged(function(user) {
+        // [START_EXCLUDE silent]
+/*         document.getElementById('quickstart-verify-email').disabled = true; */ 
+      
+  // [END_EXCLUDE]
+        if (user) {
+          // User is signed in.
+          var displayName = user.displayName;
+          var email = user.email;
+          var emailVerified = user.emailVerified;
+          var photoURL = user.photoURL;
+          var isAnonymous = user.isAnonymous;
+          var uid = user.uid;
+          var providerData = user.providerData;
+          console.log(displayName);
+          console.log(email);
+          console.log(uid);
+          console.log(providerData);
+          
+          increment2(email);
+          // [START_EXCLUDE]
+/*           document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
+          document.getElementById('quickstart-sign-in').textContent = 'Sign out';
+          document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  '); */
+          if (!emailVerified) {
+            /* document.getElementById('quickstart-verify-email').disabled = false; */
+          }
+          // [END_EXCLUDE]
+        } else {
+          // User is signed out.
+          // [START_EXCLUDE]
+			console.log('usuario desconectado');
+          // [END_EXCLUDE]
+        }
+        // [START_EXCLUDE silent]
+       /*  document.getElementById('quickstart-sign-in').disabled = false; */
+        // [END_EXCLUDE]
+      });
+      // [END authstatelistener]
+
+
+    }
+
+   function toggleSignIn() {
+
+	     var mail= document.getElementById("email").value;
+	     console.log(mail);
+	     
+	   console.log('entroToogle');
+	   var email = document.getElementById('email').value;
+       var password = document.getElementById('password').value;
+	   console.log('email');
+	   console.log('password');
+	   
+	      if (firebase.auth().currentUser) {
+		      
+	        // [START signout]
+	        firebase.auth().signOut();
+	        // [END signout]
+	      } else {
+		      console.log(firebase.auth().currentUser);
+	         email = document.getElementById('email').value;
+	         password = document.getElementById('password').value;
+ 	        if (email.length &lt; 4){
+	          alert('Please enter an email address.');
+	          return;
+	        }
+	        if (password.length &lt; 4) {
+	          alert('Please enter a password.');
+	          return;
+	        } 
+	        // Sign in with email and pass.
+	        // [START authwithemail]
+	       
+	        var usu= document.getElementById("email").value;
+	      
+	        console.log(usu);
+	        
+// 	        buscarU2(usu,perfilU);
+	        
+	        
+	        firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+	          // Handle Errors here.
+	          
+	          var errorCode = error.code;
+	          var errorMessage = error.message;
+	          // [START_EXCLUDE]
+	          if (errorCode === 'auth/wrong-password') {
+	            alert('Wrong password.');
+	          } else {
+	            alert(errorMessage);
+	          }
+	          console.log(error);
+	          // [END_EXCLUDE]
+	        });
+	        // [END authwithemail]
+	    
+			
+	     }
+	     /*  document.getElementById('quickstart-sign-in').disabled = true; */
+	    }
+         function increment2(value) {
+             console.log('emtro incrm');
+//  	   increment3([{name:'valor3', value}]);
+             increment3([{name:'pUsu', value:value}])
+             
+ }
+         function signOut2() {
+         firebase.auth().signOut().then(function() {
+        	  // Sign-out successful.
+        	 console.log('usuario desconectado');
+        	 
+        	}).catch(function(error) {
+        	  // An error happened.
+          	  
+        	});
+         }
+     	
+         function signOut() {
+				
+       		console.log('entro signOut');
+                   if (firebase.auth().currentUser) {
+         		          	       
+           	        firebase.auth().signOut();
+           	        location.reload();
+           	      }
+                   };    
+                   function signInWithPopup2() {
+       				
+                   var provider = new firebase.auth.GoogleAuthProvider();
+
+                   firebase.auth().signInWithPopup(provider).then(function(result) {
+                	   // This gives you a Google Access Token. You can use it to access the Google API.
+                	   var token = result.credential.accessToken;
+                	   // The signed-in user info.
+                	   console.log(token);
+                	   var user = result.user;
+                	   // ...
+                	 }).catch(function(error) {
+                	   // Handle Errors here.
+                	   var errorCode = error.code;
+                	   var errorMessage = error.message;
+                	   // The email of the user's account used.
+                	   var email = error.email;
+                	   // The firebase.auth.AuthCredential type that was used.
+                	   var credential = error.credential;
+                	   // ...
+                	 });
+                   }
+
+                   
+</script>
+            
+</h:head>
+<body>
+
+
+	<form id="f1">
+	<div id="f1" class="ui-fluid" align="center" >
+		<p:panelGrid id="grid" columns="2">
+							
+			<f:facet name="header">
+			
+			<img src="resources/showcase/images/loginUsu.png" />
+						
+			</f:facet>
+			<p:outputLabel>Email</p:outputLabel>
+			<p:inputText id="email" value="" label="Email" autocomplete="true"></p:inputText>
+					
+					
+			<p:outputLabel>Contraseña</p:outputLabel>
+			<p:inputText  id="password" type="password" value="" autocomplete="true"></p:inputText>
+			        
+			                       
+
+
+			<f:facet name="footer">
+			
+						<p:commandButton  id="btnlogin2" onclick="toggleSignIn()" value="Login"></p:commandButton>
+			
+						
+<!-- 			<p:commandButton class="g-signin2" id="btnlogin2" onclick="toggleSignIn()" value="Login"  data-theme="dark"></p:commandButton> -->
+<!-- 						<p:commandButton id="btnlogin3" onclick="signOut2()" type="button" value="Logut" style="width: 100%"></p:commandButton> -->
+			
+<!-- 			<div class="g-signin2"  onclick="signInWithPopup2()" data-theme="dark"></div> -->
+			
+			 <p:messages id="messages2" showDetail="false" closable="true">
+         	</p:messages>
+			
+			</f:facet>
+			
+		</p:panelGrid>
+		
+		<b></b>
+		
+
+	</div>
+	</form>
+
+		
+<h:form id="f2">                                                                                                                       
+<p:remoteCommand name="increment3" action="#{login.increment}" update="@this"/>
+<p:remoteCommand name="buscarU" action="#{login.buscarU}"/>
+<p:messages id="messages3" showDetail="false" closable="true"/>
+
+
+</h:form>
+ <h:outputStylesheet name="css/layout.css" library="showcase"/>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+      
+
+<head id="j_idt2">
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+
+
+
+<title>PrimeFaces Showcase</title>
+
+<!-- For Community Themes except 'Luna' and 'Nova' theme -->
+<style type="text/css">
+/** Demo **/
+.ui-outputlabel {
+	font-weight: bold;
+}
+
+.ui-orderlist .ui-orderlist-list {
+	height: auto;
+}
+</style>
+</head>
+<body>
+	<div class="layout-wrapper">
+		<!--&lt;div class="layout-notification"&gt;
+                &lt;a href="https://www.primefaces.org/store"&gt;
+                    &lt;h:graphicImage name="showcase/images/asset-1-endofyear-2019.png" alt="New Year"/&gt;
+                    &lt;span class="layout-notification-details"&gt;
+                        &lt;span class="helper-text"&gt;NEW YEAR SALE&lt;/span&gt; SAVE UP TO &lt;span class="rate"&gt;60%&lt;/span&gt; AT PRIMESTORE!
+                    &lt;/span&gt;
+                &lt;/a&gt;
+            &lt;/div&gt;-->
+
+		<div class="layout-news">
+			<div class="layout-news-container">
+
+			</div>
+		</div>
+
+		<div class="layout-topbar">
+		
+		</div>
+
+		<div class="layout-sidebar">
+			<div class="nano">
+				<div class="nano-content menu-scroll-content">
+					<div class="search-input">
+					</div>
+
+	
+				</div>
+			</div>
+		</div>
+
+		<div class="layout-content">
+			<div class="content-section content-submenu"></div>
+			<div class="content-section content-introduction">
+
+			</div>
+			<div class="content-section content-implementation ">
+<form id="form1" >		
+ <p:dataView id="idDataView" var="a" value="#{dep.listAsig}" gridIcon="pi pi-th-large"  listIcon="pi pi-bars" >
+ 
+         <p:dataViewGridItem>
+            <p:panel header="#{a.entrenamiento.nombre}" style="text-align:center">
+                <h:panelGrid columns="1" style="width:100%">
+                <p:graphicImage name="#{a.entrenamiento.deporte}.png"   library="img" cache="false" />
+                   
+ 
+                    <h:outputText value="#{a.entrenamiento.deporte}" />
+ 
+                    <p:commandLink update="carDetail" oncomplete="PF('carDialog').show()" title="View Detail">
+                        <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;" />
+                        <f:setPropertyActionListener value="#{a}" target="#{dep.selectAsig}" />
+                    </p:commandLink>
+                </h:panelGrid>
+            </p:panel>
+        </p:dataViewGridItem>
+        
+        
+        <p:dataViewListItem id="idDataViewListItem">
+            <h:panelGrid  id="idPanelGrid" columns="3" style="width:100%" columnClasses="logo,detail" >
+               <p:graphicImage name="#{a.entrenamiento.deporte}.png"   library="img" cache="false" />
+ 
+                <p:outputPanel>
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputText value="Entrenamiento:" />
+                        <h:outputText value="#{a.entrenamiento.nombre}" style="font-weight: bold"/>
+ 
+ 						<h:outputText value="Deporte" />
+                        <h:outputText value="#{a.entrenamiento.deporte}" style="font-weight: bold"/>
+					 <p:separator> </p:separator>
+					 </h:panelGrid>
+                </p:outputPanel>
+                
+                <p:commandLink update="carDetail" oncomplete="PF('carDialog').show()" title="View Detail">
+                    <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;" />
+                    <f:setPropertyActionListener value="#{a}" target="#{dep.selectAsig}" />
+                   </p:commandLink>
+            </h:panelGrid>
+        </p:dataViewListItem>
+    </p:dataView>
+ 
+ <p:dialog header="Car Info" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+        <p:outputPanel id="carDetail" style="text-align:center;">
+            <p:panelGrid  columns="2" rendered="#{not empty dep.selectAsig}" columnClasses="label,value">
+                <f:facet name="header">
+                 <p:graphicImage name="#{dep.selectAsig.entrenamiento.deporte}.png"   library="img" cache="false"/>
+                </f:facet>
+ 
+                <h:outputText value="Nombre" />
+                <h:outputText value="#{dep.selectAsig.entrenamiento.nombre}" />
+ 
+                <h:outputText value="Fecha Inicio" />
+                <h:outputText value="#{dep.selectAsig.fechaIni}" />
+ 
+                <h:outputText value="Color:" />
+                <h:outputText value="#{dep.selectAsig.fechaIni}"/>
+ 
+             
+            </p:panelGrid>
+        </p:outputPanel>
+    </p:dialog>
+    </form>	
+			</div>
+			<div class="content-section content-source"></div>
+		</div>
+
+
+		<div class="ui-g-12 layout-footer">
+			<div class="ui-g-12 ui-md-6 footer-left">
+				<span class="footer-info-left">PrimeTek Informatics,
+					Copyright © 2019 All rights reserved.</span>
+			</div>
+			<div class="ui-g-12 ui-md-6 footer-right">
+				<span class="footer-info-right">Running
+					PrimeFaces-8.0.2-SNAPSHOT on Mojarra-2.3.13.</span>
+			</div>
+		</div>
+		<div class="layout-mask"></div>
+
+	</div>
+
+
+
+	<script type="text/javascript"
+		src="/showcase/javax.faces.resource/jquery/jquery.js.xhtml?ln=primefaces&amp;v=8.0.0-SNAPSHOT">
+                    </script>
+	<script type="text/javascript"
+		src="/showcase/javax.faces.resource/jquery/jquery-plugins.js.xhtml?ln=primefaces&amp;v=8.0.0-SNAPSHOT"></script>
+	<script type="text/javascript"
+		src="/showcase/javax.faces.resource/core.js.xhtml?ln=primefaces&amp;v=8.0.0-SNAPSHOT"></script>
+	<script type="text/javascript"
+		src="/showcase/javax.faces.resource/components.js.xhtml?ln=primefaces&amp;v=8.0.0-SNAPSHOT">
+                    </script>
+	<script type="text/javascript"
+		src="/showcase/javax.faces.resource/keyboard/keyboard.js.xhtml?ln=primefaces&amp;v=8.0.0-SNAPSHOT"></script>
+	<script type="text/javascript"
+		src="/showcase/javax.faces.resource/charts/charts.js.xhtml?ln=primefaces&amp;v=8.0.0-SNAPSHOT"></script>
+	<script type="text/javascript"
+		src="/showcase/javax.faces.resource/touch/touchswipe.js.xhtml?ln=primefaces&amp;v=8.0.0-SNAPSHOT"></script>
+	<script type="text/javascript"
+		src="/showcase/javax.faces.resource/validation/validation.js.xhtml?ln=primefaces&amp;v=8.0.0-SNAPSHOT"></script>
+	<script type="text/javascript"
+		src="/showcase/javax.faces.resource/validation/beanvalidation.js.xhtml?ln=primefaces&amp;v=8.0.0-SNAPSHOT"></script>
+	<script type="text/javascript"
+		src="/showcase/javax.faces.resource/script/nanoscroller.js.xhtml?ln=showcase"></script>
+	<script type="text/javascript"
+		src="/showcase/javax.faces.resource/script/layout.js.xhtml?ln=showcase"></script>
+	<script type="text/javascript"
+		src="/showcase/javax.faces.resource/showcase/script/sh.js.xhtml"></script>
+</body>
+
+
+</html>

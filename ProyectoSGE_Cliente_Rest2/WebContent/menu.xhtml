@@ -1,0 +1,80 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+    <div class="layout-sidebar">
+        <div class="nano">
+            <div class="nano-content menu-scroll-content">
+                <div class="search-input">
+                    <i class="pi pi-search icon-search"></i>
+                    <input type="text" aria-label="Search Components"></input>
+                </div>
+
+                <ul id="layout-menu" class="layout-menu">
+                    <li id="submenu-ajax">
+                        <a href="#">
+                            <p:graphicImage name="images/icons/coach2.png" library="showcase" />
+                            <span>Entrenador</span>
+                        </a>
+                        <div>
+                            <ul style="width:60%">
+                                <li>
+                                    <p:commandLink action="/entrenador/entrenamiento">
+                                        <i class="pi pi-circle-on"></i>
+                                        <span class="menuitem-text">Crear Entrenamiento</span>
+                                     </p:commandLink>
+                                     
+                                     
+                                     
+                                </li>
+                                
+                                                      
+                                 
+                                <li>
+                                     <p:commandLink action="/entrenador/ejercicio">
+                                        <i class="pi pi-circle-on"></i>
+                                        <span class="menuitem-text">Crear Ejercicio</span>
+                                   </p:commandLink>
+                                </li>
+                                
+                                <li>
+                                    <p:commandLink action="/entrenador/asignarEnto">
+                                        <i class="pi pi-circle-on"></i>
+                                        <span class="menuitem-text">Asignar Entrenamiento</span>
+                                      </p:commandLink>
+                                </li>
+<!--                                 <li> -->
+<!--                                     <h:link outcome="/ui/ajax/process"> -->
+<!--                                         <i class="pi pi-circle-on"></i> -->
+<!--                                         <span class="menuitem-text">Process</span> -->
+<!--                                     </h:link> -->
+<!--                                 </li> -->
+<!--                                 <li> -->
+<!--                                     <h:link outcome="/ui/ajax/validation"> -->
+<!--                                         <i class="pi pi-circle-on"></i> -->
+<!--                                         <span class="menuitem-text">Validation</span> -->
+<!--                                     </h:link> -->
+<!--                                 </li> -->
+<!--                                 <li> -->
+<!--                                     <h:link outcome="/ui/ajax/remoteCommand"> -->
+<!--                                         <i class="pi pi-circle-on"></i> -->
+<!--                                         <span class="menuitem-text">RemoteCommand</span> -->
+<!--                                     </h:link> -->
+<!--                                 </li> -->
+<!--                                 <li> -->
+<!--                                     <h:link outcome="/ui/ajax/dropdown"> -->
+<!--                                         <i class="pi pi-circle-on"></i> -->
+<!--                                         <span class="menuitem-text">Dropdown</span> -->
+<!--                                     </h:link> -->
+<!--                                 </li> -->
+                            </ul>
+                            <ul>
+                        
+                            </ul>
+                        </div>
+                    </li>
+                     </ul>
+            </div>
+        </div>
+    </div>
+
+</ui:composition>

@@ -1,0 +1,73 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./homeEnt.xhtml">
+
+    <ui:define name="title">
+          Entrenador - <span class="subitem">Asignar a deportistas</span>
+    </ui:define>
+
+<!--     <ui:param name="documentationLink" value="/components/dataview" /> -->
+<!--     <ui:param name="widgetLink" value="dataview" /> -->
+
+    <ui:define name="description">
+        Busca y selecciona los deportistas que deseas asignar el entrnamiento.
+    </ui:define>
+
+
+    <ui:define name="implementation">
+    
+<h:form>
+           
+                    <p:panel header="#{asignar.selectAsignarEnto.entrenamiento.nombre}Nombre" style="text-align:center">
+                        <h:panelGrid columns="1" style="width:100%">
+                            <p:graphicImage name="/imagesDep/#{asignar.selectAsignarEnto.entrenamiento.deporte}.png"/> 
+
+                            <h:outputText value="#{asignar.selectAsignarEnto.entrenamiento.nombre}" />
+
+                            
+                        </h:panelGrid>
+                    </p:panel>
+               
+		<p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true" />
+		
+		        <p:outputLabel for="mask" value="Fecha Inicio" />
+        <p:calendar id="mask" value="#{asignar.fechaIni}" pattern="dd-MM-yyyy" mask="true" />
+        
+                <p:outputLabel for="mask2" value="Fecha Fin" />
+        <p:calendar id="mask2" value="#{asignar.fechaFin}" pattern="dd-MM-yyyy" mask="true" />
+        
+		<p:pickList value="#{asignar.dualListDep}" var="d" itemLabel="#{d}" itemValue="#{d}"/>
+
+    <p:dialog modal="true" showEffect="fade" hideEffect="fade" widgetVar="cityDialog">
+        <h:panelGrid id="displayCities" columns="2">
+            <h:outputText value="Source: " style="font-weight:bold" />
+             <ui:repeat value="#{asignar.dualListDep.source}" var="item">
+                <h:outputText value="#{item}" style="margin-right:5px" />
+            </ui:repeat>
+ 
+            <h:outputText value="Target: " style="font-weight:bold" />
+            <ui:repeat value="#{asignar.dualListDep.target}" var="item">
+                <h:outputText value="#{item}" style="margin-right:5px" />
+            </ui:repeat>
+        </h:panelGrid>
+    </p:dialog>
+    
+			<p:column headerText="">
+				<p:commandButton id="btnSelc" value="Selecionar" action="#{asignar.seleccionarEntoBean()}"  >
+				
+    			</p:commandButton>
+				
+			</p:column>
+			
+			
+					
+
+	
+		
+</h:form>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#deportista#buscarEnt2.xhtml"
+  PATH="/deportista/buscarEnt2.xhtml" SHAPE="720,33,0,0"
+  model-entity="JSFProcessGroup" persistent="true"/>
+ <PROCESS-ITEM NAME="rules:#entrenador#entrenamiento.xhtml"
+  PATH="/entrenador/entrenamiento.xhtml" SHAPE="720,241,0,0"
+  model-entity="JSFProcessGroup" persistent="true"/>
+ <PROCESS-ITEM NAME="rules:#fire" PATH="/fire" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#fire:0" NAME="item" PATH="/fire" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="cargaPerfilDep::#deportista#cargaPerfilDep"
+    NAME="output" PATH="/deportista/cargaPerfilDep"
+    TARGET="rules:#deportista#cargaPerfilDep" TITLE="cargaPerfilDep" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="homeDep::#deportista#homeDep" NAME="output1"
+    PATH="/deportista/homeDep" TARGET="rules:#deportista#homeDep"
+    TITLE="homeDep" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cargaPerfilEnt::#entrenador#cargaPerfilEnt"
+    NAME="output2" PATH="/entrenador/cargaPerfilEnt"
+    TARGET="rules:#entrenador#cargaPerfilEnt" TITLE="cargaPerfilEnt" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="homeEnt::#entrenador#homeEnt" NAME="output3"
+    PATH="/entrenador/homeEnt" TARGET="rules:#entrenador#homeEnt"
+    TITLE="homeEnt" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#deportista#homeDep"
+  PATH="/deportista/homeDep" SHAPE="512,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#deportista#homeDep:0" NAME="item"
+   PATH="/deportista/homeDep" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="buscarEnt::#deportista#buscarEnt"
+    NAME="output" PATH="/deportista/buscarEnt"
+    TARGET="rules:#deportista#buscarEnt" TITLE="buscarEnt" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#entrenador#homeEnt"
+  PATH="/entrenador/homeEnt" SHAPE="512,225,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#entrenador#homeEnt:0" NAME="item"
+   PATH="/entrenador/homeEnt" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="entrenamiento::#entrenador#entrenamiento"
+    NAME="output" PATH="/entrenador/entrenamiento"
+    TARGET="rules:#entrenador#entrenamiento" TITLE="entrenamiento" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#deportista#cargaPerfilDep"
+  PATH="/deportista/cargaPerfilDep" SHAPE="288,33,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#deportista#cargaPerfilDep:0" NAME="item"
+   PATH="/deportista/cargaPerfilDep" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="homeDep::#deportista#homeDep" NAME="output"
+    PATH="/deportista/homeDep" TARGET="rules:#deportista#homeDep"
+    TITLE="homeDep" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#entrenador#cargaPerfilEnt"
+  PATH="/entrenador/cargaPerfilEnt" SHAPE="288,241,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#entrenador#cargaPerfilEnt:0" NAME="item"
+   PATH="/entrenador/cargaPerfilEnt" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="homeEnt::#entrenador#homeEnt" NAME="output"
+    PATH="/entrenador/homeEnt" TARGET="rules:#entrenador#homeEnt"
+    TITLE="homeEnt" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#deportista#buscarEnt"
+  PATH="/deportista/buscarEnt" SHAPE="720,241,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#entrenador#entrenamiento"
+  PATH="/entrenador/entrenamiento" SHAPE="720,465,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+            xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:sc="http://primefaces.org/ui/showcase">
+      
+
+<h:head>
+     <f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes"/>
+            
+             <link href="#{resource['showcase/images/logoNavB.svg']}" rel="icon" type="image/svg" sizes="32x32"/>
+            <link href="#{resource['showcase/images/logoNav3.svg']}" rel="icon" type="image/svg" sizes="16x16"/>
+            
+             <script type="text/javascript">
+
+            function signOut() {
+				
+		console.log('entro signOut');
+            if (firebase.auth().currentUser) {
+  		          	       
+    	        firebase.auth().signOut();
+    	        location.reload();
+    	      }
+            }; 
+            </script>
+            
+   <style type="text/css">         
+             .layout-wrapper .layout-content {
+    margin-left: 1px;
+    padding: 10px 0 0 0;
+}
+        </style>
+
+ </f:facet>
+ 
+  <title>SGE</title>
+            <h:outputStylesheet name="css/sh.css" library="showcase"/>
+        <h:outputStylesheet name="css/nanoscroller.css" library="showcase"/>
+        <h:outputStylesheet name="css/primeflex.css" library="showcase"/>
+
+        <!-- For Community Themes except 'Luna' and 'Nova' theme -->
+        <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces"/>
+
+
+        <h:outputScript name="jquery/jquery.js" library="primefaces"/>
+        <h:outputScript name="jquery/jquery-plugins.js" library="primefaces"/>
+        <h:outputScript name="script/nanoscroller.js" library="showcase"/>
+        <h:outputScript name="script/layout.js" library="showcase"/>
+        
+</h:head> 
+<body> 
+<p:commandButton  onclick="signOut()" value="Logout" update="@this" action="#{login.signOut()}" > </p:commandButton>       
+
+<div class="layout-wrapper">
+<div class="layout-content">
+                <ui:insert name="content">
+                    <div class="content-section content-submenu">
+                        <ui:insert name="submenu"></ui:insert>
+                    </div>
+                    <div class="content-section content-introduction">
+                        <h1><ui:insert name="title">Perfil Entrenador</ui:insert></h1>
+                        <p><ui:insert name="description">Complete el formulario con sus datos personales y profesionales
+                        recuerde que los datos profesionales, seran visibles para los deportisas que esten buscando entrenador.</ui:insert></p>
+                   
+                
+                    </div>
+                    <div class="content-section content-implementation">
+                        <ui:insert name="implementation"></ui:insert>
+                    </div>
+                    <div class="content-section content-source">
+
+                    </div>
+                </ui:insert>
+        
+
+   
+<h:form>
+              
+    <div class="ui-fluid p-formgrid p-grid">
+    	 
+
+ 	 	<div class="p-field p-col-12">
+            <p:outputLabel for="nombreCompleto" value="Nombre Completo" />
+            <p:inputText id="nombreCompleto" value="#{ent.nombre}" required="true"
+					 requiredMessage="Debe ingresar Nombre Completo">  </p:inputText>
+        </div>
+ 	 	
+ 	 	     <div class="p-field p-col-12">
+            <p:outputLabel for="descripcion" value="Descripcion" />
+            <p:inputTextarea id="descripcion" value="#{ent.descripcion}" rows="4"> </p:inputTextarea>
+        	</div>
+                 <div class="p-field p-col-12">
+            <p:outputLabel for="deportes" value="Deportes" />
+            <p:inputTextarea id="deportes" value="#{ent.deportes}" rows="4" />
+        </div>
+                 <div class="p-field p-col-12">
+            <p:outputLabel for="titulos" value="Titulos" />
+            <p:inputTextarea id="titulos" value="#{ent.titulos}" rows="4" />
+        </div>
+        
+            <div class="p-field p-col-12">
+            <p:outputLabel for="logros" value="Logros" />
+            <p:inputTextarea id="logros" value="#{ent.logros}" rows="4" />
+        	</div>
+
+			
+			<div class="p-field p-col-12 p-md-6">
+						<p:outputLabel value="Disponibilidad" />
+			<p:selectOneMenu value = "#{ent.dispHoraria}">
+            	<f:selectItem itemLabel="Remoto" itemValue="Remoto"/>
+				<f:selectItem itemLabel="Precensial" itemValue="Precensial"/>
+				<f:selectItem itemLabel="Remote y Precensial" itemValue="RemPre"/>
+			</p:selectOneMenu>
+		
+
+ 		</div>
+
+			
+			<div class="p-field p-col-12 p-md-6">
+				<p:outputLabel for="ubicacion" value="Ubicacion"></p:outputLabel>
+				<p:inputText id="ubicacion" value="#{ent.ubicacion}">
+					
+				</p:inputText>
+			</div>
+			
+<!-- 					<p:messages id="msgs1" showDetail="false" closable="true"> -->
+<!--        				 <p:autoUpdate /> -->
+<!--  	 				</p:messages> -->
+		 <p:messages id="messages2" showDetail="false" closable="true">
+         	</p:messages>
+			<p:commandButton value="Enviar" action="#{ent.guardarPerfilBean()}" update="messages2"></p:commandButton> 
+			    	 
+
+			
+			
+         </div>
+        </h:form>
+        </div>
+            </div>
+  
+        <h:outputStylesheet name="css/layout.css" library="showcase"/>
+</body> 
+</html>
+

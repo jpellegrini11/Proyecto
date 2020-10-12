@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+      
+
+<h:head>
+			<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes"/>
+            
+             <script type="text/javascript">
+
+            function signOut() {
+				
+		console.log('entro signOut');
+            if (firebase.auth().currentUser) {
+  		          	       
+    	        firebase.auth().signOut();
+    	        location.reload();
+    	      }
+            }; 
+            </script>
+            
+</h:head>
+ 
+<body> 
+<h:outputStylesheet name="css/primeflex.css"/>
+<h:outputStylesheet name="css/layout.css"/>
+
+<p:commandButton  onclick="signOut()" value="Logout" update="@this" action="#{login.signOut()}" > </p:commandButton>
+
+<h1>Home Deportista</h1>
+<h:form id="f1">
+<p:autoUpdate />
+ 	 	<div >
+			<p:commandButton value="Entrenamientos" action="verEntrenamientos"> </p:commandButton> 
+         </div>
+         <div>
+			<p:commandButton value="Buscar Entrenador" action="buscarEnt" > </p:commandButton> 
+         </div>
+          <div>
+			<p:commandButton value="Análisis" action="homeDep2"> </p:commandButton> 
+         </div>
+          	 	<div>
+			<p:commandButton value="Mi Perfil Deportista" action="modPerfildep"> </p:commandButton> 
+         </div>
+</h:form>
+</body>
+</html>

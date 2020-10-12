@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+ <navigation-rule>
+  <from-view-id>/fire</from-view-id>
+  <navigation-case>
+   <from-outcome>cargaPerfilDep</from-outcome>
+   <to-view-id>/deportista/cargaPerfilDep</to-view-id>
+   <redirect include-view-params="true"/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>homeDep</from-outcome>
+   <to-view-id>/deportista/homeDep</to-view-id>
+   <redirect include-view-params="true"/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>cargaPerfilEnt</from-outcome>
+   <to-view-id>/entrenador/cargaPerfilEnt</to-view-id>
+   <redirect include-view-params="true"/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>homeEnt</from-outcome>
+   <to-view-id>/entrenador/homeEnt</to-view-id>
+   <redirect include-view-params="true"/>
+  </navigation-case>
+ </navigation-rule>
+ <navigation-rule>
+  <from-view-id>/deportista/homeDep</from-view-id>
+  <navigation-case>
+   <from-outcome>buscarEnt</from-outcome>
+   <to-view-id>/deportista/buscarEnt</to-view-id>
+   <redirect include-view-params="true"/>
+  </navigation-case>
+ </navigation-rule>
+ <navigation-rule>
+  <from-view-id>/entrenador/homeEnt</from-view-id>
+  <navigation-case>
+   <from-outcome>entrenamiento</from-outcome>
+   <to-view-id>/entrenador/entrenamiento</to-view-id>
+   <redirect include-view-params="true"/>
+  </navigation-case>
+ </navigation-rule>
+ <navigation-rule>
+  <from-view-id>/deportista/cargaPerfilDep</from-view-id>
+  <navigation-case>
+   <from-outcome>homeDep</from-outcome>
+   <to-view-id>/deportista/homeDep</to-view-id>
+   <redirect include-view-params="true"/>
+  </navigation-case>
+ </navigation-rule>
+ <navigation-rule>
+  <from-view-id>/entrenador/cargaPerfilEnt</from-view-id>
+  <navigation-case>
+   <from-outcome>homeEnt</from-outcome>
+   <to-view-id>/entrenador/homeEnt</to-view-id>
+   <redirect include-view-params="true"/>
+  </navigation-case>
+ </navigation-rule>
+ <application/>
+</faces-config>

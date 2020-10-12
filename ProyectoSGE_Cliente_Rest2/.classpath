@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="JavaSource"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/PoyectoSGE_EJB_Rest2"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk-11.0.6">
+		<attributes>
+			<attribute name="module" value="true"/>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.jboss.ide.eclipse.as.core.server.runtime.runtimeTarget/WildFly 19.0 Runtime">
+		<attributes>
+			<attribute name="owner.project.facets" value="jst.web;jst.jsf"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/primefaces-8.0.jar" sourcepath="C:/Users/Administrador/.m2/repository/org/primefaces/primefaces/8.0/primefaces-8.0-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Administrador/wildfly-19.0.0.Final/modules/system/layers/base/org/hibernate/main/hibernate-core-5.3.15.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Administrador/wildfly-19.0.0.Final/bin/client/jboss-cli-client.jar"/>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>

@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head>
+			<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes"/>
+ <script type="text/javascript">
+
+
+            function signOut() {
+				
+		console.log('entro signOut');
+            if (firebase.auth().currentUser) {
+  		          	       
+    	        firebase.auth().signOut();
+    	        location.reload();
+    	      }
+            }; 
+
+           
+            	
+
+
+            </script>
+
+</h:head> 
+<body>
+
+<p:commandButton  onclick="signOut()" value="Logout" update="@this" action="#{login.signOut()}" > </p:commandButton>
+ 
+<h1>Home entrenador</h1>
+
+<h:form>
+		<div class="ui-fluid p-formgrid p-grid">
+ 	 	<div class="p-field p-col-12">
+ 	 	<div>
+			<p:commandButton value="Entrenamientos" action="vistaEnto" > </p:commandButton> 
+         </div>
+         </div>
+         
+         <div class="p-field p-col-2">
+         </div>
+         <div class="p-field p-col-8">
+         <div>
+			<p:commandButton value="Ejercicios" action="ejercicio"> </p:commandButton> 
+         </div>
+         </div>
+         <div class="p-field p-col-2">
+         </div>
+         
+          <div class="p-field p-col-2">
+         </div>
+         <div class="p-field p-col-12">
+          	 	<div>
+			<p:commandButton value="Análisis" action="analisis"> </p:commandButton> 
+         </div>
+         </div>
+          <div class="p-field p-col-2">
+         </div>
+         
+          <div class="p-field p-col-2">
+         </div>
+         <div class="p-field p-col-12">
+          <div>
+			<p:commandButton value="Mi Perfil Entrenador" action="perfil"> </p:commandButton> 
+         </div>
+         </div>
+          <div class="p-field p-col-2">
+         </div>
+         
+         </div>
+         </h:form>
+         
+</body> 
+</html>

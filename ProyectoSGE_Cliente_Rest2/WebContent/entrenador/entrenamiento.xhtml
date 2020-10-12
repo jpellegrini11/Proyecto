@@ -1,0 +1,277 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./homeEnt.xhtml">
+
+    <ui:define name="title">
+        Entrenador - <span class="subitem">Crear entrenamientos</span>
+    </ui:define>
+
+    <ui:define name="head">
+        <script type="text/javascript">
+ 
+                          function signOut() {
+              				
+                      		console.log('entro signOut');
+                                  if (firebase.auth().currentUser) {
+                        		          	       
+                          	        firebase.auth().signOut();
+                          	        location.reload();
+                          	      }
+                                  }; 
+                                  </script>
+                                  </ui:define>
+                                  
+    <ui:define name="description">
+        Crea entrenamiento para tus deportistas, complete los datos del formulario.
+    </ui:define>
+	
+	<ui:define name="implementation">
+	<h:form>
+				<div class="ui-fluid">
+					<div class="p-field">
+						<p:outputLabel for="nombre" value="Nombre" />
+						<p:inputText id="nombre" value="#{entrenamiento.nombre}"
+							required="true" requiredMessage="Debe ingresar Nombre">
+						</p:inputText>
+					</div>
+
+
+				<div class="p-field p-col-12 p-md-6">
+						<p:outputLabel for="deporte" value="Deporte" />
+			<p:selectOneMenu id="deporte" value = "#{entrenamiento.deporte}" >
+            	<f:selectItem itemLabel="NATACION" itemValue="NATACION"/>
+				<f:selectItem itemLabel="CORRER" itemValue="CORRER"/>
+				<f:selectItem itemLabel="BICICLETA" itemValue="BICICLETA"/>
+				<f:selectItem itemLabel="GYM Y EQUIPO FITNESS" itemValue="GYM Y EQUIPO FITNESS"/>
+				
+			</p:selectOneMenu>
+          </div>
+
+
+				</div>
+	<p:spacer ></p:spacer>	
+				<div class="ui-fluid p-formgrid p-grid">
+
+					<div class="p-field p-col p-md-6">
+						<p:outputLabel for="ejercicios" value="Ejercicios"/>
+						<p:selectOneMenu id="ejercicios" value="#{entrenamiento.ejer}"  required="true"
+					 requiredMessage="Debe crear ejercicios primero">
+							<f:selectItems value="#{entrenamiento.listStrEjer}" />
+
+						</p:selectOneMenu>
+					</div>
+
+					<div class="p-field p-col p-md-3">
+						<p:outputLabel for="intensidad" value="Intensidad" />
+						<p:inputText id="intensidad" value="#{entrenamiento.intensidad}"
+							required="true" requiredMessage="Debe ingresar Intensidad" />
+					</div>
+
+					<div class="p-field p-col p-md-3">
+						<p:outputLabel for="repeticion" value="Repeticiones" />
+						<p:inputText id="repeticion" value="#{entrenamiento.repeticion}"  required="true" requiredMessage="Debe ingresar Intensidad" />
+						
+					</div>
+
+				</div>
+
+
+				<h:panelGroup id="pg2">
+					<h:panelGroup id="pg22" rendered="#{entrenamiento.visib2}">
+
+						<div class="ui-fluid p-formgrid p-grid">
+
+							<div class="p-field p-col p-md-6">
+								<p:outputLabel for="ejercicios2" value="Ejercicios 2" />
+								<p:selectOneMenu id="ejercicios2" value="#{entrenamiento.ejer2}"  required="true"
+					 requiredMessage="Debe crear ejercicios primero">
+									<f:selectItems value="#{entrenamiento.listStrEjer2}" />
+
+								</p:selectOneMenu>
+							</div>
+
+							<div class="p-field p-col p-md-3">
+								<p:outputLabel for="intensidad2" value="Intensidad" />
+								<p:inputText id="intensidad2"
+									value="#{entrenamiento.intensidad2}" required="true"
+									requiredMessage="Debe ingresar Intensidad" />
+							</div>
+
+							<div class="p-field p-col p-md-3">
+								<p:outputLabel for="repeticion2" value="Repeticiones" />
+								<p:inputText id="repeticion2"
+									value="#{entrenamiento.repeticion2}"  required="true" requiredMessage="Debe ingresar Intensidad"/>
+							</div>
+
+						</div>
+					</h:panelGroup>
+					</h:panelGroup>
+				
+
+				<h:panelGroup id="pg3">
+				<h:panelGroup rendered="#{entrenamiento.visib3}">
+					<div class="ui-fluid p-formgrid p-grid">
+
+						<div class="p-field p-col p-md-6">
+							<p:outputLabel for="ejercicios3" value="Ejercicios 3" />
+							<p:selectOneMenu id="ejercicios3" value="#{entrenamiento.ejer3}"  required="true"
+					 requiredMessage="Debe crear ejercicios primero">
+								<f:selectItems value="#{entrenamiento.listStrEjer3}" />
+
+							</p:selectOneMenu>
+						</div>
+
+						<div class="p-field p-col p-md-3">
+							<p:outputLabel for="intensidad3" value="Intensidad" />
+							<p:inputText id="intensidad3"
+								value="#{entrenamiento.intensidad3}" required="true"
+								requiredMessage="Debe ingresar Intensidad" />
+						</div>
+
+						<div class="p-field p-col p-md-3">
+							<p:outputLabel for="repeticion3" value="Repeticiones" />
+							<p:inputText id="repeticion3"
+								value="#{entrenamiento.repeticion3}"  required="true" requiredMessage="Debe ingresar Intensidad"/>
+						</div>
+
+					</div>
+				</h:panelGroup>
+				</h:panelGroup>
+				
+			<h:panelGroup id="pg4">
+				<h:panelGroup rendered="#{entrenamiento.visib4}">
+					<div class="ui-fluid p-formgrid p-grid">
+
+						<div class="p-field p-col p-md-6">
+							<p:outputLabel for="ejercicios4" value="Ejercicios 4" />
+							<p:selectOneMenu id="ejercicios4" value="#{entrenamiento.ejer4}"  required="true"
+					 requiredMessage="Debe crear ejercicios primero">
+								<f:selectItems value="#{entrenamiento.listStrEjer4}" />
+
+							</p:selectOneMenu>
+						</div>
+
+						<div class="p-field p-col p-md-3">
+							<p:outputLabel for="intensidad4" value="Intensidad" />
+							<p:inputText id="intensidad4"
+								value="#{entrenamiento.intensidad4}" required="true"
+								requiredMessage="Debe ingresar Intensidad" />
+						</div>
+
+						<div class="p-field p-col p-md-3">
+							<p:outputLabel for="repeticion4" value="Repeticiones" />
+							<p:inputText id="repeticion4"
+								value="#{entrenamiento.repeticion4}"  required="true" requiredMessage="Debe ingresar Intensidad"/>
+						</div>
+
+					</div>
+				</h:panelGroup>
+				</h:panelGroup>
+				
+				
+<h:panelGroup id="pg5">
+				<h:panelGroup rendered="#{entrenamiento.visib5}">
+					<div class="ui-fluid p-formgrid p-grid">
+
+						<div class="p-field p-col p-md-6">
+							<p:outputLabel for="ejercicios5" value="Ejercicios 5" />
+							<p:selectOneMenu id="ejercicios5" value="#{entrenamiento.ejer5}"  required="true"
+					 requiredMessage="Debe crear ejercicios primero">
+								<f:selectItems value="#{entrenamiento.listStrEjer5}" />
+
+							</p:selectOneMenu>
+						</div>
+
+						<div class="p-field p-col p-md-3">
+							<p:outputLabel for="intensidad5" value="Intensidad" />
+							<p:inputText id="intensidad5"
+								value="#{entrenamiento.intensidad5}" required="true"
+								requiredMessage="Debe ingresar Intensidad" />
+						</div>
+
+						<div class="p-field p-col p-md-3">
+							<p:outputLabel for="repeticion5" value="Repeticiones" />
+							<p:inputText id="repeticion5"
+								value="#{entrenamiento.repeticion5}"  required="true" requiredMessage="Debe ingresar Intensidad" />
+						</div>
+
+					</div>
+				</h:panelGroup>
+				</h:panelGroup>
+				
+					
+			
+			
+					<div class="ui-fluid p-formgrid p-grid">
+						
+			
+					<div class="p-field p-col">
+			
+						<p:commandButton value="+" action="#{entrenamiento.agregarEjer()}" process="@this" update="pg2,pg3,pg4,pg5 ">
+						
+
+						</p:commandButton>
+					</div>
+
+					<div class="p-field p-col">
+						<p:commandButton value="-"  action="#{entrenamiento.eliminarEjer()}" process="@this" update="pg2,pg3,pg4,pg5 "></p:commandButton>
+					</div>
+		</div>
+		<p:spacer ></p:spacer>
+		
+<!-- <p:button onclick="#{entrenamiento.agregarEjer()}" ></p:button> -->
+
+
+				<div class="ui-fluid">
+					<div class="p-field">
+						<p:outputLabel for="tiempoRealizar" value="Tiempo a Realizar" />
+						<p:inputText id="tiempoRealizar"
+							value="#{entrenamiento.tiempoRealizar}" />
+					</div>
+				</div>
+				
+					<div class="ui-fluid">
+					<div class="p-field">
+						<p:outputLabel for="etiquetas" value="Etiquetas" />
+						<p:chips id="etiquetas"
+							value="#{entrenamiento.etiquetas}"  required="true"/>
+					</div>
+				</div>
+
+
+
+
+<div class="ui-fluid p-formgrid p-grid">
+							
+							
+			
+					<div class="p-field p-col">
+			
+				<p:messages id="msgs1" showDetail="false" closable="true">
+					<p:autoUpdate />
+				</p:messages>
+				
+				
+				<p:growl id="growl" for="growl" showDetail="true" sticky="true" >  
+				<p:autoUpdate />
+				 </p:growl>
+				
+
+				<p:commandButton value="Crear"
+					action="#{entrenamiento.guardarEntrenamientoBean()}"
+					 process="@this , @form"></p:commandButton>
+				
+
+</div>
+				</div>
+
+
+
+		</h:form>	
+ </ui:define>
+	
+
+</ui:composition>

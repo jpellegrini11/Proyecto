@@ -1,0 +1,222 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./homeDep.xhtml">
+
+    <ui:define name="title">
+          Entrenador - <span class="subitem">Ver entrenamientos</span>
+    </ui:define>
+    
+    <ui:define name="head">
+        <script type="text/javascript">
+ 
+                          function signOut() {
+              				
+                      		console.log('entro signOut');
+                                  if (firebase.auth().currentUser) {
+                        		          	       
+                          	        firebase.auth().signOut();
+                          	        location.reload();
+                          	      }
+                                  }; 
+                                  </script>
+                                  
+                                   <style type="text/css">         
+            /*demo*/
+            .ui-dataview-list .ui-dataview-row {
+                border-bottom: 1px solid #A8A8A8;
+                padding: 25px 10px;
+                /* with the exported variables from Nova and Luna Themes*/
+                border-bottom-color: var(--input-border-color, #A8A8A8);
+            }
+
+            .logo {
+                width: 5%;
+            }
+            .detail {
+                width: 85%;
+                padding-left: 25px;
+            }
+        </style>
+        
+  </ui:define>
+ 
+
+    <ui:define name="description">
+        Utilza el calendario y la lista de entrenamientos para realizar las rutinas marcadas por el entrenador.
+    </ui:define>
+
+<!--     <ui:param name="documentationLink" value="/components/dataview" /> -->
+<!--     <ui:param name="widgetLink" value="dataview" /> -->
+
+    <ui:define name="implementation">
+<h:form id="form1">
+   
+    <p:growl id="messages" showDetail="true"  sticky="true" > 
+    <p:autoUpdate></p:autoUpdate>
+    </p:growl>
+    
+   	
+					
+        <p:schedule id="schedule" value="#{dep.eventModel}" draggable="false" scrollTime="2:00:00" >
+ 		
+           
+            <p:ajax event="eventResize" listener="#{dep.onEventResize}" update="messages"  />
+ 
+        </p:schedule>
+        
+
+   <p:dataView id="idDataView" var="a" value="#{dep.listAsig}" gridIcon="pi pi-th-large"  
+   					listIcon="pi pi-bars" layout="grid">
+ 
+         <p:dataViewGridItem>
+            <p:panel header="#{a.entrenamiento.nombre}" style="text-align:center">
+                <h:panelGrid columns="1" style="width:70%">
+                <p:graphicImage name="#{a.entrenamiento.deporte}.png"   library="imagesDep" cache="false" />
+                   
+ 					
+                    <h:outputText value="#{a.entrenamiento.deporte}" />
+                    
+                    <h:outputText value="#{a.fechaIni}" />
+ 					
+                    <p:commandLink update=":form1:carDetail" oncomplete="PF('carDialog').show()" title="View Detail">
+                        <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;" />
+                        <f:setPropertyActionListener value="#{a}" target="#{dep.selectAsig}" />
+                    </p:commandLink>
+                </h:panelGrid>
+            </p:panel>
+        </p:dataViewGridItem>
+        
+        
+        <p:dataViewListItem id="idDataViewListItem">
+            <h:panelGrid  id="idPanelGrid" columns="3" style="width:100%" columnClasses="logo,detail" >
+                  <p:graphicImage name="#{a.entrenamiento.deporte}.png"   library="imagesDep" cache="false" />
+ 
+                <p:outputPanel>
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputText value="Entrenamiento:" />
+                        <h:outputText value="#{a.entrenamiento.nombre}" />
+ 
+ 						<h:outputText value="Deporte :" />
+                        <h:outputText value="#{a.entrenamiento.deporte}" />
+                        
+						<h:outputText value="Fecha Inicio :" />
+                      <h:outputText value="#{a.fechaIni}" />
+                   
+					
+					 </h:panelGrid>
+                </p:outputPanel>
+                
+                <p:commandLink update=":form1:carDetail" oncomplete="PF('carDialog').show()" title="View Detail">
+                    <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;" />
+                    <f:setPropertyActionListener value="#{a}" target="#{dep.selectAsig}" />
+                   </p:commandLink>
+            </h:panelGrid>
+        </p:dataViewListItem>
+        
+    </p:dataView>
+ 
+ <p:dialog header="Entrenamiento Info" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+        <p:outputPanel id="carDetail" style="text-align:center;">
+        
+<p:dataTable id="tablaModif" var="e" value="#{dep.selectAsig.entrenamiento.listEntEjer}"
+			 binding="#{entrena.entSelect}" reflow="true" >
+			
+			<p:column headerText="Ejercicio :" style="font: bold">
+			<p:outputLabel id="t1" value="#{e.ejercicios.nombre}" disabled="true" />
+
+			</p:column>
+
+			<p:column headerText="Rep :" style="font: bold">
+				<p:outputLabel id="t2" value="#{e.repeticiones}" />
+				
+			</p:column>
+
+			<p:column headerText="Int :" style="font: bold">
+				<p:outputLabel id="t3" value="% #{e.intensidad}"  />
+
+			</p:column>
+
+			<p:column headerText="" >
+					   <p:commandLink title="Descripcion" action="/">
+					                            <h:outputText styleClass="pi pi-list" style="margin:0 auto;" />
+					
+					   	<p:confirm  icon="" header="Descripcion Ejercicos :" message="#{e.ejercicios.descripcion}" />
+						
+						</p:commandLink>
+						    			<p:confirmDialog id="idConfirmDialog" global="true" showEffect="fade" hideEffect="fade">
+    
+   		 </p:confirmDialog>
+						
+				</p:column>	
+				
+					<p:column headerText="" >
+					
+					<h:outputLink value="http://youtube.com" target="_blank">
+			
+			
+                            <h:outputText styleClass="pi pi-external-link" style="margin:0 auto;" />
+                                   
+                                
+                       </h:outputLink>        
+                
+	
+			</p:column>
+
+
+             </p:dataTable>
+             
+             <p:separator></p:separator>	
+            
+             <p:outputLabel>Complete los siguentes datos para enviarlos a su entrenador</p:outputLabel>
+            
+               <p:separator></p:separator>
+             <div class="ui-fluid p-formgrid p-grid">
+
+  <div class="p-field p-col-12 p-md-4"> 
+  				 
+       <p:inputText id="freq" value="#{dep.freqCard}" placeholder="Freq Cardiaca"/>
+      
+   </div>
+   
+    <div class="p-field p-col-12 p-md-4"> 
+  				 
+       <p:inputText id="veloc" value="#{dep.velocidad}" placeholder="Velocidad"/>
+      
+   </div>
+   
+       <div class="p-field p-col-12 p-md-4"> 
+  				 
+       <p:inputText id="tiempo" value="#{dep.tiempoTotal}" placeholder="Tiempo Total"/>
+      
+   </div>
+   
+          <div class="p-field p-col-12"> 
+  				 
+       <p:inputTextarea id="coment" value="#{dep.comentario}"  rows="4"  placeholder="Comentarios"/>
+      
+   </div>
+   
+
+      
+   
+    <div class="p-field p-col-12 p-md-12"> 
+					<p:commandButton value="Enviar" action="#{dep.guardarAsignarEnto()}" onsuccess="#{dep.upGuardar}" onstart="this.disabled=true;">
+   						
+					    			
+    				</p:commandButton>
+       </div>       
+             
+ </div>    
+      </p:outputPanel> 
+    </p:dialog>
+
+
+
+</h:form>
+
+    </ui:define>
+
+</ui:composition>

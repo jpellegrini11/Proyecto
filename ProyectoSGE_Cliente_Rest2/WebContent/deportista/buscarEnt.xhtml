@@ -1,0 +1,184 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./homeDep.xhtml">
+
+    <ui:define name="title">
+          Deportista - <span class="subitem">Buscar entrenadores</span>
+    </ui:define>
+    
+    <ui:define name="head">
+        <script type="text/javascript">
+ 
+                          function signOut() {
+              				
+                      		console.log('entro signOut');
+                                  if (firebase.auth().currentUser) {
+                        		          	       
+                          	        firebase.auth().signOut();
+                          	        location.reload();
+                          	      }
+                                  }; 
+                                  </script>
+                                  
+                                   <style type="text/css">         
+            /*demo*/
+            .ui-dataview-list .ui-dataview-row {
+                border-bottom: 1px solid #A8A8A8;
+                padding: 25px 10px;
+                /* with the exported variables from Nova and Luna Themes*/
+                border-bottom-color: var(--input-border-color, #A8A8A8);
+            }
+
+            .logo {
+                width: 5%;
+            }
+            .detail {
+                width: 85%;
+                padding-left: 25px;
+            }
+        </style>
+        
+                                  </ui:define>
+ 
+
+    <ui:define name="description">
+        Busca y selecciona un entrenador, para empezar con sus entrenamientos.
+    </ui:define>
+
+<!--     <ui:param name="documentationLink" value="/components/dataview" /> -->
+<!--     <ui:param name="widgetLink" value="dataview" /> -->
+
+    <ui:define name="implementation">
+ 
+   <h:form id="form">
+
+<div class="ui-fluid p-formgrid p-grid">
+
+<div class="p-field p-col-12 p-md-2"> 
+<p:outputLabel id="t2" value="Buscar Entrenador : " />
+</div>
+
+<div class="p-field p-col-12 p-md-3"> 
+<p:inputText value="#{dep.strBuscar}" required="true"
+					 requiredMessage="Debe ingresar Entrenador"/>
+</div>
+
+<div class="p-field p-col-12 p-md-3"> 
+<p:commandButton value="Buscar" action="#{dep.filtroEnt}" update="idDataView"/>
+</div>
+<div class="p-field p-col-12 p-md-4"> 
+
+</div>
+
+<p:separator></p:separator>	
+
+<p:messages id="messages2" showDetail="true" closable="true"> 
+<p:autoUpdate />
+ 	</p:messages>
+
+				<p:growl id="growl" for="growl" showDetail="true" sticky="true" >  
+				<p:autoUpdate />
+				 </p:growl>
+    	
+<p:separator></p:separator>	
+  </div>  	
+        
+            <p:dataView id="idDataView" var="a" value="#{dep.entListAll}" listIcon="pi pi-bars"
+                        gridIcon="pi pi-th-large" layout="grid">
+
+                <p:dataViewGridItem>
+                    <p:panel header="#{a.nombre}" style="text-align:center">
+                        <h:panelGrid columns="1" style="width:100%">
+                        <p:graphicImage name="images/icons/coach.png" library="showcase" />
+                             <h:outputText value="#{a.ubicacion}" />
+							 <h:outputText value="#{a.dispHoraria}" />
+
+                                    
+                        </h:panelGrid>
+                          <p:commandLink  title="Seleccionar" update=":form:carDetail" oncomplete="PF('carDialog').show()">
+                            <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;" />
+                                       <f:setPropertyActionListener value="#{a}" target="#{entrena.selectEntrenador}" />
+                           
+                        </p:commandLink>
+                    </p:panel>
+                </p:dataViewGridItem>
+
+                <p:dataViewListItem>
+                    <h:panelGrid columns="3" style="width:100%" columnClasses="logo,detail">
+ 						<p:graphicImage name="images/icons/coach.png" library="showcase" />
+                        
+                        <p:outputPanel>
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputText value="Nombre:" />
+                                <h:outputText value="#{a.nombre}" style="font-weight: bold"/>
+
+                                <h:outputText value="Ubicacion" />
+                                <h:outputText value="#{a.ubicacion}" style="font-weight: bold"/>
+                                
+                                 <h:outputText value="Modo" />
+                       			 <h:outputText value="#{a.dispHoraria}" style="font-weight: bold"/>
+
+                            </h:panelGrid>
+                        </p:outputPanel>
+                          
+                          <p:commandLink  title="Seleccionar" update=":form:carDetail" oncomplete="PF('carDialog').show()">
+                            <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;" />
+                                       <f:setPropertyActionListener value="#{a}" target="#{entrena.selectEntrenador}" />
+                           
+                        </p:commandLink>
+
+
+                    </h:panelGrid>
+                </p:dataViewListItem>
+            </p:dataView>
+   
+ <p:dialog id="idDialog" header="Entrenador" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" width="80%" height="100%" responsive="true"  blockScroll="true" fitViewport="true" >
+ 
+                <p:outputPanel id="carDetail" style="text-align:center;" >
+                    <p:panelGrid  columns="1" rendered="#{not empty entrena.selectEntrenador}" columnClasses="label,value" layout="grid" >
+                        <f:facet name="header">
+                         <h:outputText value="#{entrena.selectEntrenador.nombre}" style="font-weight: bold"/>
+                       <p:separator></p:separator>
+                                               
+                         
+                        </f:facet>
+                    <p:outputLabel  value="Descripcion" />
+                   <p:inputText value="#{entrena.selectEntrenador.descripcion}" readonly="true"></p:inputText>
+                   
+                     <p:outputLabel  value="Logros" />
+                   <p:inputText value="#{entrena.selectEntrenador.logros}" readonly="true"></p:inputText>
+                   
+                             <p:outputLabel  value="Titulos Profesionales" />
+                   <p:inputText value="#{entrena.selectEntrenador.titulos}" readonly="true"></p:inputText>
+                   
+                     <p:outputLabel  value="Modo" />
+                   <p:inputText value="#{entrena.selectEntrenador.dispHoraria}" readonly="true"></p:inputText>
+                   
+                      <p:outputLabel  value="Ubicacion" />
+                   <p:inputText value="#{entrena.selectEntrenador.ubicacion}" readonly="true"></p:inputText>
+                   
+                              		  
+                    <p:separator></p:separator>
+					<p:commandButton value="Seleccionar" action="#{entrena.seleccionarEntBean()}">
+   						
+   						<p:confirm  header="Confirmación" message="Por favor confirme el entrenador selccionado?" />
+					    			
+    				</p:commandButton>
+    			
+    			<p:confirmDialog id="idConfirmDialog" global="true" showEffect="fade" hideEffect="fade">
+        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" update=":form:carDetail, @this,@form,:from:idDialog" oncomplete="" />
+        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" />
+   		 </p:confirmDialog>
+    			
+                    </p:panelGrid>
+                </p:outputPanel>
+            
+            </p:dialog>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

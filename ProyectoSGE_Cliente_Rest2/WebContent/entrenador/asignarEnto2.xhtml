@@ -1,0 +1,90 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./homeEnt.xhtml">
+
+          
+
+    
+    <ui:define name="title">
+        Entrenador - <span class="subitem">Asignar entrenamientos</span>
+    </ui:define>
+
+    <ui:define name="description">
+        Busca y selecciona el entrenamiento, que deseas asignar a tus deportistas.
+    </ui:define>
+  
+<ui:define name="implementation"> 
+
+<h:form id="BusquedaEnto" >
+
+<div class="ui-fluid p-formgrid p-grid">
+
+<div class="p-field p-col-12 p-md-2"> 
+<p:outputLabel id="t2" value="Buscar Entrenamiento :  " />
+</div>
+
+<div class="p-field p-col-12 p-md-3"> 
+<p:inputText value="#{asignar.buscar}" required="true"
+					 requiredMessage="Debe ingresar Entrenamiento"/>
+</div>
+
+<div class="p-field p-col-12 p-md-3"> 
+<p:commandButton value="Buscar" action="#{asignar.filtroEnto}"  update="tablaBusEnto, messages2"/>
+</div>
+<div class="p-field p-col-12 p-md-4"> 
+
+</div>
+
+<p:separator></p:separator>	
+
+<p:messages id="messages2" showDetail="true" closable="true">  	</p:messages>
+    	
+    	<p:separator></p:separator>	
+
+<div class="ui-fluid p-formgrid p-grid">
+
+<div class="p-field p-col-12 p-md-12"> 
+
+		<p:dataTable id="tablaBusEnto" var="a" value="#{asignar.listEnto}"
+			 binding="#{asignar.selectEnto}">
+			
+			<p:column headerText="Nombre">
+			<p:outputLabel id="t1" value="#{a.nombre}" disabled="true" />
+
+			</p:column>
+
+			<p:column headerText="Deportes">
+				<p:outputLabel id="t2" value="#{a.deporte}" />
+				
+			</p:column>
+
+			<p:column headerText="Fecha">
+				<p:outputLabel id="t3" value="#{a.fecha}"  />
+
+			</p:column>
+
+		
+
+			<p:column headerText="">
+				    			
+    		<div class="p-field"> 
+    		
+			<p:commandButton  id="btnSelc"  style="width: 85%;" value="Asignar"  action="asignarDep"  update=":BusquedaEnto:tablaBusEnto , :BusquedaEnto:messages2" > </p:commandButton> 
+        	
+        	 </div>
+				
+			</p:column>
+					
+
+			
+		</p:dataTable>
+		</div>
+		 </div>
+		  </div>
+</h:form>
+         </ui:define>
+         
+</ui:composition>

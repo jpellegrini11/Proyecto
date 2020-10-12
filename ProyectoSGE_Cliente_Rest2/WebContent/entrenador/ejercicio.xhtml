@@ -1,0 +1,85 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./homeEnt.xhtml">
+
+    <ui:define name="title">
+        Entrenador - <span class="subitem">Crear ejercicios</span>
+    </ui:define>
+
+    <ui:define name="head">
+        <script type="text/javascript">
+ 
+                          function signOut() {
+              				
+                      		console.log('entro signOut');
+                                  if (firebase.auth().currentUser) {
+                        		          	       
+                          	        firebase.auth().signOut();
+                          	        location.reload();
+                          	      }
+                                  }; 
+                                  </script>
+                                  </ui:define>
+    <ui:define name="description">
+        Crea ejercicios para tus deportistas, complete los datos del formulario.
+    </ui:define>
+  
+<ui:define name="implementation">   
+<h:form>
+
+    <div class="ui-fluid p-formgrid p-grid">
+
+ 		<div class="p-field p-col-12 ">
+            <p:outputLabel for="nombre" value="Nombre de Ejercicio" />
+            <p:inputText id="nombre" value="#{eje.nombre}"  required="true"
+					 requiredMessage="Debe ingresar Nombre"/> 
+        </div>
+
+         <div class="p-field p-col-12 ">
+            <p:outputLabel for="descripcion" value="Descripcion" />
+            <p:inputTextarea id="descripcion" value="#{eje.descripcion}" rows="4" />
+        </div>
+
+			<div class="p-field p-col-12 p-md-6">
+						<p:outputLabel for="deporte" value="Deporte" /> 
+			<p:selectOneMenu id="deporte" value = "#{eje.deporte}">
+            	<f:selectItem itemLabel="NATACION" itemValue="NATACION"/>
+				<f:selectItem itemLabel="CORRER" itemValue="CORRER"/>
+				<f:selectItem itemLabel="BICICLETA" itemValue="BICICLETA"/>
+				<f:selectItem itemLabel="GYM Y EQUIPO FITNESS" itemValue="GYM Y EQUIPO FITNESS"/>
+				
+			</p:selectOneMenu>
+          </div>
+ 		<div class="p-field p-col-12  p-md-6">
+            <p:outputLabel for="linkVideo" value="Link del video" />
+            <p:inputText id="linkVideo" value="#{eje.linkVideo}"/>
+        </div>
+
+       		
+			<div class="p-field p-col">
+			
+				<p:messages id="msgs1" showDetail="false" closable="true">
+					<p:autoUpdate />
+				</p:messages>
+				
+				
+				<p:growl id="growl" for="growl" showDetail="true" sticky="true" >  
+				<p:autoUpdate />
+				 </p:growl>
+				
+
+ 	 				
+			<p:commandButton value="Crear" action="#{eje.crearEjercicoBean()}"> </p:commandButton> 
+			
+
+         </div>
+       
+         </div> 
+         
+        </h:form>
+         </ui:define>
+         
+</ui:composition>
