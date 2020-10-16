@@ -34,13 +34,13 @@ public class AuthorizationFilter2 implements Filter {
 			HttpSession ses = reqt.getSession(false);
 
 			String reqURI = reqt.getRequestURI();
-			if (reqURI.indexOf("/fire.jsf") >= 0
+			if (reqURI.indexOf("/login2.jsf") >= 0
 					|| (ses != null && ses.getAttribute("usuario") != null)
 					|| reqURI.indexOf("/public/") >= 0
 					|| reqURI.contains("javax.faces.resource"))
 				chain.doFilter(request, response);
 			else
-				resp.sendRedirect(reqt.getContextPath() + "/fire.jsf");
+				resp.sendRedirect(reqt.getContextPath() + "/login2.jsf");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

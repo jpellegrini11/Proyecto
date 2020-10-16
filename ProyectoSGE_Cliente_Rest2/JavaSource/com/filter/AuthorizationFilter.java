@@ -38,7 +38,7 @@ public class AuthorizationFilter implements Filter {
 		
 			
 			
-			if (reqURI.indexOf("/fire.xhtml") >= 0
+			if (reqURI.indexOf("/login2.xhtml") >= 0
 					|| (ses != null && ses.getAttribute("usuario") != null)
 					|| reqURI.indexOf("/public/") >= 0
 					|| reqURI.contains("javax.faces.resource")) {
@@ -47,7 +47,7 @@ public class AuthorizationFilter implements Filter {
 				chain.doFilter(request, response);
 				
 			}else
-				resp.sendRedirect(reqt.getContextPath() + "/fire.xhtml");
+				resp.sendRedirect(reqt.getContextPath() + "/login2.xhtml");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

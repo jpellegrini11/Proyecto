@@ -51,7 +51,9 @@ public class EntrenadorBean implements Serializable {
 		String str= null;
 			try {
 				 str= entrenadorEjb.guardarPerfilEjb(nombre, descripcion, deportes, titulos, logros, cantPersonas, dispHoraria, ubicacion);
+				 mostMsjGrowl("Exito su perfil se guardo");
 				 return str;
+				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				
@@ -60,6 +62,13 @@ public class EntrenadorBean implements Serializable {
 			}
 			return str;
 				
+	}
+	
+	public void mostMsjGrowl(String msj) {
+		FacesContext.getCurrentInstance().addMessage("growl",
+				new FacesMessage(FacesMessage.SEVERITY_INFO, msj, ""));
+		
+		
 	}
 
 	public String getUsuario() {

@@ -1,40 +1,307 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+	
+	
 
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"><head id="j_idt2">
+
+<h:head>
+
+
+  <f:facet name="first">
             <meta http-equiv="X-UA-Compatible" content="IE=edge" />
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+            
             <meta name="apple-mobile-web-app-capable" content="yes" />
-            
-            <link type="text/css" rel="stylesheet" href="/olympia/javax.faces.resource/theme.css.xhtml?ln=primefaces-olympia-blue-orange" />
-            <link type="text/css" rel="stylesheet" href="/olympia/javax.faces.resource/fa/font-awesome.css.xhtml?ln=primefaces&amp;v=8.0" />
-            <link type="text/css" rel="stylesheet" href="/olympia/javax.faces.resource/components.css.xhtml?ln=primefaces&amp;v=8.0" />
-            <link type="text/css" rel="stylesheet" href="/olympia/javax.faces.resource/inputswitch/inputswitch.css.xhtml?ln=primefaces&amp;v=8.0" />
-            
-            <script type="text/javascript" src="/olympia/javax.faces.resource/jquery/jquery.js.xhtml?ln=primefaces&amp;v=8.0"></script>
-            <script type="text/javascript" src="/olympia/javax.faces.resource/jquery/jquery-plugins.js.xhtml?ln=primefaces&amp;v=8.0"></script>
-            <script type="text/javascript" src="/olympia/javax.faces.resource/core.js.xhtml?ln=primefaces&amp;v=8.0"></script><script type="text/javascript" src="/olympia/javax.faces.resource/components.js.xhtml?ln=primefaces&amp;v=8.0"></script>
-            <script type="text/javascript" src="/olympia/javax.faces.resource/inputswitch/inputswitch.js.xhtml?ln=primefaces&amp;v=8.0"></script>
-            <link type="text/css" rel="stylesheet" href="/olympia/javax.faces.resource/css/layout-blue-orange.css.xhtml?ln=olympia-layout" /><script type="text/javascript">if(window.PrimeFaces){PrimeFaces.settings.locale='en_US';}</script>
+            <meta name="google-signin-client_id" content="203313346214-m87aj8qg5najegkdjol27rvd4df6rhqq.apps.googleusercontent.com"/>
+</f:facet>
       
-        <title>PrimeFaces Olympia - Login</title></head>
+        <title>SGE - Login</title>
         
-        <body class="login-body">
-        <div class="login-topbar"><img id="j_idt7" src="/olympia/javax.faces.resource/images/logo-olympia-white.png.xhtml?ln=olympia-layout" alt="" />
-            <span class="app-title">Olympia</span>
-        </div>
+        <h:outputScript name="jquery/jquery.js" library="primefaces"/>
+        <h:outputScript name="jquery/jquery-plugins.js" library="primefaces"/>
 
+        <h:outputScript name="inputswitch/inputswitch.js" library="showcase" />
+        <h:outputScript name="css/core.js" library="showcase"/>
+        <h:outputScript name="css/components.js" library="showcase"/>
+        
+        <link href="#{resource['showcase/images/logoNavB.svg']}" rel="icon" type="image/svg" sizes="32x32"/>
+        <link href="#{resource['showcase/images/logoNav3.svg']}" rel="icon" type="image/svg" sizes="16x16"/>
+        
+        <script src="https://apis.google.com/js/platform.js" async="defer" ></script>
+        <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase.js"></script>
+
+
+<script type="text/javascript">
+	
+window.onload = function() {
+	 var email;
+// 	document.getElementById('btn1').onclick;
+	var firebaseConfig = {
+		    apiKey: "AIzaSyCCRn3mef1T_iQ1vjcFVbvwxsOi3lJXM6g",
+		    authDomain: "aug-bot.firebaseapp.com",
+		    databaseURL: "https://aug-bot.firebaseio.com",
+		    projectId: "aug-bot",
+		    storageBucket: "aug-bot.appspot.com",
+		    messagingSenderId: "203313346214",
+		    appId: "1:203313346214:web:e5e8072afc22ed4d072667"
+		  };
+		  // Initialize Firebase
+		  firebase.initializeApp(firebaseConfig);
+   		  initApp();
+  };
+
+   function initApp() {
+      // Listening for auth state changes.
+      // [START authstatelistener]
+      firebase.auth().onAuthStateChanged(function(user) {
+        // [START_EXCLUDE silent]
+/*         document.getElementById('quickstart-verify-email').disabled = true; */ 
+      
+  // [END_EXCLUDE]
+        if (user) {
+          // User is signed in.
+          var displayName = user.displayName;
+          email = user.email;
+          var emailVerified = user.emailVerified;
+          var photoURL = user.photoURL;
+          var isAnonymous = user.isAnonymous;
+          var uid = user.uid;
+          var providerData = user.providerData;
+          
+          console.log(displayName);
+          console.log(email);
+          console.log(uid);
+          console.log(providerData);
+          
+//           increment2(email);
+   
+        
+          // [START_EXCLUDE]
+
+          if (!emailVerified) {
+        	  console.log('usuario emailVerified');
+        	 
+            /* document.getElementById('quickstart-verify-email').disabled = false; */
+          }
+          // [END_EXCLUDE]
+        } else {
+          // User is signed out.
+          // [START_EXCLUDE]
+			console.log('usuario desconectado');
+          // [END_EXCLUDE]
+        }
+        
+        	
+            
+        
+        // [START_EXCLUDE silent]
+        
+       /*  document.getElementById('quickstart-sign-in').disabled = false; */
+        // [END_EXCLUDE]
+      });
+      // [END authstatelistener]
+
+
+    }
+
+   
+	
+	 
+         function increment2(value,value2) {
+             console.log('emtro incrm');
+//  	   increment3([{name:'valor3', value}]);
+             increment3([{name:'pUsu', value:value}])
+             
+             
+ }
+         function signOut2() {
+         firebase.auth().signOut().then(function() {
+        	  // Sign-out successful.
+        	 console.log('usuario desconectado');
+        	 
+        	}).catch(function(error) {
+        	  // An error happened.
+          	  
+        	});
+         }
+     	
+                      
+                   function signInWithPopup2() {
+                	  
+                   var provider = new firebase.auth.GoogleAuthProvider();
+
+                   firebase.auth().signInWithPopup(provider).then(function(result) {
+                	   // This gives you a Google Access Token. You can use it to access the Google API.
+                	   var token = result.credential.accessToken;
+                	   // The signed-in user info.
+                	   console.log(token);
+                	   var user = result.user;
+
+                	   firebase.auth().currentUser.getIdToken(true).then(function(token) {
+                		   // Send token to your backend via HTTPS
+                		   // ...
+                		   increment2(token);
+                		   
+                		 }).catch(function(error) {
+                		   // Handle error
+                		 });
+              		 
+                	  
+                 	  
+                	 }).catch(function(error) {
+                	   // Handle Errors here.
+                	   var errorCode = error.code;
+                	   var errorMessage = error.message;
+                	   // The email of the user's account used.
+                	   var email = error.email;
+                	   // The firebase.auth.AuthCredential type that was used.
+                	   var credential = error.credential;
+                	   // ...
+                	 });
+                   }
+
+              
+
+
+                  
+                
+</script>
+
+
+             
+                   <style type="text/css">         
+  body .ui-widget, body .ui-widget .ui-widget {
+                	    color: white;
+                	}
+              	
+
+body .ui-panel .ui-panel-content {
+
+    background-color: #ffffff00;
+ 
+}
+            </style>
+ 
+        </h:head>
+
+
+        <h:body class="login-body">
+
+       
+        
+                <h:outputStylesheet name="css/layout-blue-orange.css" library="showcase" />
+         <h:outputStylesheet name="inputswitch/inputswitch.css" library="showcase" />
+         <h:outputStylesheet name="css/theme.css" library="showcase" />
+         <h:outputStylesheet name="css/components.css" library="showcase" />
+          <h:outputStylesheet name="css/layout.css" library="showcase" />
+         
+        <h:form id="f1">
+               
+        <div class="login-topbar">
+        
+<h:graphicImage value="/resources/showcase/images/logoSGE6.svg"></h:graphicImage>
+
+            <span class="app-title"></span>
+        </div>
+        
         <div class="login-panel">
-            <h1>SIGN IN TO OLYMPIA</h1>
-
-            <p>Welcome, please use the form to sign-in.</p><label for="username">Username</label><input id="username" type="text" name="username" /><label for="password">Password</label><input id="password" type="password" name="password" value="" />
-
-            <div class="remember-me"><div id="j_idt12" class="ui-inputswitch ui-widget ui-widget-content ui-corner-all"><div class="ui-inputswitch-off"><span>off</span></div><div class="ui-inputswitch-on ui-state-active"><span>on</span></div><div class="ui-inputswitch-handle ui-state-default "></div><div class="ui-helper-hidden-accessible"><input id="j_idt12_input" name="j_idt12_input" type="checkbox" /></div></div><script id="j_idt12_s" type="text/javascript">$(function(){PrimeFaces.cw("InputSwitch","widget_j_idt12",{id:"j_idt12"});});</script>
-                <span>Remember Me</span>
-            </div><button id="j_idt14" name="j_idt14" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" type="button"><span class="ui-button-text ui-c">Login</span></button><script id="j_idt14_s" type="text/javascript">$(function(){PrimeFaces.cw("CommandButton","widget_j_idt14",{id:"j_idt14"});});</script>
-        </div>
         
-        <h:outputStylesheet name="css/layout.css" library="showcase" />
-        </body>
+            <h1>
+            <p:outputLabel value="#{login.titulo}" style="#{login.colorLinkTit}">
+            
+             </p:outputLabel>
+            </h1>
+          
+            <p>
+            <p:outputLabel value="#{login.subTitulo}" rendered="#{login.bolSubTitulo}">
+            
+             </p:outputLabel>
+           </p>
+            <div>. 
+            </div>
+			
+			<p:panel rendered="#{login.bolPanelLog}"  style="background-color:#ffffff00;border:transparent;">
+			
+			<p:commandLink id="btnlogin1" actionListener="#{login.btnLogActiv()}" onclick="signInWithPopup2()" rendered="#{login.btnAcceso1}" >
+			<h:graphicImage
+					value="/resources/showcase/images/icons/iconsGoogle.png"></h:graphicImage>
+			</p:commandLink>
+			
+			
+     <p:separator style="border:transparent"></p:separator>
+			
+
+        
+
+        
+		</p:panel>
+				
+			
+			<p:panel rendered="#{login.bolPanelReg}"  style="background-color:#ffffff00;border:transparent;">
+			
+			<p:commandLink id="btnlogin2" actionListener="#{login.btnRegActiv()}"  onclick="signInWithPopup2()" rendered="#{login.btnAcceso2}" >
+			<h:graphicImage
+					value="/resources/showcase/images/icons/iconsGoogleReg.png"></h:graphicImage>
+			</p:commandLink>
+			
+			            <p:outputLabel  value="Perfil" />
+       
+			<h:selectOneMenu value="#{login.perfil}" label="Perfil">
+        <f:selectItem itemLabel="DEPORTISTA" itemValue="DEPORTISTA" />
+        <f:selectItem itemLabel="ENTRENADOR" itemValue="ENTRENADOR" />
+        	
+        	
+     </h:selectOneMenu>
+     <p:separator style="border:transparent;"></p:separator>
+            <p:commandButton value="Registrarce" action="#{login.btnRegistrar()}"  disabled="#{login.btnRegistrar}" style="color:grey;" update="@form">
+            <p:autoUpdate/>
+            </p:commandButton>
+			
+
+        
+
+        
+		</p:panel>
+			<!--             <p:outputLabel for="username" id="username" value="#{login.val}" style="color:red;font-size:17px;font-weight: bold;"> </p:outputLabel> -->
+<!--             <p:inputText id="email" type="text" name="email"> </p:inputText> -->
+            
+<!--             <label for="password">Password</label> -->
+<!--             <p:inputText id="password" type="password" name="password" value="" /> -->
+
+            <div class="remember-me">
+            
+          
+            </div>
+            <p:commandLink id="btn1"  action="#{login.linkLogin()}"  style="#{login.colorLinkLog}" update="@form" >Login   /</p:commandLink>
+            <p:commandLink  id="btn2" action="#{login.linkRegistro()}"  style="#{login.colorLinkReg}" update="@form" >   Registro</p:commandLink>
+            
+<!--             <p:commandButton value="Login" onclick="toggleSignIn()"  class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" > -->
+<!--             <span class="ui-button-text ui-c"></span></p:commandButton> -->
+        </div>
+       
+
+         	
+         	<p:growl id="growl" for="growl" showDetail="true" sticky="true" >  
+				<p:autoUpdate />
+				 </p:growl>
+</h:form>
+
+ 
+
+<h:form id="f2"> 
+            	
+		                                                                                                          
+<p:remoteCommand name="increment3" action="#{login.increment}" update="@this,:f1:growl"/>
+<p:remoteCommand name="buscarU" action="#{login.buscarU}"/>
+
+</h:form>
+
+
+  </h:body>
 
 </html>

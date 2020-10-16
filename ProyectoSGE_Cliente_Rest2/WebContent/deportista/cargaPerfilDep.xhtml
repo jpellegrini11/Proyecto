@@ -29,12 +29,8 @@
     	      }
             }; 
             </script>
-               <style type="text/css">         
-             .layout-wrapper .layout-content {
-    margin-left: 1px;
-    padding: 10px 0 0 0;
-}
-        </style>
+            
+
        </f:facet>
          <title>SGE</title>
         
@@ -164,10 +160,21 @@
 
          </div>
          </div>
+         <p:growl id="growl" for="growl" showDetail="true" sticky="true" >  
+				<p:autoUpdate />
+				 </p:growl>
         </h:form>
          
         </div>
         </div>
  <h:outputStylesheet name="css/layout.css" library="showcase"/>
+ 
+                <style type="text/css">         
+             .layout-wrapper .layout-content {
+    margin-left: 1px;
+    padding: 10px 0 0 0;
+}
+
+        </style>
 </body> 
 </html>

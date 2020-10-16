@@ -8,7 +8,7 @@
             <i class="pi pi-bars"></i>
         </a>
         
-        <p:commandLink class="logo-container"  action="location.replace('/fire.jsf')">
+        <p:commandLink class="logo-container"  onclick="fire.jsf">
        
             <p:graphicImage name="images/logoSGE6.svg" library="showcase" />
         </p:commandLink>
@@ -80,7 +80,7 @@
 <!--                     <li><a href="https://www.primefaces.org/whouses/" target="_blank"><span>Who Uses</span></a></li> -->
 <!--                     <li><a href="https://www.primefaces.org/newsletter" target="_blank"><span>Newsletter</span></a></li> -->
                     <li>
-                 <p:commandLink  onclick="signOut()" value="Logout" update="@this" action="#{login.signOut()}" > </p:commandLink>
+                 <p:commandLink  onclick="signOut2()" value="Logout" update="@this" action="#{login.signOut()}" > </p:commandLink>
                     </li>
                 </ul>
             </li>

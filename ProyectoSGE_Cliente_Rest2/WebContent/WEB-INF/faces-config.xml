@@ -2,7 +2,7 @@
 <faces-config version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
  <navigation-rule>
-  <from-view-id>/fire</from-view-id>
+  <from-view-id>/login2</from-view-id>
   <navigation-case>
    <from-outcome>cargaPerfilDep</from-outcome>
    <to-view-id>/deportista/cargaPerfilDep</to-view-id>

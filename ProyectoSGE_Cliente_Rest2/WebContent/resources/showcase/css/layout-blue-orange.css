@@ -1309,7 +1309,7 @@ a {
     padding-bottom: 14px; } }
 .login-body {
   padding: 0;
-  background: url("/olympia/javax.faces.resource/images/pages/login-bg.jpg.xhtml?ln=olympia-layout");
+  background: url("#{resource['showcase:images/logo.jpg']}");
   background-size: cover; }
   .login-body .login-topbar {
     height: 60px;
@@ -1329,14 +1329,14 @@ a {
   .login-body .login-panel {
     border-top: 4px solid #feedbc;
     padding: 0 70px 20px 70px;
-    height: 350px;
-    width: 560px;
+    height: 330px;
+    width: 460px;
     position: fixed;
     left: 50%;
     top: 50%;
     margin-left: -280px;
     margin-top: -175px;
-    background-color: rgba(0, 0, 0, 0.13);
+    background-color: rgba(0, 0, 0, 0.40);
     -moz-border-radius: 2px;
     -webkit-border-radius: 2px;
     border-radius: 2px; }
@@ -1351,11 +1351,11 @@ a {
       -webkit-border-radius: 2px;
       border-radius: 2px; }
     .login-body .login-panel p {
-      color: #c8c8c8;
+      color: #f4f4f4;
       margin: 0 0 0 0; }
     .login-body .login-panel label {
       display: block;
-      color: #c8c8c8;
+      color: #f4f4f4;
       margin: 24px 0 7px 0; }
     .login-body .login-panel input {
       background: transparent;
@@ -1378,7 +1378,7 @@ a {
       .login-body .login-panel .remember-me .ui-inputswitch {
         vertical-align: middle; }
       .login-body .login-panel .remember-me span {
-        color: #c8c8c8;
+        color: #f4f4f4;
         margin-left: 8px; }
     .login-body .login-panel button {
       min-width: 120px; }
