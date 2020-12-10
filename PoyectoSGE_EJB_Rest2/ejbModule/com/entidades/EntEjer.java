@@ -40,18 +40,21 @@ public class EntEjer implements Serializable{
 	
 	private Long intensidad;
 	private Long repeticiones;
-	
-	
-	public EntEjer() {
-		
-	}
+	private Long tiempoRealizar;
+	private Long tiempoReal;
 
-	public EntEjer(Entrenador entrenador, Ejercicios ejercicios, Long intensidad, Long repeticiones) {
+
+	public EntEjer() {}
+	
+	
+	public EntEjer(Entrenador entrenador, Ejercicios ejercicios, 
+				   Long intensidad, Long repeticiones,Long tiempoRealizar) {
 		super();
 		this.entrenador = entrenador;
 		this.ejercicios = ejercicios;
 		this.intensidad = intensidad;
 		this.repeticiones = repeticiones;
+		this.tiempoRealizar= tiempoRealizar;
 	}
 
 
@@ -126,6 +129,22 @@ public class EntEjer implements Serializable{
 
 	public void setEntrenamiento(Entrenamiento entrenamiento) {
 		this.entrenamiento = entrenamiento;
+	}
+
+	public Long getTiempoRealizar() {
+		return tiempoRealizar;
+	}
+
+	public void setTiempoRealizar(Long tiempoRealizar) {
+		this.tiempoRealizar = tiempoRealizar;
+	}
+
+	public Long getTiempoReal() {
+		return tiempoReal;
+	}
+
+	public void setTiempoReal(Long tiempoReal) {
+		this.tiempoReal = tiempoReal;
 	}
 
 

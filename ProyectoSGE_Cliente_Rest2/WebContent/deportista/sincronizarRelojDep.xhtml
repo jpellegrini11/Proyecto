@@ -1,0 +1,91 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./homeDep.xhtml">
+                
+  	<ui:define name="title">
+          Deportista - <span class="subitem">Sincronizar Reloj Inteligente</span>
+    </ui:define>
+    
+    <ui:define name="head">
+        <script type="text/javascript">
+ 
+                          function signOut2() {
+              				
+                      		console.log('entro signOut2');
+                                  if (firebase.auth().currentUser) {
+                        		          	       
+                          	        firebase.auth().signOut();
+                          	        location.reload();
+                          	      }
+                                  }; 
+                                  </script>
+                                  
+                                   <style type="text/css">         
+            /demo/
+            .ui-dataview-list .ui-dataview-row {
+                border-bottom: 1px solid #A8A8A8;
+                padding: 25px 10px;
+                /* with the exported variables from Nova and Luna Themes*/
+                border-bottom-color: var(--input-border-color, #A8A8A8);
+            }
+
+            .logo {
+                width: 5%;
+            }
+            .detail {
+                width: 85%;
+                padding-left: 25px;
+            }
+        </style>
+        
+                                  </ui:define>
+ 
+
+    <ui:define name="description">
+        Clickea el botón para sincronizar tu reloj de la marca POLAR.
+        Una vez que sincronizado debe volver a realizar el login con su gmail.
+    </ui:define>
+
+<!--     <ui:param name="documentationLink" value="/components/dataview" /> -->
+<!--     <ui:param name="widgetLink" value="dataview" /> -->
+
+    <ui:define name="implementation">
+ <h:form>   
+        	<p:commandLink id="btnSincDep" action="homeDep">
+			<h:graphicImage height="25px" width="25px"
+					value="/resources/showcase/images/icons/iconBack.png"></h:graphicImage>
+			</p:commandLink>
+			</h:form>
+    <h:form id="formReloj">
+    
+
+			
+	<p:outputLabel value="#{reloj.titulo}"></p:outputLabel>
+	<div class="ui-fluid p-formgrid p-grid">
+
+	<div class="p-field p-col-12 p-md-2"> 
+
+<p:button  value="Sincronizar" href="https://flow.polar.com/oauth2/authorization?response_type=code&amp;scope=accesslink.read_all&amp;client_id=da50c34b-ee22-483f-bc84-3a3c30defce8"  rendered="#{dep.siToken}"/>
+	</div>
+	
+		
+
+	<p:separator></p:separator>	
+	
+	<p:messages id="messages2" showDetail="true" closable="true"> 
+	<p:autoUpdate />
+	 	</p:messages>
+	
+					<p:growl id="growl" for="growl" showDetail="true" sticky="true" >  
+					<p:autoUpdate />
+					 </p:growl>
+	    	
+	<p:separator></p:separator>	
+	</div>    			
+    </h:form>
+	</ui:define>
+
+</ui:composition>

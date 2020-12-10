@@ -12,6 +12,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import com.entidades.Deportista;
+import com.entidades.Entrena;
 
 
 @Stateless
@@ -38,11 +39,24 @@ public class DeportistaDao {
 		em.refresh(deportista);
 	}
 
-	public void borrarDeportista(Long idDeportista) throws SQLException {
+	public void borrarDeportista(Long idDeportista, List<Entrena> listEntrena2) throws SQLException {
+		
 		Deportista deportista = em.find(Deportista.class, idDeportista);
+		
+//		System.out.println("deportista ="+deportista.getNomCompleto());
+//		if(listEntrena2.size()>0) {
+//System.out.println("if dao ent2");
+//			for (Entrena e : listEntrena2) {
+//				System.out.println("suma ent2");
+//				em.remove(e);
+//				em.flush();
+//				em.refresh(e);
+//		}
+//		}
+//		deportista.setListAsignarEnto(null);
 		em.remove(deportista);
-		em.flush();
-		em.refresh(deportista);
+//		em.flush();
+//		em.refresh(deportista);
 	}
 
 	public Deportista obtenerDeportista(Long idDeportista) {

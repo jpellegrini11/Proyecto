@@ -20,52 +20,54 @@
     <ui:define name="implementation">
     
 <h:form>
-           
-                    <p:panel header="#{asignar.selectAsignarEnto.entrenamiento.nombre}Nombre" style="text-align:center">
-                        <h:panelGrid columns="1" style="width:100%">
-                            <p:graphicImage name="/imagesDep/#{asignar.selectAsignarEnto.entrenamiento.deporte}.png"/> 
-
-                            <h:outputText value="#{asignar.selectAsignarEnto.entrenamiento.nombre}" />
-
-                            
-                        </h:panelGrid>
-                    </p:panel>
-               
-		<p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true" />
-		
-		        <p:outputLabel for="mask" value="Fecha Inicio" />
-        <p:calendar id="mask" value="#{asignar.fechaIni}" pattern="dd-MM-yyyy" mask="true" />
-        
-                <p:outputLabel for="mask2" value="Fecha Fin" />
-        <p:calendar id="mask2" value="#{asignar.fechaFin}" pattern="dd-MM-yyyy" mask="true" />
-        
-		<p:pickList value="#{asignar.dualListDep}" var="d" itemLabel="#{d}" itemValue="#{d}"/>
-
-    <p:dialog modal="true" showEffect="fade" hideEffect="fade" widgetVar="cityDialog">
-        <h:panelGrid id="displayCities" columns="2">
-            <h:outputText value="Source: " style="font-weight:bold" />
-             <ui:repeat value="#{asignar.dualListDep.source}" var="item">
-                <h:outputText value="#{item}" style="margin-right:5px" />
-            </ui:repeat>
  
-            <h:outputText value="Target: " style="font-weight:bold" />
-            <ui:repeat value="#{asignar.dualListDep.target}" var="item">
-                <h:outputText value="#{item}" style="margin-right:5px" />
-            </ui:repeat>
-        </h:panelGrid>
-    </p:dialog>
-    
-			<p:column headerText="">
-				<p:commandButton id="btnSelc" value="Selecionar" action="#{asignar.seleccionarEntoBean()}"  >
+               
+                    <p:panelGrid  columns="1" rendered="#{not empty asignar.selectEnto2}" columnClasses="label,value" layout="grid" >
+                        <f:facet name="header">
+                         <h:outputText value="#{asignar.selectEnto2.nombre}" style="font-weight: bold"/>
+                       <p:separator></p:separator>
+                       
+                        
+                            <p:graphicImage name="/imagesDep/#{asignar.selectEnto2.deporte}-big.png"/> 
+                        </f:facet>
+                    <p:outputLabel  value="Fecha Creado:" />
+                   <p:inputText value="#{asignar.selectEnto2.fecha}" readonly="true"></p:inputText>
+                   
+                              		        <p:outputLabel for="mask" value="Fecha Inicio :" />
+        <p:calendar id="mask" value="#{asignar.fechaIni}" pattern="dd-MM-yyyy HH:mm"  showOn="button" required="true"
+					 requiredMessage="Debe ingresar Fecha Inicio"/>
+        
+                <p:outputLabel for="mask2" value="Fecha Fin:" />
+        <p:calendar id="mask2" value="#{asignar.fechaFin}" pattern="dd-MM-yyyy HH:mm"  showOn="button" required="true"
+					 requiredMessage="Debe ingresar Fecha Fin"/>
+					
+                    <p:separator></p:separator>
+                    
+		<p:pickList value="#{asignar.dualListDep}" var="d" itemLabel="#{d}" itemValue="#{d}" responsive="true"> 
+		
+		<p:column style="width:15%">
+		#{asignar.cargaSumaFotas()}
+ 		<p:graphicImage  value="#{asignar.listDep.get(asignar.numSuma).fotoPerfil}" height="50px" width="50px" style="border-radius: 50%">
+ 		
+ 		</p:graphicImage>
+ 		<br/>
+		<p:outputLabel value="#{asignar.listDep.get(asignar.numSuma).nomCompleto}" ></p:outputLabel>
+		
+			
+        </p:column>
+        
+		</p:pickList>
+
+     <p:separator></p:separator>
+     	<p:commandButton id="btnSelc" value="Selecionar" action="#{asignar.seleccionarEntoBean()}"  >
 				
     			</p:commandButton>
-				
-			</p:column>
-			
-			
-					
-
-	
+                    </p:panelGrid>
+               
+                
+            	<p:growl id="growl" for="growl" showDetail="true" sticky="true" >  
+				<p:autoUpdate />
+				 </p:growl>
 		
 </h:form>
     </ui:define>

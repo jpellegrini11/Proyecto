@@ -34,8 +34,8 @@ public class EjerciciosBean implements Serializable {
 		String str="";
 		
 		try {
-			ejerciciosEjb.alta(nombre, deporte, descripcion, linkVideo);
-			mostMsjGrowl("El ejercico : "+nombre +" se creo correctamente");
+			ejerciciosEjb.alta(nombre, descripcion, linkVideo);
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			mostMsj("El ejercicio no se guardo, vuelva a intentarlo mas tarde");

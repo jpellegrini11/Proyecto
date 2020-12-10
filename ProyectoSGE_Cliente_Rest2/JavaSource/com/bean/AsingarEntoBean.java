@@ -1,5 +1,6 @@
-package com.bean;
+ package com.bean;
 
+import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -24,13 +25,14 @@ import java.util.Date;
 import java.util.List;
 
 @Named("asignar")
-@ViewScoped
+@ManagedBean
+@SessionScoped
 public class AsingarEntoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private List<Entrenamiento> listEnto;
-	private Entrenamiento selectEnto2;
+	private Entrenamiento selectEnto2 = new Entrenamiento();
 	private UIData selectEnto;
 	private String buscar;
 	private DualListModel<String> dualListDep;
@@ -44,9 +46,12 @@ public class AsingarEntoBean implements Serializable {
 	private AsignarEnto selectAsignarEnto;
 	private List<AsignarEnto> listAsignarEnto;
 	private List<AsignarEnto> listSelectAsignarEnto;
+	private Integer numSuma =-1;
 	
 	@EJB
 	AsignarEntoEjb asignarEntoEjb;
+
+	private List<Deportista> listDep;
 
 
 	
@@ -69,14 +74,31 @@ public class AsingarEntoBean implements Serializable {
 		
 		listEnto = asignarEntoEjb.listarEntrenamientoEjb();
 		
+		
 	     List<String> source = new ArrayList<String>();
 	     
+	     listDep = asignarEntoEjb.listarDeportistaEjb();
+	   
+	     if(listDep.size()>0) {
+	     System.out.println("asignar listDep= "+listDep.size());
+	     }
 	     source=asignarEntoEjb.listarDepEntrenaEjb();
 
 	        List<String> target = new ArrayList<String>();
 	  
 	        dualListDep = new DualListModel<String>(source, target);
 	        System.out.println("size citnes: "+dualListDep.getSource().size());
+	}
+	
+	public void navAsignarDep() {
+		numSuma=-1;
+		System.out.println("met nav :"+numSuma);
+		
+	}
+	
+	public void cargaSumaFotas() {
+		numSuma = numSuma+1;
+		System.out.println("numSuma ="+numSuma);
 	}
 	
 	public void filtroEnto() {
@@ -87,8 +109,8 @@ public class AsingarEntoBean implements Serializable {
 	public String seleccionarEntoBean() {
 		String str="";
 		System.out.println(dualListDep.getTarget().size());
-	for (int i = 0; i < dualListDep.getTarget().size(); i++) {
-		System.out.println(dualListDep.getTarget().get(i).toString());
+//	for (int i = 0; i < dualListDep.getTarget().size(); i++) {
+//		System.out.println(dualListDep.getTarget().get(i).toString());
 		
 		freqCard=(float) 0;
 		velocidad=(float) 0;
@@ -96,14 +118,14 @@ public class AsingarEntoBean implements Serializable {
 		
 		try {
 			asignarEntoEjb.seleccionarEntoBeanEjb(dualListDep.getTarget(), selectEnto2, fechaIni, fechaFin, freqCard, velocidad, tiempoTotal);
-			mostMsjGrowl("El entrenamiento :"+selectEnto2.getNombre() +", se asigno correctamente");
+			
 		} catch (SQLException e) {
 			mostMsjGrowl("Error, el entrenamiento:" +selectEnto2.getNombre() +", no se asigno. Vuelva a intentarlo mas tarde ");
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	
-	}
+//	}
 		
 		return str;
 	}
@@ -241,6 +263,22 @@ public class AsingarEntoBean implements Serializable {
 
 	public void setListSelectAsignarEnto(List<AsignarEnto> listSelectAsignarEnto) {
 		this.listSelectAsignarEnto = listSelectAsignarEnto;
+	}
+
+	public Integer getNumSuma() {
+		return numSuma;
+	}
+
+	public void setNumSuma(Integer numSuma) {
+		this.numSuma = numSuma;
+	}
+
+	public List<Deportista> getListDep() {
+		return listDep;
+	}
+
+	public void setListDep(List<Deportista> listDep) {
+		this.listDep = listDep;
 	}
 
 	

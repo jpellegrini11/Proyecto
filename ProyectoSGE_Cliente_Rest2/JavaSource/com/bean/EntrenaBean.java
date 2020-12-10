@@ -1,5 +1,6 @@
 package com.bean;
 
+import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -19,7 +20,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Named("entrena")
-@ViewScoped
+@ManagedBean
+@SessionScoped
 public class EntrenaBean implements Serializable {
 
 

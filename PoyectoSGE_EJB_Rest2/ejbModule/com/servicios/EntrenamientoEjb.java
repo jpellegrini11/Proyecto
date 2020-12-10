@@ -45,6 +45,7 @@ public class EntrenamientoEjb {
 	private EntEjer ejercicios3;
 	private EntEjer ejercicios4;
 	private EntEjer ejercicios5;
+	private Long tiempoRealizarReal = (long)0;
 
 	
 	
@@ -63,12 +64,14 @@ public Boolean existeNomEnt(String entrenamiento) {
 
 
 
-public void guardarEntrenamientoEjb(String nombre, String deporte, Long tiempoRealizar,  List<String> etiquetas, 
-		String ejer, Long repeticion, Long intensidad,
-		String ejer2, Long repeticion2, Long intensidad2, 
-		String ejer3, Long repeticion3, Long intensidad3, 
-		String ejer4, Long repeticion4, Long intensidad4, 
-		String ejer5, Long repeticion5, Long intensidad5) throws SQLException {
+public void guardarEntrenamientoEjb(String nombre, String deporte, List<String> etiquetas, 
+		String ejer, Long repeticion, Long intensidad,Long tiempoRealizar,
+		String ejer2, Long repeticion2, Long intensidad2,Long tiempoRealizar2, 
+		String ejer3, Long repeticion3, Long intensidad3,Long tiempoRealizar3, 
+		String ejer4, Long repeticion4, Long intensidad4,Long tiempoRealizar4, 
+		String ejer5, Long repeticion5, Long intensidad5,Long tiempoRealizar5
+		
+		) throws SQLException {
 	
 	System.out.println("entro Ejb guardar entrenamiento");
 	
@@ -80,19 +83,19 @@ public void guardarEntrenamientoEjb(String nombre, String deporte, Long tiempoRe
 	
 	
 	System.out.println(" guardar entrenamiento usuario 2  "+entrenador.getUsuario());
-		ejercicios = cargarEjercicios(repeticion,intensidad,ejer);
+		ejercicios = cargarEjercicios(repeticion,intensidad,tiempoRealizar,ejer);
 	System.out.println("1 paso"+ejer);
-		ejercicios2 = cargarEjercicios(repeticion2,intensidad2,ejer2);
+		ejercicios2 = cargarEjercicios(repeticion2,intensidad2,tiempoRealizar2,ejer2);
 		
 		System.out.println("2 paso");
 		
-		ejercicios3 = cargarEjercicios(repeticion3,intensidad3,ejer3);
+		ejercicios3 = cargarEjercicios(repeticion3,intensidad3,tiempoRealizar3,ejer3);
 		System.out.println("3 paso");
 		
-		ejercicios4 = cargarEjercicios(repeticion4,intensidad4,ejer4);
+		ejercicios4 = cargarEjercicios(repeticion4,intensidad4,tiempoRealizar4,ejer4);
 		System.out.println("4 paso");
 		
-		ejercicios5 =cargarEjercicios(repeticion5,intensidad5,ejer5);
+		ejercicios5 =cargarEjercicios(repeticion5,intensidad5,tiempoRealizar5,ejer5);
 		
 		System.out.println(" guardar entrenamiento paso metodo cargaEjer");
 		
@@ -101,7 +104,7 @@ public void guardarEntrenamientoEjb(String nombre, String deporte, Long tiempoRe
 
 		
 		Date fecha = new Date();
-		entrenamiento=new Entrenamiento(nombre, deporte, tiempoRealizar,  etiquetas, entrenador, fecha);
+		entrenamiento=new Entrenamiento(nombre, deporte, tiempoRealizarReal,  etiquetas, entrenador, fecha);
 		entrenamiento.setListEntEjer(listEjercicios);
 		System.out.println(" guardar entrenamiento ");
 		entrenamientoDao.guardarEntrenamiento(entrenamiento);
@@ -130,7 +133,8 @@ public void guardarEntrenamientoEjb(String nombre, String deporte, Long tiempoRe
 
 // Metodo comprueba que los ejercicios tengan datos y carga atributos repet e intsi.Tambien cambia id 
 //	y agrega a la listaEjer para guerda en la baseD
-	public EntEjer cargarEjercicios(Long repeticion, Long intensidad, String nomEjer) throws SQLException{
+	public EntEjer cargarEjercicios(Long repeticion, Long intensidad,Long tiempoRealizar, String nomEjer) throws SQLException{
+		
 		
 		
 		System.out.println(" 1 idEjercicios :" +repeticion+intensidad+nomEjer);
@@ -140,16 +144,19 @@ public void guardarEntrenamientoEjb(String nombre, String deporte, Long tiempoRe
 		System.out.println("  Ejercicios :");
 		if(repeticion!=null && intensidad!=null) {
 		
-			if(repeticion>0 &&intensidad>0){
+			if(repeticion>0 && intensidad>0 && tiempoRealizar>0){
 			System.out.println(" entro if rep int :");
 			listEj2= ejerciciosDao.filtroEjercicios(nomEjer);
 			
 			System.out.println(" e despues del DAa Nom "+listEj2.get(0).getNombre());
 					
-			 e2= new EntEjer (entrenador, listEj2.get(0), intensidad, repeticion);
+			 e2= new EntEjer (entrenador, listEj2.get(0), intensidad, repeticion,tiempoRealizar);
+			 
 			System.out.println(" e2 despues del DAO "+e2.getEjercicios().getNombre());		
 			listEjercicios.add(e2);
 			entEjerDao.guardarEntEjer(e2);
+			tiempoRealizarReal = tiempoRealizarReal+tiempoRealizar;
+			System.out.println("tiempoRealizarReal ="+tiempoRealizarReal);
 			
 		}else {
 			

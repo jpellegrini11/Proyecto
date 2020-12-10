@@ -34,18 +34,31 @@
        </f:facet>
          <title>SGE</title>
         
-                    <h:outputStylesheet name="css/sh.css" library="showcase"/>
-        <h:outputStylesheet name="css/nanoscroller.css" library="showcase"/>
-        <h:outputStylesheet name="css/primeflex.css" library="showcase"/>
+		<h:outputStylesheet name="css/layout.css" library="showcase" />
+	<h:outputStylesheet name="schedule/schedule.css" library="showcase" />
+    <h:outputStylesheet name="css/sh.css" library="showcase" />
+	<h:outputStylesheet name="css/nanoscroller.css" library="showcase" />
+	<h:outputStylesheet name="css/primeflex.css" library="showcase" />
 
-        <!-- For Community Themes except 'Luna' and 'Nova' theme -->
-        <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces"/>
+    <h:outputStylesheet name="inputswitch/inputswitch.css" library="showcase" />
+    <h:outputStylesheet name="css/theme.css" library="showcase" />
+    <h:outputStylesheet name="css/components.css" library="showcase" />
+	<!-- For Community Themes except 'Luna' and 'Nova' theme -->
+	<h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+
 
 
         <h:outputScript name="jquery/jquery.js" library="primefaces"/>
         <h:outputScript name="jquery/jquery-plugins.js" library="primefaces"/>
-        <h:outputScript name="script/nanoscroller.js" library="showcase"/>
-        <h:outputScript name="script/layout.js" library="showcase"/>
+
+        <h:outputScript name="inputswitch/inputswitch.js" library="showcase" />
+        <h:outputScript name="css/core.js" library="showcase"/>
+        <h:outputScript name="css/components.js" library="showcase"/>
+        
+
+	<h:outputScript name="script/nanoscroller.js" library="showcase" />
+	<h:outputScript name="script/layout.js" library="showcase" />
+	<h:outputScript name="schedule/schedule.js" library="showcase" />
 </h:head>
  
 <body> 
@@ -92,35 +105,35 @@
 		<div class="p-field p-col-12 p-md-6">
 				<p:outputLabel for="peso" value="Peso en kgs"></p:outputLabel>
 				<p:inputMask id="peso" value="#{dep.peso}" required="true"
-					mask="999.99" requiredMessage="Debe ingresar peso">
+					mask="999.99" requiredMessage="Debe ingresar peso" placeholder="Ej: 025.00 o 005.00">
 				</p:inputMask>
 		</div>
 
 		<div class="p-field p-col-12 p-md-6">
 				<p:outputLabel for="altura" value="Altura en cms"></p:outputLabel>
 				<p:inputMask id="altura" value="#{dep.altura}"
-					required="true" mask="999" requiredMessage="Debe ingresar altura">
+					required="true" mask="999" requiredMessage="Debe ingresar altura" placeholder="Ej: 025 o 155">
 				</p:inputMask>
 		</div>
 			
 		<div class="p-field p-col-12 p-md-4">
 				<p:outputLabel for="frecuenciaMin" value="Frecuencia Min"></p:outputLabel>
 				<p:inputMask id="frecuenciaMin" value="#{dep.ferqCardMin}"
-					required="true" mask="999" requiredMessage="Debe ingresar Frecuencia minima">
+					required="true" mask="999" requiredMessage="Debe ingresar Frecuencia minima" placeholder="Ej: 025 o 155">
 				</p:inputMask>
 		</div>
 
 		<div class="p-field p-col-12 p-md-4">
 				<p:outputLabel for="frecuenciaMax" value="Frecuencia Max"></p:outputLabel>
 				<p:inputMask id="frecuenciaMax" value="#{dep.ferqCardMax}"
-					required="true" mask="999" requiredMessage="Debe ingresar Frecuencia maxima">
+					required="true" mask="999" requiredMessage="Debe ingresar Frecuencia maxima" placeholder="Ej: 025 o 155">
 				</p:inputMask>
 		</div>
 			
 			<div class="p-field p-col-12 p-md-4">
 				<p:outputLabel for="horas" value="Horas semanales"></p:outputLabel>
 				<p:inputMask id="horas" value="#{dep.dispHoraria}"
-					required="true" mask="99" requiredMessage="Debe ingresar horas">
+					required="true" mask="99" requiredMessage="Debe ingresar horas" placeholder="Ej: 05 o 15">
 				</p:inputMask>
 			
 			</div>
@@ -167,7 +180,7 @@
          
         </div>
         </div>
- <h:outputStylesheet name="css/layout.css" library="showcase"/>
+
  
                 <style type="text/css">         
              .layout-wrapper .layout-content {

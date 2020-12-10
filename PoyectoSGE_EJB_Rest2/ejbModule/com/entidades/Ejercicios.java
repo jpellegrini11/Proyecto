@@ -18,7 +18,7 @@ public class Ejercicios implements Serializable {
 	private Long idEjercicios;
 	
 	private String	nombre;
-	private String	deporte;
+//	private String	deporte;
 	private String	descripcion;
 	private String linkVideo;
 
@@ -38,10 +38,10 @@ public class Ejercicios implements Serializable {
 
 
 
-	public Ejercicios(String nombre, String deporte, String descripcion, String linkVideo) {
+	public Ejercicios(String nombre, String descripcion, String linkVideo) {
 		super();
 		this.nombre = nombre;
-		this.deporte = deporte;
+		
 		this.descripcion = descripcion;
 		this.linkVideo = linkVideo;
 
@@ -70,15 +70,6 @@ public class Ejercicios implements Serializable {
 		this.nombre = nombre;
 	}
 
-
-	public String getDeporte() {
-		return deporte;
-	}
-
-
-	public void setDeporte(String deporte) {
-		this.deporte = deporte;
-	}
 
 
 	public String getDescripcion() {

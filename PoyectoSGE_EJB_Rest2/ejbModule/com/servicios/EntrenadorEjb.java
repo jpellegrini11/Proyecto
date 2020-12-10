@@ -28,7 +28,10 @@ public class EntrenadorEjb {
  	public EntrenadorEjb() {
 		
 	}
-	 
+	 public void actualizarDepEntEjb() {
+		 
+		 
+	 }
  	public String guardarPerfilEjb(String nombre,String descripcion,String deportes,String titulos,String logros,
  							Long cantPersonas,String dispHoraria,String ubicacion) throws SQLException{
 		
@@ -99,9 +102,12 @@ public class EntrenadorEjb {
 
 	public void actualizar(Entrenador entrenador) throws SQLException {
 		
+		System.out.println("actualizar entrenador.getUsuDep() ="+entrenador.getUsuDep());
+		String usuario = (String) SessionUtils.getRequest().getSession(false).getAttribute("usuario");
 		
-		
-			this.entrenadorDao.actualizarEntrenador(entrenador);
+		Entrenador ent1= obtenerEntrenadorIgual(usuario); 
+		ent1.setUsuDep(entrenador.getUsuDep());
+			this.entrenadorDao.actualizarEntrenador(ent1);
 	
 	 }
 
@@ -119,7 +125,7 @@ public class EntrenadorEjb {
 
 	 
 	public List<Entrenador> obtenerTodos(){
-		return this.entrenadorDao.obternerTodos();
+		return entrenadorDao.obternerTodos();
 	}
 
 	 

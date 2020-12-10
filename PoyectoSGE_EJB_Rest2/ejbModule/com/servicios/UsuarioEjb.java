@@ -52,6 +52,10 @@ public class UsuarioEjb{
 	private Usuario usu;
 	private Entrenador ent;
 	private Deportista dep;
+
+
+
+	private String nomCompleto;
 	
 	public UsuarioEjb() {
 		
@@ -96,7 +100,7 @@ public class UsuarioEjb{
 
   
 	
-    public String login(String usuarioL) throws SQLException {
+    public String login(String usuarioL, String fotoUrl) throws SQLException {
     	
     	Boolean u = false;
     	
@@ -105,7 +109,12 @@ public class UsuarioEjb{
     		
     		if (deportistaDao.obtenerDeportistaIgual(usuarioL) != null) {
     			System.out.println("If dentro 1 "+usuarioL);
-    			compPerif= deportistaDao.obtenerDeportistaIgual(usuarioL).getCompPerfil();
+    			
+    			Deportista dep=deportistaDao.obtenerDeportistaIgual(usuarioL);
+    			dep.setFotoPerfil(fotoUrl);
+    			deportistaDao.actualizarDeportista(dep);
+    			setNomCompleto(dep.getNomCompleto());
+    			compPerif= dep.getCompPerfil();
     			
     			String perfil= "DEPORTISTA";
     		cargarSeccionUsu(usuarioL,perfil,compPerif);
@@ -125,7 +134,11 @@ public class UsuarioEjb{
     		if (entrenadorDao.obtenerEntrenadorIgual(usuarioL) != null) {
     			System.out.println("If ent"+usuarioL);
     		String perfil2= "ENTRENADOR";
-    		compPerif= entrenadorDao.obtenerEntrenadorIgual(usuarioL).getCompPerfil();
+    		Entrenador ent1= entrenadorDao.obtenerEntrenadorIgual(usuarioL);
+    		ent1.setFotoPerfil(fotoUrl);
+    		entrenadorDao.actualizarEntrenador(ent1);
+    		compPerif= ent1.getCompPerfil();
+    		setNomCompleto(ent1.getNombre());
     		cargarSeccionUsu(usuarioL,perfil2,compPerif);
     		
     		if(compPerif==1) {
@@ -188,7 +201,7 @@ public class UsuarioEjb{
 
 		  if(perfil.equals("DEPORTISTA")) {
 			  
-			  if (deportistaDao.obtenerDeportistaIgual(mail) != null) { 
+			  if (deportistaDao.obtenerDeportistaIgual(mail) != null || entrenadorDao.obtenerEntrenadorIgual(mail) != null) { 
 			  
 				  mostMsjGrowl("Ya se encuentra registrado en SGE");
 				  return str;
@@ -216,7 +229,7 @@ public class UsuarioEjb{
 		  			  
 			  if(perfil.equals("ENTRENADOR")) {
 				  
-				  if (entrenadorDao.obtenerEntrenadorIgual(mail) != null) {
+				  if (entrenadorDao.obtenerEntrenadorIgual(mail) != null || deportistaDao.obtenerDeportistaIgual(mail) != null ) {
 					  
 					  mostMsjGrowl("Ya se encuentra registrado en SGE");
 					  return str;
@@ -244,9 +257,19 @@ public class UsuarioEjb{
 		return str;
 		
 	}
+	
+	public String urlJson() {
+		String url=SessionUtils.getRequest().getRequestURI();
+		System.out.println("url 1 "+url);
+		url=url+"/resoruce/lib/";
+		System.out.println("url 2 "+url);
+		return url;
+	}
+	
 	public void cargarSeccionUsu(String usuario, String perfil, Long compPerfil ) {
 	
 		HttpSession session = SessionUtils.getSession();
+	
 		session.setAttribute("usuario", usuario);
 		
 		session.setAttribute("perfil", perfil);
@@ -313,6 +336,19 @@ public class UsuarioEjb{
 	public Usuario obtenerUsuarioIgual(String usuario) throws SQLException {
 		return this.usuarioDao.obtenerUsuarioIgual(usuario);
 	}
+
+
+	public String getNomCompleto() {
+		return nomCompleto;
+	}
+
+
+	public void setNomCompleto(String nomCompleto) {
+		this.nomCompleto = nomCompleto;
+	}
+
+
+
 	
 	 
 //	public List<UsuarioDTO> obtenerTodosUsuariosList() throws SQLException {

@@ -1,0 +1,213 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./homeEnt.xhtml">
+
+    <ui:define name="title">
+          Entrenador - <span class="subitem">Resultados de Entrenamiento</span>
+    </ui:define>
+
+		<h:outputStylesheet name="css/layout.css" library="showcase" />
+	<h:outputStylesheet name="schedule/schedule.css" library="showcase" />
+    <h:outputStylesheet name="css/sh.css" library="showcase" />
+	<h:outputStylesheet name="css/nanoscroller.css" library="showcase" />
+	<h:outputStylesheet name="css/primeflex.css" library="showcase" />
+
+    <h:outputStylesheet name="inputswitch/inputswitch.css" library="showcase" />
+    <h:outputStylesheet name="css/theme.css" library="showcase" />
+    <h:outputStylesheet name="css/components.css" library="showcase" />
+	<!-- For Community Themes except 'Luna' and 'Nova' theme -->
+	<h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+
+
+
+        <h:outputScript name="jquery/jquery.js" library="primefaces"/>
+        <h:outputScript name="jquery/jquery-plugins.js" library="primefaces"/>
+
+        <h:outputScript name="inputswitch/inputswitch.js" library="showcase" />
+        <h:outputScript name="css/core.js" library="showcase"/>
+        <h:outputScript name="css/components.js" library="showcase"/>
+        
+
+	<h:outputScript name="script/nanoscroller.js" library="showcase" />
+	<h:outputScript name="script/layout.js" library="showcase" />
+	<h:outputScript name="schedule/schedule.js" library="showcase" />
+
+
+    <ui:define name="description">
+        Ver resultados de los entrenamientos asignados.
+    </ui:define>
+
+
+    <ui:define name="implementation">
+ <h:form>   
+        	<p:commandLink id="btnSincDep" action="/entrenador/listarEntoDep">
+			<h:graphicImage height="25px" width="25px"
+					value="/resources/showcase/images/icons/iconBack.png"></h:graphicImage>
+			</p:commandLink>
+			</h:form>
+<h:form>
+ <div class="ui-fluid p-formgrid p-grid">
+                     <p:panelGrid  columns="1" layout="flex" >
+ 
+ <f:facet name="header">
+                        <p:outputLabel>
+             <h3  style="color: #4c4c4c;margin-left:10%;margin-right:10%;font-family:revert;"> Datos de los entrenamientos finalizados</h3>
+             </p:outputLabel>
+                         
+                        </f:facet>
+                        </p:panelGrid>
+               
+            
+
+ 
+         <p:outputPanel id="carDetail" style="text-align:center;">
+        
+<p:dataTable id="tablaModif" var="e" value="#{ent.selectResultadosEnto.asignarEnto.entrenamiento.listEntEjer}"
+													  reflow="true" resizableColumns="true">
+			
+			<p:column headerText="Ejercicio :" style="font: bold">
+			<p:outputLabel id="t1" value="#{e.ejercicios.nombre}" disabled="true" />
+
+			</p:column>
+
+			<p:column headerText="Rep :" style="font: bold">
+				<p:outputLabel id="t2" value="#{e.repeticiones}" />
+				
+			</p:column>
+			
+
+			<p:column headerText="Int :" style="font: bold">
+				<p:outputLabel id="t3" value="%: #{e.intensidad}"  />
+
+			</p:column>
+			
+						<p:column headerText="Tiempo :" style="font: bold">
+				<p:outputLabel id="t4" value="min: #{e.tiempoRealizar}"  />
+
+			</p:column>
+			
+			
+<p:column headerText="" >
+ <h:outputLink value="https://youtu.be/#{e.ejercicios.linkVideo}" target="_blank">
+			
+			
+                            <h:outputText value="Link del video" styleClass="pi pi-external-link" style="margin:0 auto;" />
+                                   
+                                
+                       </h:outputLink> 
+           
+</p:column>
+			<p:column headerText="" >
+			
+			 <p:accordionPanel activeIndex="-1">
+			  <p:tab title="Descripcion del ejercicio"  >
+          
+			 <h4>
+        	#{e.ejercicios.descripcion}
+        	</h4>
+        	
+      		  </p:tab>
+           </p:accordionPanel>   
+
+						
+				</p:column>	
+				
+					<p:column headerText="" resizable="true">
+	                        
+             
+    <p:accordionPanel activeIndex="-1">
+        <p:tab title="Video del ejercicio"  >
+            <h:panelGrid columns="" cellpadding="10" >
+            
+
+            <object width="300" height="400">
+            <param name="allowfullscreen" value="true" />
+            <EMBED src="https://www.youtube.com/embed/#{e.ejercicios.linkVideo}" 
+             showcontrols="true"
+             height="100%"
+             width="100%"
+            >
+             </EMBED>
+            </object>
+             </h:panelGrid>
+        </p:tab>
+                           
+
+	</p:accordionPanel>  
+			</p:column>
+			
+		
+			
+             </p:dataTable>
+             
+             <p:separator style="border:transparent"></p:separator>
+            Tiempo:  #{ent.selectResultadosEnto.asignarEnto.entrenamiento.tiempoRealizar} min.
+         
+            <p:separator style="border:transparent"></p:separator>
+             Tiempo Real:  #{ent.selectResultadosEnto.tiempoTotal} min.
+            <p:separator style="border:transparent"></p:separator>
+             <div class="ui-fluid p-formgrid p-grid">
+             
+
+  <div class="p-field p-col-12 p-md-4"> 
+  				 <p:outputLabel value="Frecuencia cardiaca"></p:outputLabel>
+       <p:inputText id="freq" value="#{ent.selectResultadosEnto.freqCard}"  readonly="true" />
+      
+   </div>
+   
+    <div class="p-field p-col-12 p-md-4"> 
+  				  <p:outputLabel value="Velocidad km/hr"></p:outputLabel>
+       <p:inputText id="veloc" value="#{ent.selectResultadosEnto.velocidad}"  readonly="true" />
+      
+   </div>
+      
+          <div class="p-field p-col-12"> 
+  				  <p:outputLabel value="Comentarios"></p:outputLabel>
+       <p:inputTextarea id="coment" value="#{ent.selectResultadosEnto.comentarios}"  rows="4"  readonly="true" />
+      
+   </div>
+    
+   
+    <div class="p-field p-col-12 p-md-12">
+     
+					
+       </div>       
+             
+ </div>    
+      </p:outputPanel> 
+     
+      
+      	<p:growl id="growl" for="growl" showDetail="true" sticky="true" >  
+				<p:autoUpdate />
+				 </p:growl>
+		</div> 
+</h:form>
+
+<style type="text/css">         
+            
+.layout-wrapper .layout-topbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    height: 70px;
+    background-color: #0a0808d6;
+    -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
+}
+
+.ui-datatable table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+    height: 250px;
+}
+        </style>
+    </ui:define>
+
+</ui:composition>

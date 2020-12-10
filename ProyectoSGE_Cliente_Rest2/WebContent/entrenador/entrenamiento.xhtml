@@ -9,6 +9,32 @@
         Entrenador - <span class="subitem">Crear entrenamientos</span>
     </ui:define>
 
+		<h:outputStylesheet name="css/layout.css" library="showcase" />
+	<h:outputStylesheet name="schedule/schedule.css" library="showcase" />
+    <h:outputStylesheet name="css/sh.css" library="showcase" />
+	<h:outputStylesheet name="css/nanoscroller.css" library="showcase" />
+	<h:outputStylesheet name="css/primeflex.css" library="showcase" />
+
+    <h:outputStylesheet name="inputswitch/inputswitch.css" library="showcase" />
+    <h:outputStylesheet name="css/theme.css" library="showcase" />
+    <h:outputStylesheet name="css/components.css" library="showcase" />
+	<!-- For Community Themes except 'Luna' and 'Nova' theme -->
+	<h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+
+
+
+        <h:outputScript name="jquery/jquery.js" library="primefaces"/>
+        <h:outputScript name="jquery/jquery-plugins.js" library="primefaces"/>
+
+        <h:outputScript name="inputswitch/inputswitch.js" library="showcase" />
+        <h:outputScript name="css/core.js" library="showcase"/>
+        <h:outputScript name="css/components.js" library="showcase"/>
+        
+
+	<h:outputScript name="script/nanoscroller.js" library="showcase" />
+	<h:outputScript name="script/layout.js" library="showcase" />
+	<h:outputScript name="schedule/schedule.js" library="showcase" />
+	
     <ui:define name="head">
         <script type="text/javascript">
  
@@ -52,10 +78,11 @@
 
 
 				</div>
-	<p:spacer ></p:spacer>	
-				<div class="ui-fluid p-formgrid p-grid">
+	<p:separator></p:separator>
+				
 
-					<div class="p-field p-col p-md-6">
+<div class="ui-fluid p-formgrid p-grid">
+					<div class="p-field p-col">
 						<p:outputLabel for="ejercicios" value="Ejercicios"/>
 						<p:selectOneMenu id="ejercicios" value="#{entrenamiento.ejer}"  required="true"
 					 requiredMessage="Debe crear ejercicios primero">
@@ -63,59 +90,80 @@
 
 						</p:selectOneMenu>
 					</div>
+					</div>
 
-					<div class="p-field p-col p-md-3">
-						<p:outputLabel for="intensidad" value="Intensidad" />
+			<div class="ui-fluid p-formgrid p-grid">
+					<div class="p-field p-col">
+						<p:outputLabel for="intensidad" value="Int %" />
 						<p:inputText id="intensidad" value="#{entrenamiento.intensidad}"
 							required="true" requiredMessage="Debe ingresar Intensidad" />
 					</div>
 
-					<div class="p-field p-col p-md-3">
-						<p:outputLabel for="repeticion" value="Repeticiones" />
+					<div class="p-field p-col">
+						<p:outputLabel for="repeticion" value="Rep" />
 						<p:inputText id="repeticion" value="#{entrenamiento.repeticion}"  required="true" requiredMessage="Debe ingresar Repeticiones" />
 						
 					</div>
-
+					
+				<div class="p-field p-col">
+						<p:outputLabel for="tiempoRealizar" value="Tiemp min" />
+						<p:inputText id="tiempoRealizar"
+							value="#{entrenamiento.tiempoRealizar}" required="true" requiredMessage="Debe ingresar Tiempo"/> 
+					</div>
+					
 				</div>
 
 
 				<h:panelGroup id="pg2">
 					<h:panelGroup id="pg22" rendered="#{entrenamiento.visib2}">
+					
+<p:separator></p:separator>
 
 						<div class="ui-fluid p-formgrid p-grid">
-
-							<div class="p-field p-col p-md-6">
-								<p:outputLabel for="ejercicios2" value="Ejercicios 2" />
+					<div class="p-field p-col">
+					
+								<p:outputLabel for="ejercicios2" value="Ejercicios 2" class="p-field" />
 								<p:selectOneMenu id="ejercicios2" value="#{entrenamiento.ejer2}"  required="true"
 					 requiredMessage="Debe crear ejercicios primero">
 									<f:selectItems value="#{entrenamiento.listStrEjer2}" />
 
 								</p:selectOneMenu>
 							</div>
+								</div>
 
-							<div class="p-field p-col p-md-3">
-								<p:outputLabel for="intensidad2" value="Intensidad" />
+							<div class="ui-fluid p-formgrid p-grid">
+					<div class="p-field p-col">
+					
+								<p:outputLabel for="intensidad2" value="Int %" />
 								<p:inputText id="intensidad2"
 									value="#{entrenamiento.intensidad2}" required="true"
 									requiredMessage="Debe ingresar Intensidad" />
 							</div>
 
-							<div class="p-field p-col p-md-3">
-								<p:outputLabel for="repeticion2" value="Repeticiones" />
+								<div class="p-field p-col">
+								<p:outputLabel for="repeticion2" value="Rep" />
 								<p:inputText id="repeticion2"
 									value="#{entrenamiento.repeticion2}"  required="true" requiredMessage="Debe ingresar Repeticiones"/>
 							</div>
-
+							
+							<div class="p-field p-col">
+						<p:outputLabel for="tiempoRealizar2" value="Tiemp min" />
+						<p:inputText id="tiempoRealizar2"
+							value="#{entrenamiento.tiempoRealizar2}" required="true" requiredMessage="Debe ingresar Tiempo" />
+					</div>
 						</div>
 					</h:panelGroup>
 					</h:panelGroup>
 				
+				
 
 				<h:panelGroup id="pg3">
 				<h:panelGroup rendered="#{entrenamiento.visib3}">
-					<div class="ui-fluid p-formgrid p-grid">
-
-						<div class="p-field p-col p-md-6">
+				
+				<p:separator></p:separator>
+				
+						<div class="ui-fluid p-formgrid p-grid">
+					<div class="p-field p-col">
 							<p:outputLabel for="ejercicios3" value="Ejercicios 3" />
 							<p:selectOneMenu id="ejercicios3" value="#{entrenamiento.ejer3}"  required="true"
 					 requiredMessage="Debe crear ejercicios primero">
@@ -123,29 +171,40 @@
 
 							</p:selectOneMenu>
 						</div>
-
-						<div class="p-field p-col p-md-3">
-							<p:outputLabel for="intensidad3" value="Intensidad" />
+		</div>
+						<div class="ui-fluid p-formgrid p-grid">
+					<div class="p-field p-col">
+							<p:outputLabel for="intensidad3" value="Int %" />
 							<p:inputText id="intensidad3"
 								value="#{entrenamiento.intensidad3}" required="true"
 								requiredMessage="Debe ingresar Intensidad" />
 						</div>
 
 						<div class="p-field p-col p-md-3">
-							<p:outputLabel for="repeticion3" value="Repeticiones" />
+							<p:outputLabel for="repeticion3" value="Rep" />
 							<p:inputText id="repeticion3"
 								value="#{entrenamiento.repeticion3}"  required="true" requiredMessage="Debe ingresar Repeticiones"/>
 						</div>
-
+						
+					<div class="p-field p-col p-md-3">
+						<p:outputLabel for="tiempoRealizar3" value="Tiemp min" />
+						<p:inputText id="tiempoRealizar3"
+							value="#{entrenamiento.tiempoRealizar3}" required="true" requiredMessage="Debe ingresar Tiempo" />
+					</div>
+					
 					</div>
 				</h:panelGroup>
 				</h:panelGroup>
 				
+			
+				
 			<h:panelGroup id="pg4">
 				<h:panelGroup rendered="#{entrenamiento.visib4}">
+				
+					<p:separator></p:separator>
+					
 					<div class="ui-fluid p-formgrid p-grid">
-
-						<div class="p-field p-col p-md-6">
+					<div class="p-field p-col">
 							<p:outputLabel for="ejercicios4" value="Ejercicios 4" />
 							<p:selectOneMenu id="ejercicios4" value="#{entrenamiento.ejer4}"  required="true"
 					 requiredMessage="Debe crear ejercicios primero">
@@ -153,57 +212,78 @@
 
 							</p:selectOneMenu>
 						</div>
-
-						<div class="p-field p-col p-md-3">
-							<p:outputLabel for="intensidad4" value="Intensidad" />
+	</div>
+						<div class="ui-fluid p-formgrid p-grid">
+					<div class="p-field p-col">
+							<p:outputLabel for="intensidad4" value="Int %" />
 							<p:inputText id="intensidad4"
 								value="#{entrenamiento.intensidad4}" required="true"
 								requiredMessage="Debe ingresar Intensidad" />
 						</div>
 
-						<div class="p-field p-col p-md-3">
-							<p:outputLabel for="repeticion4" value="Repeticiones" />
+						<div class="p-field p-col">
+							<p:outputLabel for="repeticion4" value="Rep" />
 							<p:inputText id="repeticion4"
 								value="#{entrenamiento.repeticion4}"  required="true" requiredMessage="Debe ingresar Repeticiones"/>
 						</div>
 
+					
+					<div class="p-field p-col">
+						<p:outputLabel for="tiempoRealizar4" value="Tiemp min" />
+						<p:inputText id="tiempoRealizar4"
+							value="#{entrenamiento.tiempoRealizar4}"  required="true" requiredMessage="Debe ingresar Tiempo"/>
+					</div>
+					
 					</div>
 				</h:panelGroup>
 				</h:panelGroup>
 				
+		
 				
 <h:panelGroup id="pg5">
 				<h:panelGroup rendered="#{entrenamiento.visib5}">
+				
+						<p:separator></p:separator>
+						
 					<div class="ui-fluid p-formgrid p-grid">
-
-						<div class="p-field p-col p-md-6">
-							<p:outputLabel for="ejercicios5" value="Ejercicios 5" />
+					<div class="p-field p-col">
+							<p:outputLabel for="ejercicios5" value="Ejercicio 5" />
 							<p:selectOneMenu id="ejercicios5" value="#{entrenamiento.ejer5}"  required="true"
 					 requiredMessage="Debe crear ejercicios primero">
 								<f:selectItems value="#{entrenamiento.listStrEjer5}" />
 
 							</p:selectOneMenu>
 						</div>
-
-						<div class="p-field p-col p-md-3">
-							<p:outputLabel for="intensidad5" value="Intensidad" />
+</div>
+						<div class="ui-fluid p-formgrid p-grid">
+					<div class="p-field p-col">
+							<p:outputLabel for="intensidad5" value="Int %" />
 							<p:inputText id="intensidad5"
 								value="#{entrenamiento.intensidad5}" required="true"
 								requiredMessage="Debe ingresar Intensidad" />
 						</div>
 
-						<div class="p-field p-col p-md-3">
+						<div class="p-field p-col">
 							<p:outputLabel for="repeticion5" value="Repeticiones" />
 							<p:inputText id="repeticion5"
 								value="#{entrenamiento.repeticion5}"  required="true" requiredMessage="Debe ingresar Repeticiones" />
 						</div>
-
+						
+										
+					<div class="p-field p-col">
+						<p:outputLabel for="tiempoRealizar5" value="Tiemp min" />
+						<p:inputText id="tiempoRealizar5"
+							value="#{entrenamiento.tiempoRealizar5}" required="true" requiredMessage="Debe ingresar Tiempo"/>
 					</div>
+				
+				</div>
+				
+			
 				</h:panelGroup>
 				</h:panelGroup>
 				
 					
-			
+			<p:separator></p:separator>
 			
 					<div class="ui-fluid p-formgrid p-grid">
 						
@@ -225,13 +305,7 @@
 <!-- <p:button onclick="#{entrenamiento.agregarEjer()}" ></p:button> -->
 
 
-				<div class="ui-fluid">
-					<div class="p-field">
-						<p:outputLabel for="tiempoRealizar" value="Tiempo a Realizar" />
-						<p:inputText id="tiempoRealizar"
-							value="#{entrenamiento.tiempoRealizar}" />
-					</div>
-				</div>
+
 				
 					<div class="ui-fluid">
 					<div class="p-field">
@@ -250,7 +324,7 @@
 			
 					<div class="p-field p-col">
 			
-				<p:messages id="msgs1" showDetail="false" closable="true">
+				<p:messages id="msgs1" showDetail="false" closable="true" style="font-size: 10px;">
 					<p:autoUpdate />
 				</p:messages>
 				

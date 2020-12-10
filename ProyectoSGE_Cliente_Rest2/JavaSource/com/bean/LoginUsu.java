@@ -25,6 +25,7 @@ import com.google.firebase.auth.UserRecord;
 import com.servicios.DeportistaEjb;
 import com.servicios.EntrenadorEjb;
 import com.servicios.UsuarioEjb;
+import com.utils.SessionUtils;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -64,7 +65,7 @@ public class LoginUsu implements Serializable {
 	private String val;
 	private String titulo ="Inicie seccion en SGE";
 	private String colorLinkTit="color:grey;";
-	private String subTitulo=" Bienvenido, porfavor ingrese con su cuenta de google.";
+	private String subTitulo=" Bienvenido, presione el botón para ingresar con su cuenta de google.";
 	private Boolean bolSubTitulo=true;
 	private Boolean btnRegistrar=true;
 	private Boolean btnAcceso1= true;
@@ -79,6 +80,9 @@ public class LoginUsu implements Serializable {
 	private Boolean btnRegActiv=false;
 
 	private String mail;
+	private String body= "login-body";
+
+	private String fotoUrl;
 
 
 public LoginUsu() {
@@ -87,8 +91,7 @@ public LoginUsu() {
 
 
 public String increment() throws FirebaseException, IOException   {
-	
-	
+
 	
 	System.out.println("entro incr");
 	String pUsu=FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("pUsu");
@@ -99,8 +102,11 @@ public String increment() throws FirebaseException, IOException   {
 	
 	System.out.println("entro 33"+firebaseApps.size());
 	if(firebaseApps.size()==0) {
+	String urlJson= usuarioEjb.urlJson();
+	System.out.println("urlJson"+urlJson);
 	FileInputStream serviceAccount = new FileInputStream("C:/Users/Administrador/Downloads/aug-bot-firebase-adminsdk-ooa9a-d0f75f6b4c.json");
-	
+//	FileInputStream serviceAccount = new FileInputStream("/opt/aug-bot-firebase-adminsdk-ooa9a-d0f75f6b4c.json");
+
 		
 		System.out.println("if build ");
 		
@@ -125,6 +131,8 @@ public String increment() throws FirebaseException, IOException   {
 	System.out.println("Successfully fetched user data: " + userRecord.getEmail());
 	
 	   mail= userRecord.getEmail();
+	   setFotoUrl(userRecord.getPhotoUrl());
+	 
 	  if(mail.length()>0) {
 		  
 		  System.out.println("if mail");
@@ -132,12 +140,14 @@ public String increment() throws FirebaseException, IOException   {
 		  
 	  }else {
 		  btnRegistrar=true;
+		  btnLogActiv=false;
 		  
 	  }
 	  if(btnLogActiv) {
 		  System.out.println("btnLogActiv metodo incrm");
 	try {
-		str= usuarioEjb.login(mail);
+		str= usuarioEjb.login(mail,fotoUrl);
+		body="";
 		System.out.println(" Metodo login2" +str);
 		if(str.equals("login2")) {
 			
@@ -163,19 +173,28 @@ public String increment() throws FirebaseException, IOException   {
 public String btnRegistrar() {
 	String str="login2";
 	str=usuarioEjb.registarUsu(perfil, mail);
-	
+	body="";
 	return str;
+	
+}
+
+public String nomCompleto() {
+	
+	return usuarioEjb.getNomCompleto();
+	
 	
 }
 
   public void btnLogActiv() {
 	  System.out.println("btnLogActiv");
 	  btnLogActiv=true;
+	  btnRegActiv=false;
   }
   
   public void btnRegActiv() {
 	  System.out.println("btnRegActiv");
 	  btnRegActiv=true;
+	  btnLogActiv=false;
   }
 //public String increment()  {
 //	  
@@ -240,10 +259,10 @@ public String btnRegistrar() {
 	
 		bolPanelLog=false;
 		bolPanelReg=true;
-		bolSubTitulo=false;
+		bolSubTitulo=true;
 		  titulo ="Registrece en SGE";
 		  colorLinkTit="color:#20711f;";
-		  subTitulo=" Bienvenido, porfavor ingrese con su cuenta de google y seleccione un perfil.";
+		  subTitulo="Presione el botón Gmail para registrar y seleccione un perfil";
 		
 		 
 		 btnAcceso1= false;
@@ -262,13 +281,14 @@ public String btnRegistrar() {
 		bolSubTitulo=true;
 		 titulo ="Inicie seccion en SGE";
 		 colorLinkTit="color:grey;";
-		 subTitulo=" Bienvenido, porfavor ingrese con su cuenta de google.";
+		 subTitulo="  Bienvenido, presione el botón para ingresar con su cuenta de google.";
 		 
 		 btnAcceso1= true;
 		 btnAcceso2= false;
 		 colorLinkReg="color:#98BED7;";
 		 colorLinkLog="color:white;";
 	}
+	
 	public void perfilUsu(String perfilUsu) {
 		
 		if(perfilUsu.equals("DEPORTISTA")) {
@@ -288,6 +308,26 @@ public String btnRegistrar() {
 
 	}
 	
+	public Boolean perfilDep() {
+		
+		Boolean bPerfil=false;
+		perfil = (String) SessionUtils.getRequest().getSession(false).getAttribute("perfil");
+		if(perfil.equals("ENTRENADOR")) {
+			bPerfil= true;
+		}
+		return bPerfil;
+		
+	}
+public Boolean perfilEnt() {
+		
+	Boolean bPerfil=false;
+	perfil = (String) SessionUtils.getRequest().getSession(false).getAttribute("perfil");
+		if(perfil.equals("DEPORTISTA")) {
+			bPerfil= true;
+		}
+	return bPerfil;
+		
+	}
 //	public void buscarU() throws  Exception,  IOException  {
 //		System.out.println("entro incr");
 //	
@@ -496,11 +536,6 @@ public void setDeportista(Deportista deportista) {
 
 
 
-
-
-
-
-
 	public String getColorLinkLog() {
 		return colorLinkLog;
 	}
@@ -598,6 +633,26 @@ public void setDeportista(Deportista deportista) {
 
 	public void setAlert(Boolean alert) {
 		this.alert = alert;
+	}
+
+
+	public String getBody() {
+		return body;
+	}
+
+
+	public void setBody(String body) {
+		this.body = body;
+	}
+
+
+	public String getFotoUrl() {
+		return fotoUrl;
+	}
+
+
+	public void setFotoUrl(String fotoUrl) {
+		this.fotoUrl = fotoUrl;
 	}
 
 	

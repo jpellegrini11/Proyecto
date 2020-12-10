@@ -6,6 +6,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -27,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Named("entrenamiento")
-@SessionScoped
+@ViewScoped
 public class EntrenameintoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -43,7 +44,7 @@ public class EntrenameintoBean implements Serializable {
 
 	private String nombre;
 	private String deporte;
-	private Long tiempoRealizar;
+	
 
 	
 
@@ -51,30 +52,35 @@ public class EntrenameintoBean implements Serializable {
 	private List<String> listStrEjer;
 	private Long repeticion;
 	private Long intensidad;
+	private Long tiempoRealizar;
 	private Boolean visib;
 
 	private String ejer2;
 	private List<String> listStrEjer2;
 	private Long repeticion2;
 	private Long intensidad2;
+	private Long tiempoRealizar2;
 	private Boolean visib2;
 
 	private String ejer3;
 	private List<String> listStrEjer3;
 	private Long repeticion3;
 	private Long intensidad3;
+	private Long tiempoRealizar3;
 	private Boolean visib3;
 
 	private String ejer4;
 	private List<String> listStrEjer4;
 	private Long repeticion4;
 	private Long intensidad4;
+	private Long tiempoRealizar4;
 	private Boolean visib4;
 
 	private String ejer5;
 	private List<String> listStrEjer5;
 	private Long repeticion5;
 	private Long intensidad5;
+	private Long tiempoRealizar5;
 	private Boolean visib5;
 
 	private Ejercicios ejercicio;
@@ -130,8 +136,12 @@ public class EntrenameintoBean implements Serializable {
 		if(b) {
 			try {
 				
-				entrenamientoEjb.guardarEntrenamientoEjb(nombre, deporte, tiempoRealizar, etiquetas,ejer,repeticion,intensidad,
-						ejer2,repeticion2,intensidad2,ejer3,repeticion3,intensidad3,ejer4,repeticion4,intensidad4,ejer5,repeticion5,intensidad5);
+				entrenamientoEjb.guardarEntrenamientoEjb(nombre, deporte, etiquetas,
+						ejer,repeticion,intensidad,tiempoRealizar,
+						ejer2,repeticion2,intensidad2, tiempoRealizar2,
+						ejer3,repeticion3,intensidad3,tiempoRealizar3,
+						ejer4,repeticion4,intensidad4,tiempoRealizar4,
+						ejer5,repeticion5,intensidad5,tiempoRealizar5);
 				mostMsjGrowl("El entrenamiento : "+nombre +", se creo correctamente");
 					
 			} catch (SQLException e) {
@@ -492,5 +502,45 @@ public class EntrenameintoBean implements Serializable {
 
 	public void setEtiquetas(List<String> etiquetas) {
 		this.etiquetas = etiquetas;
+	}
+
+
+	public Long getTiempoRealizar2() {
+		return tiempoRealizar2;
+	}
+
+
+	public void setTiempoRealizar2(Long tiempoRealizar2) {
+		this.tiempoRealizar2 = tiempoRealizar2;
+	}
+
+
+	public Long getTiempoRealizar3() {
+		return tiempoRealizar3;
+	}
+
+
+	public void setTiempoRealizar3(Long tiempoRealizar3) {
+		this.tiempoRealizar3 = tiempoRealizar3;
+	}
+
+
+	public Long getTiempoRealizar4() {
+		return tiempoRealizar4;
+	}
+
+
+	public void setTiempoRealizar4(Long tiempoRealizar4) {
+		this.tiempoRealizar4 = tiempoRealizar4;
+	}
+
+
+	public Long getTiempoRealizar5() {
+		return tiempoRealizar5;
+	}
+
+
+	public void setTiempoRealizar5(Long tiempoRealizar5) {
+		this.tiempoRealizar5 = tiempoRealizar5;
 	}
 }

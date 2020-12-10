@@ -1,0 +1,152 @@
+ <ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./homeEnt.xhtml">
+                
+  	<ui:define name="title">
+          Entrenador - <span class="subitem">Ver perfil del deportista</span>
+    </ui:define>
+    
+    <ui:define name="head">
+        <script type="text/javascript">
+ 
+                          function signOut2() {
+              				
+                      		console.log('entro signOut2');
+                                  if (firebase.auth().currentUser) {
+                        		          	       
+                          	        firebase.auth().signOut();
+                          	        location.reload();
+                          	      }
+                                  }; 
+                                  </script>
+                                  
+                                   <style type="text/css">         
+            /demo/
+            .ui-dataview-list .ui-dataview-row {
+                border-bottom: 1px solid #A8A8A8;
+                padding: 25px 10px;
+                /* with the exported variables from Nova and Luna Themes*/
+                border-bottom-color: var(--input-border-color, #A8A8A8);
+            }
+
+            .logo {
+                width: 5%;
+            }
+            .detail {
+                width: 85%;
+                padding-left: 25px;
+            }
+        </style>
+        
+                                  </ui:define>
+ 
+
+    <ui:define name="description">
+        Puede visualizar el perfil de su deportista.
+        Ver sus datos personales y profesional.
+       
+    </ui:define>
+
+<!--     <ui:param name="documentationLink" value="/components/dataview" /> -->
+<!--     <ui:param name="widgetLink" value="dataview" /> -->
+
+    <ui:define name="implementation">
+ <h:form>   
+        	<p:commandLink id="btnSincDep" action="/entrenador/botonesSegDep">
+			<h:graphicImage height="25px" width="25px"
+					value="/resources/showcase/images/icons/iconBack.png"></h:graphicImage>
+			</p:commandLink>
+			</h:form>
+     
+<h:form>
+
+  
+                    <p:panelGrid  columns="2" rendered="#{not empty ent.depSelect}" columnClasses="label,value" layout="grid" >
+                        <f:facet name="header">
+                        <p:graphicImage  value="#{ent.depSelect.fotoPerfil}" height="50px" width="50px" style="border-radius: 50%;"></p:graphicImage>
+                        <br/>
+                         <h:outputText value="#{ent.depSelect.nomCompleto}" style="font-weight: bold"/>
+                         
+                        </f:facet>
+                        </p:panelGrid> 
+                        
+                        <p:separator style="border:transparent"></p:separator>
+                     
+                      <div class="ui-fluid p-formgrid p-grid">
+
+ 	
+         <div class="p-field p-col-12 ">
+            <p:outputLabel for="objetivos" value="Objetivos" style="font-weight: bold;"  />
+           
+            <p:inputText id="objetivos" value="#{ent.depSelect.obejtivos}" readonly="true" />
+        </div>
+        
+
+		<div class="p-field p-col-12 p-md-6">
+				<p:outputLabel for="peso" value="Peso en kg" style="font-weight: bold;">
+				
+				</p:outputLabel>
+				 <p:inputText id="peso" value="#{ent.depSelect.peso}"  readonly="true"/>
+				
+		</div>
+
+		<div class="p-field p-col-12 p-md-6">
+				<p:outputLabel for="altura" value="Altura en cm" style="font-weight: bold;"></p:outputLabel>
+				 <p:inputText id="altura" value="#{ent.depSelect.altura}"  readonly="true"/>
+		</div>
+			
+		<div class="p-field p-col-12 p-md-4">
+				<p:outputLabel for="frecuenciaMin" value="Frecuencia Min" style="font-weight: bold;"></p:outputLabel>
+				 <p:inputText id="frecuenciaMin" value="#{ent.depSelect.ferqCardMin}" readonly="true" />
+			
+		</div>
+
+		<div class="p-field p-col-12 p-md-4">
+				<p:outputLabel for="frecuenciaMax" value="Frecuencia Max" style="font-weight: bold;"></p:outputLabel>
+				<p:inputText id="frecuenciaMax" value="#{ent.depSelect.ferqCardMax}" readonly="true" />
+				
+				
+		</div>
+			
+			<div class="p-field p-col-12 p-md-4">
+				<p:outputLabel for="horas" value="Horas semanales" style="font-weight: bold;"></p:outputLabel>
+				<p:inputText id="horas" value="#{ent.depSelect.dispHoraria}" readonly="true" />
+				
+			
+			
+			</div>
+			         <div class="p-field p-col-12">
+            <p:outputLabel for="alergias" value="Alergias" style="font-weight: bold;"/>
+            	<p:inputText id="alergias" value="#{ent.depSelect.alergias}" readonly="true" />
+     
+        	</div>
+        	
+        	         <div class="p-field p-col-12">
+            <p:outputLabel for="lesiones" value="Lesiones" style="font-weight: bold;"/>
+            <p:inputText id="lesiones" value="#{ent.depSelect.lesiones}"  readonly="true"/>
+            
+        
+        </div>
+        
+                 <div class="p-field p-col-12">
+            <p:outputLabel for="sociedad" value="Ingrese Sociedad Medica" style="font-weight: bold;"/>
+               <p:inputText id="sociedad" value="#{ent.depSelect.sociedadMedica}"  readonly="true"/>
+       
+        </div>
+        
+                 <div class="p-field p-col-12">
+            <p:outputLabel for="porbsalud" value="Problemas de Salud" style="font-weight: bold;"/>
+             <p:inputText id="porbsalud" value="#{ent.depSelect.probSalud}" readonly="true" />
+           
+        </div>
+      
+        </div>
+      
+        
+        </h:form>
+	</ui:define>
+
+</ui:composition>

@@ -13,6 +13,7 @@
 	<class>com.entidades.Entrenador</class>
 	<class>com.entidades.Entrenamiento</class>
 	<class>com.entidades.PlanEntr</class>
+	<class>com.entidades.ResultadosEnto</class>
 	<class>com.entidades.Usuario</class>
 	<exclude-unlisted-classes>true</exclude-unlisted-classes>
 	

@@ -23,13 +23,8 @@ public class AsignarEnto implements Serializable {
 	@JoinColumn(name="ID_ENTRENAMIENTO")
 	private Entrenamiento entrenamiento;
 	
-
-	
-	
 	@ManyToMany
 	private List<Deportista> listDeportista;
-	
-
 
 	@ManyToOne
 	@JoinColumn(name="ID_ENTRENADOR")
@@ -47,7 +42,68 @@ public class AsignarEnto implements Serializable {
 	
 	private Float tiempoTotal;
 	
+	
 	private String comentarios;
+
+	private String completado;
+	
+	private Long tiempoReal1;
+	private Long tiempoReal2;
+	private Long tiempoReal3;
+	private Long tiempoReal4;
+	private Long tiempoReal5;
+
+	
+	
+	public Long getTiempoReal1() {
+		return tiempoReal1;
+	}
+
+
+	public void setTiempoReal1(Long tiempoReal1) {
+		this.tiempoReal1 = tiempoReal1;
+	}
+
+
+	public Long getTiempoReal2() {
+		return tiempoReal2;
+	}
+
+
+	public void setTiempoReal2(Long tiempoReal2) {
+		this.tiempoReal2 = tiempoReal2;
+	}
+
+
+	public Long getTiempoReal3() {
+		return tiempoReal3;
+	}
+
+
+	public void setTiempoReal3(Long tiempoReal3) {
+		this.tiempoReal3 = tiempoReal3;
+	}
+
+
+	public Long getTiempoReal4() {
+		return tiempoReal4;
+	}
+
+
+	public void setTiempoReal4(Long tiempoReal4) {
+		this.tiempoReal4 = tiempoReal4;
+	}
+
+
+	public Long getTiempoReal5() {
+		return tiempoReal5;
+	}
+
+
+	public void setTiempoReal5(Long tiempoReal5) {
+		this.tiempoReal5 = tiempoReal5;
+	}
+
 
 	public AsignarEnto() {
 		super();
@@ -160,6 +216,21 @@ public class AsignarEnto implements Serializable {
 	public void setComentarios(String comentarios) {
 		this.comentarios = comentarios;
 	}
+
+
+	public String getCompletado() {
+		return completado;
+	}
+
+
+	public void setCompletado(String completado) {
+		this.completado = completado;
+	}
+
+
+
+
+
 
    
 }

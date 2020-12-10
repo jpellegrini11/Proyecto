@@ -73,5 +73,20 @@
 	<classpathentry kind="lib" path="C:/Users/Administrador/Downloads/google-api-client-assembly-1.30.2-1.30.2/google-api-java-client/libs/protobuf-java-2.6.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Administrador/Downloads/google-api-client-assembly-1.30.2-1.30.2/google-api-java-client/libs/transaction-api-1.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Administrador/Downloads/google-api-client-assembly-1.30.2-1.30.2/google-api-java-client/libs/xpp3-1.1.4c.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Administrador/Downloads/firebase-admin-7.0.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-codec-1.9.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/fluent-hc-4.5.3.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/httpclient-4.5.3.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/httpclient-cache-4.5.3.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/httpclient-win-4.5.3.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/httpcore-4.4.6.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/httpmime-4.5.3.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jackson-annotations-2.9.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jackson-core-2.9.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jackson-databind-2.3.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jna-4.1.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jna-platform-4.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Administrador/Downloads/jython-standalone-2.7.2.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

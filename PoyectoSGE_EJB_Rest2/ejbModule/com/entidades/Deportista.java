@@ -34,6 +34,10 @@ public class Deportista implements Serializable {
 	private Float ferqCardMin;
 	private Long compPerfil;
 	private String perfil;
+	private String fotoPerfil;
+	private String tokenPolarFlow;
+	private Long tokenExpire;
+	private Long userIdPolarFlow;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_entrenador")
@@ -287,6 +291,40 @@ public class Deportista implements Serializable {
 	public void setListAsignarEnto(List<AsignarEnto> listAsignarEnto) {
 		this.listAsignarEnto = listAsignarEnto;
 	}
+
+	public String getFotoPerfil() {
+		return fotoPerfil;
+	}
+
+	public void setFotoPerfil(String fotoPerfil) {
+		this.fotoPerfil = fotoPerfil;
+	}
+
+	public String getTokenPolarFlow() {
+		return tokenPolarFlow;
+	}
+
+	public void setTokenPolarFlow(String tokenPolarFlow) {
+		this.tokenPolarFlow = tokenPolarFlow;
+	}
+
+
+	public Long getUserIdPolarFlow() {
+		return userIdPolarFlow;
+	}
+
+	public void setUserIdPolarFlow(Long userIdPolarFlow) {
+		this.userIdPolarFlow = userIdPolarFlow;
+	}
+
+	public Long getTokenExpire() {
+		return tokenExpire;
+	}
+
+	public void setTokenExpire(Long tokenExpire) {
+		this.tokenExpire = tokenExpire;
+	}
+
 
 
 	

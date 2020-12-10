@@ -1356,7 +1356,7 @@ a {
     .login-body .login-panel label {
       display: block;
       color: #f4f4f4;
-      margin: 24px 0 7px 0; }
+      margin: 5px 0 7px 0; }
     .login-body .login-panel input {
       background: transparent;
       border: 1px solid #dadada;
@@ -1493,7 +1493,7 @@ a {
     .landing-body .landing-wrapper .landing-header .landing-header-content {
       padding: 235px 0 0 150px; }
       .landing-body .landing-wrapper .landing-header .landing-header-content h1 {
-        font-size: 28px;
+        font-size: 22px;
         font-weight: 700;
         color: #ffffff;
         margin: 0; }

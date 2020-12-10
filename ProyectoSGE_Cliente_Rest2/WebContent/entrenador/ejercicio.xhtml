@@ -8,7 +8,31 @@
     <ui:define name="title">
         Entrenador - <span class="subitem">Crear ejercicios</span>
     </ui:define>
+		<h:outputStylesheet name="css/layout.css" library="showcase" />
+	<h:outputStylesheet name="schedule/schedule.css" library="showcase" />
+    <h:outputStylesheet name="css/sh.css" library="showcase" />
+	<h:outputStylesheet name="css/nanoscroller.css" library="showcase" />
+	<h:outputStylesheet name="css/primeflex.css" library="showcase" />
 
+    <h:outputStylesheet name="inputswitch/inputswitch.css" library="showcase" />
+    <h:outputStylesheet name="css/theme.css" library="showcase" />
+    <h:outputStylesheet name="css/components.css" library="showcase" />
+	<!-- For Community Themes except 'Luna' and 'Nova' theme -->
+	<h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+
+
+
+        <h:outputScript name="jquery/jquery.js" library="primefaces"/>
+        <h:outputScript name="jquery/jquery-plugins.js" library="primefaces"/>
+
+        <h:outputScript name="inputswitch/inputswitch.js" library="showcase" />
+        <h:outputScript name="css/core.js" library="showcase"/>
+        <h:outputScript name="css/components.js" library="showcase"/>
+        
+
+	<h:outputScript name="script/nanoscroller.js" library="showcase" />
+	<h:outputScript name="script/layout.js" library="showcase" />
+	<h:outputScript name="schedule/schedule.js" library="showcase" />
     <ui:define name="head">
         <script type="text/javascript">
  
@@ -33,6 +57,7 @@
     <div class="ui-fluid p-formgrid p-grid">
 
  		<div class="p-field p-col-12 ">
+ 		
             <p:outputLabel for="nombre" value="Nombre de Ejercicio" />
             <p:inputText id="nombre" value="#{eje.nombre}"  required="true"
 					 requiredMessage="Debe ingresar Nombre"/> 
@@ -43,7 +68,7 @@
             <p:inputTextarea id="descripcion" value="#{eje.descripcion}" rows="4" />
         </div>
 
-			<div class="p-field p-col-12 p-md-6">
+<!-- 			<div class="p-field p-col-12 p-md-6">
 						<p:outputLabel for="deporte" value="Deporte" /> 
 			<p:selectOneMenu id="deporte" value = "#{eje.deporte}">
             	<f:selectItem itemLabel="NATACION" itemValue="NATACION"/>
@@ -52,7 +77,7 @@
 				<f:selectItem itemLabel="GYM Y EQUIPO FITNESS" itemValue="GYM Y EQUIPO FITNESS"/>
 				
 			</p:selectOneMenu>
-          </div>
+          </div> -->
  		<div class="p-field p-col-12  p-md-6">
             <p:outputLabel for="linkVideo" value="Link del video" />
             <p:inputText id="linkVideo" value="#{eje.linkVideo}"/>

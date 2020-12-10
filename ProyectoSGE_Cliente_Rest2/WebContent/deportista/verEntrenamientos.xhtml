@@ -9,6 +9,32 @@
           Entrenador - <span class="subitem">Ver entrenamientos</span>
     </ui:define>
     
+    		<h:outputStylesheet name="css/layout.css" library="showcase" />
+	<h:outputStylesheet name="schedule/schedule.css" library="showcase" />
+    <h:outputStylesheet name="css/sh.css" library="showcase" />
+	<h:outputStylesheet name="css/nanoscroller.css" library="showcase" />
+	<h:outputStylesheet name="css/primeflex.css" library="showcase" />
+
+    <h:outputStylesheet name="inputswitch/inputswitch.css" library="showcase" />
+    <h:outputStylesheet name="css/theme.css" library="showcase" />
+    <h:outputStylesheet name="css/components.css" library="showcase" />
+	<!-- For Community Themes except 'Luna' and 'Nova' theme -->
+	<h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+
+
+
+        <h:outputScript name="jquery/jquery.js" library="primefaces"/>
+        <h:outputScript name="jquery/jquery-plugins.js" library="primefaces"/>
+
+        <h:outputScript name="inputswitch/inputswitch.js" library="showcase" />
+        <h:outputScript name="css/core.js" library="showcase"/>
+        <h:outputScript name="css/components.js" library="showcase"/>
+        
+
+	<h:outputScript name="script/nanoscroller.js" library="showcase" />
+	<h:outputScript name="script/layout.js" library="showcase" />
+	<h:outputScript name="schedule/schedule.js" library="showcase" />
+	
     <ui:define name="head">
         <script type="text/javascript">
  
@@ -39,6 +65,24 @@
                 width: 85%;
                 padding-left: 25px;
             }
+            
+            .fc-button-group {
+    position: relative;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: grid;
+    vertical-align: middle;
+    
+}
+
+            .fc-button-group>.fc-button:not(:last-child) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-top: 2px;
+}
+		
+		
+
         </style>
         
   </ui:define>
@@ -52,43 +96,57 @@
 <!--     <ui:param name="widgetLink" value="dataview" /> -->
 
     <ui:define name="implementation">
+    
+ <h:form>   
+        	<p:commandLink id="btnSincDep" action="homeDep">
+			<h:graphicImage height="25px" width="25px"
+					value="/resources/showcase/images/icons/iconBack.png"></h:graphicImage>
+			</p:commandLink>
+			</h:form>
+			
 <h:form id="form1">
-   
+ 
+			 
     <p:growl id="messages" showDetail="true"  sticky="true" > 
     <p:autoUpdate></p:autoUpdate>
     </p:growl>
     
+   	<div class="p-fluid">
    	
+
+			
+   	<p:panelGrid layout="flex" columns="1">
 					
-        <p:schedule id="schedule" value="#{dep.eventModel}" draggable="false" scrollTime="2:00:00" >
+        <p:schedule id="schedule" value="#{dep.eventModel}" draggable="false"  >
  		
            
             <p:ajax event="eventResize" listener="#{dep.onEventResize}" update="messages"  />
  
         </p:schedule>
         
-
+</p:panelGrid>
+  <p:separator style="border:transparent"></p:separator>
    <p:dataView id="idDataView" var="a" value="#{dep.listAsig}" gridIcon="pi pi-th-large"  
    					listIcon="pi pi-bars" layout="grid">
  
          <p:dataViewGridItem>
             <p:panel header="#{a.entrenamiento.nombre}" style="text-align:center">
-                <h:panelGrid columns="1" style="width:70%">
+                <h:panelGrid columns="1" style="width:95%">
                 <p:graphicImage name="#{a.entrenamiento.deporte}.png"   library="imagesDep" cache="false" />
                    
- 					
-                    <h:outputText value="#{a.entrenamiento.deporte}" />
+ 					     <h:outputText value="Fecha Inicio y Fin" />
+                    <h:outputText value="#{a.fechaIni} / #{a.fechaFin}" />
                     
-                    <h:outputText value="#{a.fechaIni}" />
+                    <h:outputText value="#{a.entrenador.nombre}" />
  					
-                    <p:commandLink update=":form1:carDetail" oncomplete="PF('carDialog').show()" title="View Detail">
+                <p:commandLink action="/deportista/resultadosEnto" title="View Detail">
                         <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;" />
                         <f:setPropertyActionListener value="#{a}" target="#{dep.selectAsig}" />
                     </p:commandLink>
                 </h:panelGrid>
             </p:panel>
         </p:dataViewGridItem>
-        
+         
         
         <p:dataViewListItem id="idDataViewListItem">
             <h:panelGrid  id="idPanelGrid" columns="3" style="width:100%" columnClasses="logo,detail" >
@@ -104,12 +162,15 @@
                         
 						<h:outputText value="Fecha Inicio :" />
                       <h:outputText value="#{a.fechaIni}" />
+                      
+                      
+                      <h:outputText value="#{a.entrenador.nombre}" />
                    
 					
 					 </h:panelGrid>
                 </p:outputPanel>
                 
-                <p:commandLink update=":form1:carDetail" oncomplete="PF('carDialog').show()" title="View Detail">
+                <p:commandLink action="/deportista/resultadosEnto" title="View Detail">
                     <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;" />
                     <f:setPropertyActionListener value="#{a}" target="#{dep.selectAsig}" />
                    </p:commandLink>
@@ -118,105 +179,64 @@
         
     </p:dataView>
  
- <p:dialog header="Entrenamiento Info" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-        <p:outputPanel id="carDetail" style="text-align:center;">
-        
-<p:dataTable id="tablaModif" var="e" value="#{dep.selectAsig.entrenamiento.listEntEjer}"
-			 binding="#{entrena.entSelect}" reflow="true" >
-			
-			<p:column headerText="Ejercicio :" style="font: bold">
-			<p:outputLabel id="t1" value="#{e.ejercicios.nombre}" disabled="true" />
-
-			</p:column>
-
-			<p:column headerText="Rep :" style="font: bold">
-				<p:outputLabel id="t2" value="#{e.repeticiones}" />
-				
-			</p:column>
-
-			<p:column headerText="Int :" style="font: bold">
-				<p:outputLabel id="t3" value="% #{e.intensidad}"  />
-
-			</p:column>
-
-			<p:column headerText="" >
-					   <p:commandLink title="Descripcion" action="/">
-					                            <h:outputText styleClass="pi pi-list" style="margin:0 auto;" />
-					
-					   	<p:confirm  icon="" header="Descripcion Ejercicos :" message="#{e.ejercicios.descripcion}" />
-						
-						</p:commandLink>
-						    			<p:confirmDialog id="idConfirmDialog" global="true" showEffect="fade" hideEffect="fade">
-    
-   		 </p:confirmDialog>
-						
-				</p:column>	
-				
-					<p:column headerText="" >
-					
-					<h:outputLink value="http://youtube.com" target="_blank">
-			
-			
-                            <h:outputText styleClass="pi pi-external-link" style="margin:0 auto;" />
-                                   
-                                
-                       </h:outputLink>        
-                
-	
-			</p:column>
 
 
-             </p:dataTable>
-             
-             <p:separator></p:separator>	
-            
-             <p:outputLabel>Complete los siguentes datos para enviarlos a su entrenador</p:outputLabel>
-            
-               <p:separator></p:separator>
-             <div class="ui-fluid p-formgrid p-grid">
-
-  <div class="p-field p-col-12 p-md-4"> 
-  				 
-       <p:inputText id="freq" value="#{dep.freqCard}" placeholder="Freq Cardiaca"/>
-      
-   </div>
-   
-    <div class="p-field p-col-12 p-md-4"> 
-  				 
-       <p:inputText id="veloc" value="#{dep.velocidad}" placeholder="Velocidad"/>
-      
-   </div>
-   
-       <div class="p-field p-col-12 p-md-4"> 
-  				 
-       <p:inputText id="tiempo" value="#{dep.tiempoTotal}" placeholder="Tiempo Total"/>
-      
-   </div>
-   
-          <div class="p-field p-col-12"> 
-  				 
-       <p:inputTextarea id="coment" value="#{dep.comentario}"  rows="4"  placeholder="Comentarios"/>
-      
-   </div>
-   
-
-      
-   
-    <div class="p-field p-col-12 p-md-12"> 
-					<p:commandButton value="Enviar" action="#{dep.guardarAsignarEnto()}" onsuccess="#{dep.upGuardar}" onstart="this.disabled=true;">
-   						
-					    			
-    				</p:commandButton>
-       </div>       
-             
- </div>    
-      </p:outputPanel> 
-    </p:dialog>
-
-
+</div>
 
 </h:form>
+<style type="text/css">         
+            
+            .fc-button-group {
+    position: relative;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: grid;
+    vertical-align: middle;
+    
+}
+.fc-button-group>.fc-button:not(:first-child) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    margin-top: 2px;
+}
 
+.fc-toolbar>*>:not(:first-child) {
+    margin-left: 0.1px;
+    margin-top: 2px;
+}
+.fc-toolbar h2 {
+    font-size: 16px;
+    margin: 10px;
+}
+
+.fc-unthemed th, .fc-unthemed td, .fc-unthemed thead, .fc-unthemed tbody, .fc-unthemed .fc-divider, .fc-unthemed .fc-row, .fc-unthemed .fc-content, .fc-unthemed .fc-popover, .fc-unthemed .fc-list-view, .fc-unthemed .fc-list-heading td {
+    border-color: #ddd;
+    font-size: xx-small;
+}
+
+element.style {
+    overflow: hidden scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 100%;
+}
+.cnat{
+background-color: cadetblue;
+}
+.cbic{
+background-color: blueviolet;
+}
+.ccor{
+background-color: yellowgreen;
+}
+.cgym{
+background-color: tomato;
+}
+.ui-panelgrid {
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+        </style>
     </ui:define>
 
 </ui:composition>

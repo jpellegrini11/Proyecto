@@ -4,11 +4,11 @@
 
     
     <div class="layout-topbar">
-        <a id="menu-button" href="#">
+        <a id="menu-button">
             <i class="pi pi-bars"></i>
         </a>
         
-        <p:commandLink class="logo-container"  onclick="fire.jsf">
+        <p:commandLink class="logo-container"  action="login2">
        
             <p:graphicImage name="images/logoSGE6.svg" library="showcase" />
         </p:commandLink>
@@ -17,9 +17,11 @@
 <!--             <li> -->
 <!--                 <h:link outcome="/getstarted">Get Started</h:link> -->
 <!--             </li> -->
+
             <li class="topbar-submenu">
-                <a href="#"></a>
+               
                 <div class="topbar-themes-submenu">
+                
 <!--                     <ul> -->
 <!--                         <li class="topbar-submenu-header">THEMING</li> -->
 <!--                         <li><a href="https://www.primefaces.org/designer/primefaces"><i class="pi pi-fw pi-palette" /><span>Designer</span></a></li> -->
@@ -79,9 +81,38 @@
 <!--                     <li><a href="https://twitter.com/primefaces?lang=en" target="_blank"><span>Twitter</span></a></li> -->
 <!--                     <li><a href="https://www.primefaces.org/whouses/" target="_blank"><span>Who Uses</span></a></li> -->
 <!--                     <li><a href="https://www.primefaces.org/newsletter" target="_blank"><span>Newsletter</span></a></li> -->
+					
+					                    <li>
+  		
+       		
+            <p:graphicImage  value="#{login.fotoUrl}" height="50px" width="50px" style="border-radius: 50%;">
+            
+             </p:graphicImage>
+            
+            <br />
+            	<p:outputLabel value="#{login.nomCompleto()}" style="margin-bottom: 10px;"> </p:outputLabel>
+        		                
+        		</li>
+        		
+<!-- 					 <li> -->
+					 
+<!--                     <p:commandLink  > -->
+                    
+<!--                     </p:commandLink> -->
+<!--                     </li> -->
+                    
+					 <li>
+                 <p:commandLink  value="Perfil"  action="verPerfilDep" rendered="#{login.perfilEnt()}" > </p:commandLink>
+                    </li>
+                    <li>
+                 <p:commandLink  value="Perfil"  action="verPerfilEnt" rendered="#{login.perfilDep()}" > </p:commandLink>
+                    </li>
+                                        
                     <li>
                  <p:commandLink  onclick="signOut2()" value="Logout" update="@this" action="#{login.signOut()}" > </p:commandLink>
                     </li>
+                    
+                   
                 </ul>
             </li>
         </ul>

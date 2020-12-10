@@ -10,9 +10,11 @@ import javax.ejb.Stateless;
 
 import com.dao.AsignarEntoDao;
 import com.dao.DeportistaDao;
+import com.dao.EntrenaDao;
 import com.dao.EntrenadorDao;
 import com.entidades.AsignarEnto;
 import com.entidades.Deportista;
+import com.entidades.Entrena;
 import com.utils.SessionUtils;
 
 @Stateless
@@ -28,6 +30,9 @@ public class DeportistaEjb {
 	@EJB
 	AsignarEntoDao asignarEntoDao;
 	
+	@EJB
+	EntrenaDao entrenaDao;
+	
 	List<AsignarEnto> listAsignarEnto;
 
 	 
@@ -35,7 +40,29 @@ public class DeportistaEjb {
 		
 	}
 
+ 	public Boolean isToken() {
+		Boolean isTokendep = true;
+ 		String usuario = (String) SessionUtils.getRequest().getSession(false).getAttribute("usuario");
+		Deportista dep = deportistaDao.obtenerDeportistaIgual(usuario);
+		
+		if(dep.getTokenPolarFlow()!=null) {
+			isTokendep=false;
+		}
+		
+		return isTokendep;
+ 		
+ 	}
  
+ 	public void guardarTokenPolarFlow(String token, Long tokenExpire, Long userIdPolarFlow) {
+ 		
+		String usuario = (String) SessionUtils.getRequest().getSession(false).getAttribute("usuario");
+		Deportista dep = deportistaDao.obtenerDeportistaIgual(usuario);
+		System.out.println("metodo guarda token dep");
+		dep.setTokenPolarFlow(token);
+		dep.setTokenExpire(tokenExpire);
+		dep.setUserIdPolarFlow(userIdPolarFlow);
+ 		
+ 	}
     
     public String guardarPerfilEjb(String sociedadMedica, Float peso, Float altura, String dispHoraria, String alergias,
 			String lesiones, String probSalud, String obejtivos, Float ferqCardMax, Float ferqCardMin,String nomCompleto)
@@ -137,9 +164,29 @@ public class DeportistaEjb {
 		}
 
 	 
-	public void borrar(Long idDeportista) throws SQLException {
+	public void borrar() throws SQLException {
 		
-			this.deportistaDao.borrarDeportista(idDeportista);
+		String usuario = (String) SessionUtils.getRequest().getSession(false).getAttribute("usuario");
+		List<Entrena> listEntrena = entrenaDao.obternerTodos();
+		List<Entrena> listEntrena2 = new ArrayList<Entrena>();
+		
+		
+		Long idDeportista =deportistaDao.obtenerDeportistaIgual(usuario).getIdDesportista();
+		
+		System.out.println("idDeportista ="+idDeportista);
+		
+		if(listEntrena.size()>0) {
+			for (Entrena e : listEntrena) {
+				if(e.getDeportista().getIdDesportista().equals(idDeportista));
+				System.out.println("suma size listaEntrena");
+				listEntrena2.add(e);
+System.out.println("listEntrena2 size= "+listEntrena2.size());
+			}
+			}
+		if(listEntrena2.size()>0) {
+		System.out.println("paso for listEntrena2.size() "+listEntrena2.size());
+		}	
+		this.deportistaDao.borrarDeportista(idDeportista,listEntrena2);
 	
 	}
 	

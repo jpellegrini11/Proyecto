@@ -91,6 +91,16 @@ window.onload = function() {
 
 
     }
+   function signOut2() {
+			
+ 		console.log('entro signOut');
+             if (firebase.auth().currentUser) {
+   		          	       
+     	        firebase.auth().signOut();
+     	        location.reload();
+     	      }
+             }; 
+             
    </script>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -105,25 +115,38 @@ window.onload = function() {
 	</f:facet>
 	<title>SGE</title>
 
-	<h:outputStylesheet name="css/sh.css" library="showcase" />
+
+		<h:outputStylesheet name="css/layout.css" library="showcase" />
+	<h:outputStylesheet name="schedule/schedule.css" library="showcase" />
+    <h:outputStylesheet name="css/sh.css" library="showcase" />
 	<h:outputStylesheet name="css/nanoscroller.css" library="showcase" />
 	<h:outputStylesheet name="css/primeflex.css" library="showcase" />
 
+    <h:outputStylesheet name="inputswitch/inputswitch.css" library="showcase" />
+    <h:outputStylesheet name="css/theme.css" library="showcase" />
+    <h:outputStylesheet name="css/components.css" library="showcase" />
 	<!-- For Community Themes except 'Luna' and 'Nova' theme -->
-	<h:outputStylesheet name="primeicons/primeicons.css"
-		library="primefaces" />
+	<h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
 
 
-	<h:outputScript name="jquery/jquery.js" library="primefaces" />
-	<h:outputScript name="jquery/jquery-plugins.js" library="primefaces" />
+
+        <h:outputScript name="jquery/jquery.js" library="primefaces"/>
+        <h:outputScript name="jquery/jquery-plugins.js" library="primefaces"/>
+
+        <h:outputScript name="inputswitch/inputswitch.js" library="showcase" />
+        <h:outputScript name="css/core.js" library="showcase"/>
+        <h:outputScript name="css/components.js" library="showcase"/>
+        
+
 	<h:outputScript name="script/nanoscroller.js" library="showcase" />
 	<h:outputScript name="script/layout.js" library="showcase" />
+	<h:outputScript name="schedule/schedule.js" library="showcase" />
 
 	<ui:insert name="head" />
 
 </h:head>
 
-<h:body>
+<h:body class="">
 
 
 	<div class="layout-wrapper">
@@ -157,11 +180,11 @@ window.onload = function() {
 					<ui:insert name="submenu"></ui:insert>
 				</div>
 				<div class="content-section content-introduction">
-					<h1>
+					<h2 style="color: white;"> 
 						<ui:insert name="title"> Bienvenido a SGE</ui:insert>
-					</h1>
+					</h2>
 					<p>
-						<ui:insert name="description">SGE (Sistema de Gestion de Entrenamientos) es una aplicacion para deportistas y entrenadores. Permite entrenarce con diferentes entrendadores y seguir obejtivos profesionales.     </ui:insert>
+						<ui:insert name="description">SGE (Sistema de Gestion de Entrenamientos) es una aplicacion para deportistas y entrenadores. Permite entrenarce y alcanzar obejtivos profesionales.     </ui:insert>
 					</p>
 
 				</div>
@@ -197,7 +220,8 @@ window.onload = function() {
 
 	<ui:insert name="body"></ui:insert>
 
-	<h:outputStylesheet name="css/layout.css" library="showcase" />
+	
+	
 </h:body>
 
 </html>

@@ -46,6 +46,8 @@ public class Entrenamiento implements Serializable {
 	@OneToMany (mappedBy = "entrenamiento")
 	private List<EntEjer> listEntEjer;
 	
+	
+	
 	public Entrenamiento(){
 		
 	}

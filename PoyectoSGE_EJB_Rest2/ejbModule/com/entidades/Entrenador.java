@@ -31,6 +31,8 @@ public class Entrenador implements Serializable {
 	private	String	ubicacion;
 	private Long compPerfil;
 	private String perfil;
+	private String fotoPerfil;
+	private String usuDep;
 
 	@OneToMany(mappedBy = "entrenador", fetch=FetchType.EAGER)
 	private List<Ejercicios> listEjer;
@@ -234,6 +236,26 @@ public class Entrenador implements Serializable {
 
 	public void setPerfil(String perfil) {
 		this.perfil = perfil;
+	}
+
+
+	public String getFotoPerfil() {
+		return fotoPerfil;
+	}
+
+
+	public void setFotoPerfil(String fotoPerfil) {
+		this.fotoPerfil = fotoPerfil;
+	}
+
+
+	public String getUsuDep() {
+		return usuDep;
+	}
+
+
+	public void setUsuDep(String usuDep) {
+		this.usuDep = usuDep;
 	}
 
 

@@ -1,0 +1,189 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./homeEnt.xhtml">
+
+    <ui:define name="title">
+        Entrenador - <span class="subitem">Analisis entrenamientos del deportista</span>
+    </ui:define>
+
+	<h:outputStylesheet name="css/layout.css" library="showcase" />
+	<h:outputStylesheet name="schedule/schedule.css" library="showcase" />
+    <h:outputStylesheet name="css/sh.css" library="showcase" />
+	<h:outputStylesheet name="css/nanoscroller.css" library="showcase" />
+	<h:outputStylesheet name="css/primeflex.css" library="showcase" />
+
+    <h:outputStylesheet name="inputswitch/inputswitch.css" library="showcase" />
+    <h:outputStylesheet name="css/theme.css" library="showcase" />
+    <h:outputStylesheet name="css/components.css" library="showcase" />
+	<!-- For Community Themes except 'Luna' and 'Nova' theme -->
+	<h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+	<h:outputStylesheet name="css/charts.css" library="showcase" />
+
+
+
+        <h:outputScript name="jquery/jquery.js" library="primefaces"/>
+        <h:outputScript name="jquery/jquery-plugins.js" library="primefaces"/>
+
+        <h:outputScript name="inputswitch/inputswitch.js" library="showcase" />
+        <h:outputScript name="css/core.js" library="showcase"/>
+        <h:outputScript name="css/components.js" library="showcase"/>
+        
+
+	<h:outputScript name="script/nanoscroller.js" library="showcase" />
+	<h:outputScript name="script/layout.js" library="showcase" />
+	<h:outputScript name="schedule/schedule.js" library="showcase" />
+	
+<ui:define name="head">
+        <script type="text/javascript">
+ 
+                          function signOut() {
+              				
+                      		console.log('entro signOut');
+                                  if (firebase.auth().currentUser) {
+                        		          	       
+                          	        firebase.auth().signOut();
+                          	        location.reload();
+                          	      }
+                                  }; 
+                                  </script>
+                                  
+        <style type="text/css">   
+        
+        .jqplot-title {
+
+        margin-top: -3px;
+
+}
+      
+
+
+
+        </style>
+        
+                                  </ui:define>
+    <ui:define name="description">
+           Seguimiento de los resultados de los entrenamientos repesentado en graficos.
+    </ui:define>
+
+
+    <ui:define name="implementation">
+    
+ <h:form>   
+        	<p:commandLink id="btnSincDep" action="/entrenador/botonesSegDep">
+			<h:graphicImage height="25px" width="25px"
+					value="/resources/showcase/images/icons/iconBack.png"></h:graphicImage>
+			</p:commandLink>
+			</h:form>
+
+		 <h:form>
+		 
+       
+        <h4 style="color: #116fbf;margin-left:10%;margin-right:10%;font-family: -webkit-pictograph;"> Gráfico barras anual 2020, horas dedicadas por deporte en el mes.</h4>
+       
+        <p:chart id="chart1" type="bar" model="#{chartEntPrueba.horizontalBarModel}"  style="height:90%;width:100%;" responsive="true"> 
+		
+		</p:chart>
+        
+         <p:separator style="border:transparent"></p:separator>
+         
+        <h4 style="color: #116fbf;margin-left:10%;margin-right:10%;font-family: -webkit-pictograph;">
+         Gráfico barras anual 2020, horas dedicadas por deporte Correr en el mes, comparado con las horas exigidas por el entrenador.</h4>
+
+        <p:chart id="chart2" type="bar" model="#{chartEntPrueba.horizontalBarModel2}"  style="height:90%;width:100%;" responsive="true"/>
+     
+      <p:separator style="border:transparent"></p:separator>
+      
+      <h4 style="color: #116fbf;margin-left:10%;margin-right:10%;font-family: -webkit-pictograph;">
+      Gráfico líneas, de velocidad media por entrenamientos y deportes(datos PolarFlow)
+      </h4>
+      
+       <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+        
+        <p:splitButton id="deportes" value="NATACION" action="#{ent.verGrafPlNadar()}"  update="panelGraficos" >
+            <p:menuitem value="CORRER" action="#{ent.verGrafPlCorrer()}"   update="panelGraficos"/>
+            <p:menuitem value="BICICLETA" action="#{ent.verGrafPlBici()}"  update="panelGraficos"/>
+            <p:separator />
+           
+        </p:splitButton>  
+                 </h:panelGrid> 
+   									 <p:outputPanel id="panelGraficos">
+                               <p:chart type="line" model="#{chartRendimientoPrueba.lineModelCorrer}" style="height:90%;width:100%;" responsive="true" rendered="#{ent.bolCorrer}"/>
+                       
+                               <p:chart type="line" model="#{chartRendimientoPrueba.lineModelCiclismo}"  responsive="true" style="height:90%;width:100%;" rendered="#{ent.bolBici}"/>
+            
+                           	   <p:chart type="line" model="#{chartRendimientoPrueba.lineModelNadar}"  responsive="true" style="height:90%;width:100%;" rendered="#{ent.bolNadar}"/>
+                 
+                  </p:outputPanel>
+
+<p:separator style="border:transparent"></p:separator>
+      
+      <h4 style="color: #116fbf;margin-left:10%;margin-right:10%;font-family: -webkit-pictograph;">
+      Gráfico de líneas cansancio individual, frecuencia cardíaca por entrenamiento y deportes(datos PolarFlow)
+      </h4>
+      
+       <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+        
+        <p:splitButton id="deportes2" value="NATACION" action="#{ent.verGrafPlNadar2()}"  update="panelGraficos2" >
+            <p:menuitem value="CORRER" action="#{ent.verGrafPlCorrer2()}"   update="panelGraficos2"/>
+            <p:menuitem value="BICICLETA" action="#{ent.verGrafPlBici2()}"  update="panelGraficos2"/>
+            <p:separator />
+           
+        </p:splitButton>  
+                 </h:panelGrid> 
+   									 <p:outputPanel id="panelGraficos2">
+                               <p:chart type="line" model="#{chartCansancioInd.lineModelCorrer}" style="height:90%;width:100%;" responsive="true" rendered="#{ent.bolCorrer2}">
+                              <p:autoUpdate></p:autoUpdate>
+                               </p:chart>
+                       
+                               <p:chart type="line" model="#{chartCansancioInd.lineModelCiclismo}"  responsive="true" style="height:90%;width:100%;" rendered="#{ent.bolBici2}">
+             <p:autoUpdate></p:autoUpdate>
+                               </p:chart>
+                           	   <p:chart type="line" model="#{chartCansancioInd.lineModelNadar}"  responsive="true" style="height:90%;width:100%;" rendered="#{ent.bolNadar2}">
+                  <p:autoUpdate></p:autoUpdate>
+                 
+                               </p:chart>
+                  </p:outputPanel>
+           
+               	</h:form>
+              
+            
+          <style type="text/css">         
+
+
+.layout-wrapper .layout-content .content-implementation {
+    padding: 2px;
+    background-color: #ffffff;
+    border: solid 1px #e1e7e8;
+}
+
+.layout-wrapper .layout-topbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    height: 70px;
+    background-color: #0a0808d6;
+    -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
+}
+
+
+
+
+
+
+
+        </style>
+        
+    </ui:define>
+    
+
+        
+ 
+
+</ui:composition>

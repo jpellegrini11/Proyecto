@@ -1,7 +1,13 @@
 package com.bean;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.io.Serializable;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -23,7 +29,7 @@ import javax.faces.component.UIData;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-
+import javax.net.ssl.HttpsURLConnection;
 
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntryResizeEvent;
@@ -35,23 +41,33 @@ import org.primefaces.model.LazyScheduleModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 import org.primefaces.model.StreamedContent;
+import org.primefaces.shaded.json.JSONArray;
+import org.primefaces.shaded.json.JSONObject;
+import org.python.core.PyObject;
+import org.python.util.PythonInterpreter;
 
 import com.dao.DeportistaDao;
 import com.dao.UsuarioDao;
 import com.entidades.AsignarEnto;
 import com.entidades.Deportista;
 import com.entidades.Ejercicios;
+import com.entidades.EntEjer;
 import com.entidades.Entrenador;
 import com.entidades.Entrenamiento;
+import com.entidades.ResultadosEnto;
 import com.entidades.Usuario;
+import com.google.common.io.CharStreams;
 import com.servicios.AsignarEntoEjb;
 import com.servicios.DeportistaEjb;
 import com.servicios.EntrenadorEjb;
+import com.servicios.ResultadosEntoEjb;
 import com.servicios.UsuarioEjb;
+import com.utils.SessionUtils;
 
 
 @Named("dep")
-@ViewScoped
+@ManagedBean
+@SessionScoped
 
 
 public class DeportistaBean implements Serializable {
@@ -68,6 +84,8 @@ public class DeportistaBean implements Serializable {
 	UsuarioDao usuarioDao;
 	@EJB
 	UsuarioEjb usuarioEjb;
+	@EJB
+	ResultadosEntoEjb resultadosEntoEjb;
 	
 	@EJB
 	AsignarEntoEjb asignarEntoEjb;
@@ -87,6 +105,7 @@ public class DeportistaBean implements Serializable {
 	private String usuario;
 	private Long compPerfil;
 	
+	
 	private String strBuscar;
 
 	private List<Entrenador> entListAll;
@@ -101,11 +120,13 @@ public class DeportistaBean implements Serializable {
 	private List<Entrenamiento> listEnto ; 
 	private Entrenamiento selectEnto ; 
 	
-	private Float freqCard;
-	private Float velocidad;
+	private Integer freqCard;
+	private Double velocidad;
 	private Float tiempoTotal;
 	private String comentario;
 	private String upGuardar;
+	private Boolean siToken;
+
 
 	 private ScheduleModel eventModel;
 	    
@@ -129,6 +150,27 @@ public class DeportistaBean implements Serializable {
 	    private String columnHeaderFormat="";
 	    private String str;
 
+		private String token;
+
+		private String id_usuario;
+
+		private String transaction_id;
+		private ResultadosEnto resultadosEnto;
+
+		private Object text3;
+
+		private Deportista dep1;
+
+		private String deporte;
+		private String deporteSelect="";
+		private List<String> listDeportes = new ArrayList<String>();
+
+		private boolean bolCorrer = false;
+		private boolean bolNadar = true;
+		private boolean bolBici = false;
+		private boolean bolCorrer2 = false;
+		private boolean bolNadar2 = true;
+  	    private boolean bolBici2 = false;
 
 	public DeportistaBean() {
 
@@ -138,18 +180,43 @@ public class DeportistaBean implements Serializable {
 		
 		
 	}
-	
-
-	
-
  
     @PostConstruct
     public void init() {
     	
+    	System.out.println("init DepBean");
     	
-//    	listAsig= asignarEntoEjb.listarAsigDep();
+    	if(SessionUtils.getRequest().getRequestURI().contains("/ProyectoSGE_Cliente_Rest1/entrenador/")) {
+    		System.out.println("if init Dep SessionUtils.getRequest().getRequestURI() No carga graficos");
+			
+    	}else {
+    		
+    	System.out.println("init DepBean desde ent");
+		 String usuario = (String) SessionUtils.getRequest().getSession(false).getAttribute("usuario");
+			 dep1 = deportistaDao.obtenerDeportistaIgual(usuario);
+			
+			if(dep1.getTokenPolarFlow() != null) {
+			
+				token = dep1.getTokenPolarFlow();
+			id_usuario =String.valueOf(dep1.getUserIdPolarFlow());
+			
+			System.out.println("RelojInteligenteBean token= " +token);
+			System.out.println("RelojInteligenteBean id_usuario= " +id_usuario);
+//			cargarDatosPolarFlow();
+			
+			}else {
+				System.out.println("token vacio");
+			}
+
+    	siToken = deportistaEjb.isToken();
     	listAsig = deportistaEjb.listarAsigDep();
     	listEnto= new ArrayList<Entrenamiento>();
+    	listTodosUsu();
+    	
+    	listDeportes.add("CORRER");
+    	listDeportes.add("BICICLETA");
+    	listDeportes.add("NATACION");
+    	
 //    	System.out.println("init :"+listAsig.get(0).getEntrenador().getNombre()+" size"+listAsig.size());
 //    	
 //    	System.out.println("init :"+listAsig.get(0).getEntrenamiento().getNombre());
@@ -173,17 +240,37 @@ public class DeportistaBean implements Serializable {
         	System.out.println("for list asig2");
         	
         	System.out.println(a.getFechaIni());
-
+        	System.out.println(a.getFechaFin());
         	
         	
         	System.out.println("for list asig2");
+        	String backColor = null;
+        	switch (a.getEntrenamiento().getDeporte()) {
+			case "NATACION":
+				backColor = "cnat";
+				break;
+			case "BICICLETA":
+				backColor = "cbic";
+				break;
+			case "CORRER":
+				backColor = "ccor";
+				break;
+			case "GYM Y EQUIPO FITNESS":
+				backColor = "cgym";
+				break;
+
+			default:
+				break;
+			}
         	   event = DefaultScheduleEvent.builder()
         			   .title(a.getEntrenamiento().getNombre())
                        .startDate(fechaInicioCal(a.getFechaIni(),1))
                        .endDate(fechaInicioCal(a.getFechaFin(),2))
                        .description(a.getEntrenamiento().getDeporte())
+                       .styleClass(backColor)
                                              
                        .build();
+        	   
                eventModel.addEvent(event);
         	
 		}
@@ -200,24 +287,304 @@ public class DeportistaBean implements Serializable {
                 }
             }
         };
+    	}
+    }
+
+    public void verGrafPlCorrer() {
+    	System.out.println("metodo verGrafPlCorrer");
+    	
+			setBolCorrer(true);
+			setBolNadar(false);
+			setBolBici(false);
+    		}
+			 public void verGrafPlBici() {	
+				 System.out.println("metodo verGrafPlBici");
+			setBolCorrer(false);
+			setBolNadar(false);
+			setBolBici(true);
+			 }
+			 
+			 public void verGrafPlNadar() {	
+				 System.out.println("metodo verGrafPlNadar");
+			setBolCorrer(false);
+			setBolNadar(true);
+			setBolBici(false);
+		
+    }
+			 
+			 public void verGrafPlCorrer2() {
+			    	System.out.println("metodo verGrafPlCorrer");
+			    	
+						setBolCorrer2(true);
+						setBolNadar2(false);
+						setBolBici(false);
+			    		}
+						 public void verGrafPlBici2() {	
+							 System.out.println("metodo verGrafPlBici");
+						setBolCorrer2(false);
+						setBolNadar2(false);
+						setBolBici2(true);
+						 }
+						 
+						 public void verGrafPlNadar2() {	
+							 System.out.println("metodo verGrafPlNadar");
+						setBolCorrer2(false);
+						setBolNadar2(true);
+						setBolBici2(false);
+					
+			    }
+    
+ public void cargarDatosPolarFlow() {
+		
+		System.out.println("metodo cargaDatosPolar");
+						//ESTE ES UN POST
+						//OBTENER TRANSACTION_ID
+		
+			try {
+				
+				
+						URL urlPOST3 = new URL("https://www.polaraccesslink.com/v3/users/" + id_usuario + "/exercise-transactions");
+						try {		
+						HttpsURLConnection https3 = (HttpsURLConnection) urlPOST3.openConnection();
+						https3.setRequestMethod("POST");
+						//HEADERS
+						https3.setRequestProperty("Authorization", "Bearer " + token);
+						https3.setRequestProperty("Content-Type", "application/json");
+						https3.setDoOutput(true);
+						https3.connect();
+						text3 = null;
+					    try (Reader reader3 = new InputStreamReader(https3.getInputStream())) {
+					        text3 = CharStreams.toString(reader3);
+					    }
+					    System.out.println(text3.toString() + " devolucion del id transaction");
+					    
+					    if(!text3.toString().equals("")) {
+					    	
+					    
+						JSONObject json3 = new JSONObject(text3.toString());
+						int transaction_idInt = (int) json3.get("transaction-id");
+						transaction_id = String.valueOf(transaction_idInt);
+						System.out.println(transaction_id + "      transaction_id");
+						System.out.println();	
+						System.out.println("----------------HASTA ACA EL POST----------------");
+					    }
+					    
+						//ESTE ES UN GET
+						//OBTENER INFO DE USUARIO
+						URL urlGET = new URL("https://www.polaraccesslink.com/v3/users/" + id_usuario);
+						HttpsURLConnection httpsGet = (HttpsURLConnection) urlGET.openConnection();
+						httpsGet.setRequestMethod("GET");
+						//HEADERS
+						httpsGet.setRequestProperty("Authorization", "Bearer " + token);
+						httpsGet.setRequestProperty("Accept", "application/json;charset=UTF-8");
+						httpsGet.setDoOutput(true);
+						httpsGet.connect();
+						BufferedReader inGet = new BufferedReader(
+								  new InputStreamReader(httpsGet.getInputStream()));		
+						String inputLineGet;
+						StringBuffer contentGet = new StringBuffer();
+						while ((inputLineGet = inGet.readLine()) != null) {
+						    contentGet.append(inputLineGet);		   
+						}
+						inGet.close();
+						JSONObject jsonGet = new JSONObject(contentGet.toString());
+						System.out.println(contentGet + "      content");
+						System.out.println();
+						System.out.println("--------------HASTA ACA EL GET----------------");
+					    
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} catch (MalformedURLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+						//ESTE ES UN GET
+						//OBTENER EXCERCISE_ID
+						
+			if(!text3.toString().equals("")) {
+							try {
+								
+								
+								URL urlGET2 = new URL("https://www.polaraccesslink.com/v3/users/" + id_usuario + "/exercise-transactions/" + transaction_id);
+								try {		
+						HttpsURLConnection httpsGet2 = (HttpsURLConnection) urlGET2.openConnection();
+						httpsGet2.setRequestMethod("GET");
+						//HEADERS
+						httpsGet2.setRequestProperty("Authorization", "Bearer " + token);
+						httpsGet2.setRequestProperty("Accept", "application/json;charset=UTF-8");
+						httpsGet2.setDoOutput(true);
+						httpsGet2.connect();
+						BufferedReader inGet2 = new BufferedReader(
+								  new InputStreamReader(httpsGet2.getInputStream()));		
+						String inputLineGet2;
+						StringBuffer contentGet2 = new StringBuffer();
+						while ((inputLineGet2 = inGet2.readLine()) != null) {
+						    contentGet2.append(inputLineGet2);		   
+						}
+						inGet2.close();
+						JSONObject jsonGet2 = new JSONObject(contentGet2.toString());
+						JSONArray exercise_lista = jsonGet2.getJSONArray("exercises");
+						System.out.println(exercise_lista.toString() + "       ex lista");
+						for (int i=0; i < exercise_lista.length(); i++) {
+							System.out.println(exercise_lista.getString(i));
+							String []partesJsonGet2 = exercise_lista.getString(i).split("exercises/");
+							System.out.println(partesJsonGet2[1] + "      exercise_id");
+							
+							//ESTE ES UN GET
+							//OBTENER INFO ENTRENAMIENTO
+							URL urlGET3 = new URL("https://www.polaraccesslink.com/v3/users/" + id_usuario + "/exercise-transactions/" + transaction_id + "/exercises/" + partesJsonGet2[1]);
+							HttpsURLConnection httpsGet3 = (HttpsURLConnection) urlGET3.openConnection();
+							httpsGet3.setRequestMethod("GET");
+							//HEADERS
+							httpsGet3.setRequestProperty("Authorization", "Bearer " + token);
+							httpsGet3.setRequestProperty("Accept", "application/json;charset=UTF-8");
+							httpsGet3.setDoOutput(true);
+							httpsGet3.connect();
+							BufferedReader inGet3 = new BufferedReader(
+									  new InputStreamReader(httpsGet3.getInputStream()));		
+							String inputLineGet3;
+							StringBuffer contentGet3 = new StringBuffer();
+							while ((inputLineGet3 = inGet3.readLine()) != null) {
+							    contentGet3.append(inputLineGet3);		   
+							}
+							inGet3.close();
+							JSONObject jsonGet3 = new JSONObject(contentGet3.toString());
+							String deporte = (String) jsonGet3.get("sport");
+
+							double distancia = 0;
+							if(jsonGet3.toString().contains("distance")) {
+								distancia = (double) jsonGet3.get("distance");
+							}
+							
+							String tiempo = (String) jsonGet3.get("duration");
+							
+							System.out.println("Todo el json    " + jsonGet3.toString());
+							
+							String[] tiempo1 = tiempo.split("PT");
+							System.out.println(tiempo1[0] + "P1 " + tiempo1[1] + " P2");
+							String[] tiempo2 = null;
+							String[] tiempo3 = null;
+							String[] tiempo4 = null;
+							if(tiempo1[1].contains("H")) {
+								tiempo2 = tiempo1[1].split("H");
+								tiempo3 = tiempo2[1].split("M");
+								tiempo4 = tiempo3[1].split("S");
+							}else if(tiempo1[1].contains("M")) {
+								tiempo2 = new String[1];
+								tiempo2[0] = "0";
+								tiempo3 = tiempo1[1].split("M");
+								tiempo4 = tiempo3[1].split("S");
+							}else {
+								tiempo2 = new String[1];
+								tiempo2[0] = "0";
+								tiempo3 = new String[1];
+								tiempo3[0] = "0";
+								tiempo4 = tiempo1[1].split("S");
+							}
+							
+							int horas = Integer.parseInt(tiempo2[0]);
+							int minutos = Integer.parseInt(tiempo3[0]);
+							double segundos = Double.parseDouble(tiempo4[0]);
+							double tiempoH = horas + minutos/60 + segundos/60/60;
+							double tiempoM = horas*60 + minutos + segundos/60;
+							double velocidad = 0;
+							int velocidadEntero = 0;
+							double velocidadSeg = 0;
+							System.out.println(deporte);
+							
+							if(deporte == "CYCLING") {
+								velocidadSeg = (distancia/1000)/tiempoH;
+								System.out.println("La velocidad es de " + velocidadSeg + "km/h");
+							} else if(deporte == "SWIMMING") {
+								velocidad = tiempoM/distancia*100;
+								velocidadEntero = (int) velocidad;
+								velocidadSeg = (velocidad - velocidadEntero)*60;
+								System.out.println("La velocidad es de " + velocidadEntero + "min" + velocidadSeg + "seg/100m");
+							} else if(deporte.equals("RUNNING")) {
+								velocidad = tiempoM/(distancia/1000);
+								System.out.println(velocidad);
+								velocidadEntero = (int) velocidad;
+								velocidadSeg = (velocidad - velocidadEntero)*60;
+								System.out.println("La velocidad es de " + velocidadEntero + "min" + velocidadSeg + "seg/km");
+							}
+							
+							java.time.Duration d = java.time.Duration.parse(tiempo);
+							System.out.println("Duration in seconds: " + d.get(java.time.temporal.ChronoUnit.SECONDS));
+							
+							String usuario = (String) SessionUtils.getRequest().getSession(false).getAttribute("usuario");
+							long tiempoTotal = d.get(java.time.temporal.ChronoUnit.SECONDS);
+							Date fecha = new Date();
+							Long polarFlow = (long)1;
+							freqCard = 0;
+							
+							resultadosEnto = new ResultadosEnto(fecha , freqCard, velocidadSeg, usuario, tiempoTotal, polarFlow , deporte );
+							resultadosEntoEjb.guardarResultadosEntoEJB(resultadosEnto);
+							
+							System.out.println("Distancia: " + distancia + " Tiempo: " + tiempo + "   info ejercicio");
+							System.out.println();
+							System.out.println("--------------HASTA ACA EL GET----------------");
+							
+						}
+						
+						System.out.println();
+						System.out.println("--------------HASTA ACA EL GET----------------");
+						
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} catch (MalformedURLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+									
+							
+			}
+	
+		
+	}
+		
+		
+    public void listarEntoEjerTabla() {
+    	
+    	List<EntEjer> listarEntoEjerTabla = selectAsig.getEntrenamiento().getListEntEjer();
+    	
+        for (EntEjer a1 : listarEntoEjerTabla) {
+        	
+        	System.out.println("for lista asig");
+        	System.out.println("id idEnt "+a1.getEntrenamiento().getIdEntrenamiento());
+        	System.out.println("id Ent size "+a1.getEntrenamiento().getListEntEjer().size());
+        	System.out.println("id rep "+a1.getEntrenamiento().getListEntEjer().get(0).getRepeticiones());
+//        	System.out.println("fecha Ini :"+a1.getEntrenamiento().getListEntEjer().get(0).getEjercicios().getNombre());
+//			System.out.println("fecha Ini :"+a1.getFechaIni());
+			
+		}
     }
  
-    public void guardarAsignarEnto() {
+    public String guardarAsignarEnto() {
+    	String str="";
     	Boolean bool=false;
     	upGuardar="";
+    	
+    
     	try {
     		
-    		bool=asignarEntoEjb.guardarAsignarEntoBean(selectAsig, freqCard,velocidad,tiempoTotal,comentario);
+    		bool=asignarEntoEjb.guardarAsignarEntoBean(selectAsig, freqCard,velocidad,comentario);
     		if(bool) {
     			upGuardar="@all";
+    			str="deportista/verEntrenamientos";
+    			
     		}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			mostMsjGrowl("Incorrecto no se logro enviar los datos de entrenaminto, intente mas tarde");
 			e.printStackTrace();
 		}
-    	
-    	
+    	System.out.println("str guardarAsig"+str);
+		return str;
+     	
     	
     }
     
@@ -229,12 +596,14 @@ public class DeportistaBean implements Serializable {
     	cal.setTime(date);
     	System.out.println("cal "+cal);
     	long dias=0;
+    	
     	if(n==2) {
     	 dias = cal.get(Calendar.DAY_OF_YEAR)+1;
     	}
     	else {
     		 dias = cal.get(Calendar.DAY_OF_YEAR);
     	}
+    	
     	Calendar cal3 = Calendar.getInstance();
     	Date f1=new Date();
     	cal3.setTime(f1);
@@ -246,17 +615,27 @@ public class DeportistaBean implements Serializable {
     	long fechaIni=dias-dias3;
     	
     	if(fechaIni>0) {
+    		
     		System.out.println("if 1 "+fechaIni);
+    		System.out.println("LocalDateTime.now().plusDays(fechaIni) "+LocalDateTime.now().plusDays(fechaIni).withHour(0).withMinute(0).withSecond(0).withNano(0).toString());
+
+    		
         return LocalDateTime.now().plusDays(fechaIni).withHour(0).withMinute(0).withSecond(0).withNano(0);
         
     	}
     	if(fechaIni==0) {
+    		
     		System.out.println("if 2 "+fechaIni);
-            return LocalDateTime.now().withHour(1).withMinute(0).withSecond(0).withNano(0);
+    		
+    		System.out.println("LocalDateTime.now().plusDays(-1) "+LocalDateTime.now().plusDays(fechaIni).withHour(0).withMinute(0).withSecond(0).withNano(0).toString());
+
+    		return LocalDateTime.now().plusDays(-1).withHour(10).withMinute(0).withSecond(0).withNano(0);
             
         	}else {
         		System.out.println("if 3 "+fechaIni);
-    		return LocalDateTime.now().minusDays(fechaIni).withHour(0).withMinute(0).withSecond(0).withNano(0);
+        		System.out.println("LocalDateTime.now().plusDays(fechaIni) "+LocalDateTime.now().plusDays(fechaIni).withHour(0).withMinute(0).withSecond(0).withNano(0).toString());
+
+    		return LocalDateTime.now().plusDays(fechaIni).withHour(0).withMinute(0).withSecond(0).withNano(0);
     	}
     }
 //    private LocalDateTime fechaFin(Date date) {
@@ -280,28 +659,61 @@ public class DeportistaBean implements Serializable {
 		}
 		return str;
 	}
+	
 
-	public List<Entrenador> listTodosUsu(){
+	public String listTodosUsu(){
 				
-		return entListAll = entrenadorEjb.obtenerTodos();
+		List<Entrenador> entListAll2 = null;
+		System.out.println("str antes del primer if" + strBuscar);
 		
+		entListAll2 = entrenadorEjb.obtenerTodos();
+		
+		
+		if (entListAll2.size() == 0) {
+			entListAll2 = null;
+			System.out.println("entro 2 if");
+			mostMsjUsuNoEx();
+		}else {
+			
+			entListAll = entListAll2;
+		}
+		
+		
+		return null;
 	}
 	
 	public String filtroEnt() {
 
-		entListAll = null;
+		List<Entrenador> entListAll2 = null;
 		System.out.println("str antes del primer if" + strBuscar);
 		
-		entListAll = entrenadorEjb.filtroEntrenador2(strBuscar);
+		entListAll2 = entrenadorEjb.filtroEntrenador2(strBuscar);
 		
 		
-		if (entListAll.size() == 0) {
-			entListAll = null;
+		if (entListAll2.size() == 0) {
+			entListAll2 = null;
 			System.out.println("entro 2 if");
 			mostMsjUsuNoEx();
+		}else {
+			
+			entListAll = entListAll2;
 		}
 		
+		
 		return null;
+	}
+	
+	public String eliminarDepBean() {
+		
+		try {
+			deportistaEjb.borrar();
+			return "login2";
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
+		
 	}
 	
 //	public void selecionEnt() {
@@ -769,21 +1181,15 @@ public class DeportistaBean implements Serializable {
 			this.selectAsig2 = selectAsig2;
 		}
 
-		public Float getFreqCard() {
+		public Integer getFreqCard() {
 			return freqCard;
 		}
 
-		public void setFreqCard(Float freqCard) {
+		public void setFreqCard(Integer freqCard) {
 			this.freqCard = freqCard;
 		}
 
-		public Float getVelocidad() {
-			return velocidad;
-		}
 
-		public void setVelocidad(Float velocidad) {
-			this.velocidad = velocidad;
-		}
 
 		public Float getTiempoTotal() {
 			return tiempoTotal;
@@ -807,6 +1213,127 @@ public class DeportistaBean implements Serializable {
 
 		public void setUpGuardar(String upGuardar) {
 			this.upGuardar = upGuardar;
+		}
+
+		public Boolean getSiToken() {
+			return siToken;
+		}
+
+		public void setSiToken(Boolean siToken) {
+			this.siToken = siToken;
+		}
+
+		public String getToken() {
+			return token;
+		}
+
+		public void setToken(String token) {
+			this.token = token;
+		}
+
+		public String getId_usuario() {
+			return id_usuario;
+		}
+
+		public void setId_usuario(String id_usuario) {
+			this.id_usuario = id_usuario;
+		}
+
+		public String getTransaction_id() {
+			return transaction_id;
+		}
+
+		public void setTransaction_id(String transaction_id) {
+			this.transaction_id = transaction_id;
+		}
+
+		public Double getVelocidad() {
+			return velocidad;
+		}
+
+		public void setVelocidad(Double velocidad) {
+			this.velocidad = velocidad;
+		}
+
+		public Deportista getDep1() {
+			return dep1;
+		}
+
+		public void setDep1(Deportista dep1) {
+			this.dep1 = dep1;
+		}
+
+		public String getDeporte() {
+			return deporte;
+		}
+
+		public void setDeporte(String deporte) {
+			this.deporte = deporte;
+		}
+
+
+		public boolean isBolCorrer() {
+			return bolCorrer;
+		}
+
+		public void setBolCorrer(boolean bolCorrer) {
+			this.bolCorrer = bolCorrer;
+		}
+
+		public boolean isBolNadar() {
+			return bolNadar;
+		}
+
+		public void setBolNadar(boolean bolNadar) {
+			this.bolNadar = bolNadar;
+		}
+
+		public boolean isBolBici() {
+			return bolBici;
+		}
+
+		public void setBolBici(boolean bolBici) {
+			this.bolBici = bolBici;
+		}
+
+		public String getDeporteSelect() {
+			return deporteSelect;
+		}
+
+		public void setDeporteSelect(String deporteSelect) {
+			this.deporteSelect = deporteSelect;
+		}
+
+		public List<String> getListDeportes() {
+			return listDeportes;
+		}
+
+		public void setListDeportes(List<String> listDeportes) {
+			this.listDeportes = listDeportes;
+		}
+
+		public boolean isBolCorrer2() {
+			return bolCorrer2;
+		}
+
+		public void setBolCorrer2(boolean bolCorrer2) {
+			this.bolCorrer2 = bolCorrer2;
+		}
+
+		public boolean isBolNadar2() {
+			return bolNadar2;
+		}
+
+		public void setBolNadar2(boolean bolNadar2) {
+			this.bolNadar2 = bolNadar2;
+		}
+
+		public boolean isBolBici2() {
+			return bolBici2;
+		}
+
+		public void setBolBici2(boolean bolBici2) {
+			this.bolBici2 = bolBici2;
 		}
 
  
